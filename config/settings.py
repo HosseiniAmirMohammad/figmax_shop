@@ -165,11 +165,8 @@ STATICFILES_DIRS = [
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # استفاده از WhiteNoise برای فایل‌های استاتیک
-# در حالت بدون دیتابیس از حاده ساده استفاده کن
-if IS_RAILWAY:
-    STATICFILES_STORAGE = "whitenoise.storage.StaticFilesStorage"
-else:
-    STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+# استفاده از WhiteNoise برای فایل‌های استاتیک
+STATICFILES_STORAGE = "whitenoise.storage.StaticFilesStorage"
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"

@@ -1,11 +1,14 @@
 [phases.setup]
-nixpkgs = ["python311", "postgresql"]
+nixpkgs = ["python311"]
 
 [phases.install]
 cmds = ["pip install -r requirements.txt"]
 
 [phases.build]
-cmds = ["python manage.py migrate --run-syncdb", "python manage.py collectstatic --noinput"]
+cmds = [
+    "python manage.py migrate --run-syncdb",
+    "python manage.py collectstatic --noinput"
+]
 
 [start]
 cmd = "gunicorn config.wsgi"
