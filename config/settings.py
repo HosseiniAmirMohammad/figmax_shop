@@ -196,6 +196,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 # لاگ‌گیری (Logging)
+# در محیط تولید (Railway) لاگ‌ها به کنسول ارسال می‌شوند
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -210,36 +211,24 @@ LOGGING = {
         },
     },
     'handlers': {
-        'security_file': {
-            'level': 'WARNING',
-            'class': 'logging.FileHandler',
-            'filename': os.path.join(BASE_DIR, 'logs/security.log'),
-            'formatter': 'verbose',
-        },
         'console': {
             'class': 'logging.StreamHandler',
             'formatter': 'simple',
         },
-        'django_file': {
-            'level': 'ERROR',
-            'class': 'logging.FileHandler',
-            'filename': os.path.join(BASE_DIR, 'logs/django.log'),
-            'formatter': 'verbose',
-        },
     },
     'loggers': {
         'django.security': {
-            'handlers': ['security_file', 'console'],
+            'handlers': ['console'],
             'level': 'WARNING',
             'propagate': True,
         },
         'django.request': {
-            'handlers': ['security_file', 'console'],
+            'handlers': ['console'],
             'level': 'WARNING',
             'propagate': True,
         },
         'django': {
-            'handlers': ['django_file', 'console'],
+            'handlers': ['console'],
             'level': 'ERROR',
             'propagate': True,
         },
