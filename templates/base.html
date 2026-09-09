@@ -38,12 +38,13 @@
     <!--Favicon-->
     <link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}">
     <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.png' %}">
+    <link rel="apple-touch-icon" href="{% static 'images/favicon.png' %}">
     
     <!--Google Fonts-->
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     
     <!--Main CSS-->
-    <link rel="stylesheet" href="/static/css/main.css?v=1.1">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}?v=1.1">
     
     <!--Additional CSS-->
     {% block extra_css %}{% endblock %}
@@ -156,16 +157,16 @@
                 <h4>شبکه‌های اجتماعی</h4>
                 <div class="social-icons">
                     <a class="social-icon" href="#" aria-label="اینستاگرام FIGMAX">
-                        <img src="/static/images/instagram-white.png" class="social-img social-white" alt="اینستاگرام FIGMAX" width="32" height="32">
-                        <img src="/static/images/instagram-red.png" class="social-img social-red" alt="اینستاگرام FIGMAX" width="32" height="32">
+                        <img src="{% static 'images/instagram-white.png' %}" class="social-img social-white" alt="اینستاگرام FIGMAX" width="32" height="32">
+                        <img src="{% static 'images/instagram-red.png' %}" class="social-img social-red" alt="اینستاگرام FIGMAX" width="32" height="32">
                     </a>
                     <a class="social-icon" href="#" aria-label="تلگرام FIGMAX">
-                        <img src="/static/images/telegram-white.png" class="social-img social-white" alt="تلگرام FIGMAX" width="32" height="32">
-                        <img src="/static/images/telegram-red.png" class="social-img social-red" alt="تلگرام FIGMAX" width="32" height="32">
+                        <img src="{% static 'images/telegram-white.png' %}" class="social-img social-white" alt="تلگرام FIGMAX" width="32" height="32">
+                        <img src="{% static 'images/telegram-red.png' %}" class="social-img social-red" alt="تلگرام FIGMAX" width="32" height="32">
                     </a>
                     <a class="social-icon" href="#" aria-label="بله FIGMAX">
-                        <img src="/static/images/bale-white.png" class="social-img social-white" alt="بله FIGMAX" width="32" height="32">
-                        <img src="/static/images/bale-red.png" class="social-img social-red" alt="بله FIGMAX" width="32" height="32">
+                        <img src="{% static 'images/bale-white.png' %}" class="social-img social-white" alt="بله FIGMAX" width="32" height="32">
+                        <img src="{% static 'images/bale-red.png' %}" class="social-img social-red" alt="بله FIGMAX" width="32" height="32">
                     </a>
                 </div>
             </div>
