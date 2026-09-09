@@ -126,8 +126,8 @@ TEMPLATES = [
 WSGI_APPLICATION = "config.wsgi.application"
 
 
-# دیتابیس - SQLite برای توسعه، PostgreSQL برای تولید
-if DEBUG:
+# دیتابیس - SQLite برای توسعه و حالت بدون PostgreSQL
+if DEBUG or IS_RAILWAY:
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.sqlite3",
