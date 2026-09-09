@@ -7,10 +7,30 @@ from decouple import config
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
+# تشخیص محیط Railway
+IS_RAILWAY = 'RAILWAY_ENVIRONMENT' in os.environ or 'RAILWAY_PROJECT_ID' in os.environ
+
 # متغیرهای محیطی از .env
 SECRET_KEY = config('DJANGO_SECRET_KEY', default='django-insecure-figmax-store-secret-key-12345')
-DEBUG = config('DEBUG', default=True, cast=bool)
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='127.0.0.1,localhost,10.166.3.143').split(',')
+
+# در محیط تولید (Railway) DEBUG را False کن
+if IS_RAILWAY:
+    DEBUG = False
+else:
+    DEBUG = config('DEBUG', default=True, cast=bool)
+
+# ALLOWED_HOSTS
+if IS_RAILWAY:
+    ALLOWED_HOSTS = [
+        'localhost',
+        '127.0.0.1',
+        '.up.railway.app',  # تمام دامنه‌های Railway
+        '.railway.app',
+    ]
+else:
+    ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='127.0.0.1,localhost,10.166.3.143').split(',')
+    # حذف فاصله‌های اضافی
+    ALLOWED_HOSTS = [host.strip() for host in ALLOWED_HOSTS]
 
 # URLs
 LOGIN_URL = '/login/'
