@@ -1,0 +1,66 @@
+{% extends 'base_auth.html' %}
+
+{% load static %}
+
+{% block title %}ورود | FigMax Store{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="/static/css/auth.css">
+{% endblock %}
+
+{% block content %}
+<div class="orb"></div>
+<div class="orb"></div>
+
+<a href="/" class="back-link">
+    <span>←</span> بازگشت به صفحه اصلی
+</a>
+
+<div class="auth-card">
+    <div class="logo">
+        <img src="/static/images/logo-white.png" alt="FIGMAX">
+    </div>
+
+    <h1 class="auth-title">ورود به حساب</h1>
+
+    <form method="post">
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+        <div class="form-errors">
+            {% for error in form.non_field_errors %}
+                <div class="error-msg">{{ error }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <div class="form-group">
+            <label>یوزرنیم، ایمیل یا شماره موبایل</label>
+            {{ form.identifier }}
+            {% if form.identifier.errors %}
+            <div class="field-error">{{ form.identifier.errors.0 }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label>رمز عبور</label>
+            {{ form.password }}
+            {% if form.password.errors %}
+            <div class="field-error">{{ form.password.errors.0 }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group" style="display:flex; align-items:center; gap:8px;">
+            {{ form.remember_me }}
+            <label style="margin:0; color:#ddd;">مرا به خاطر بسپار</label>
+        </div>
+
+        <button type="submit" class="auth-btn">ورود</button>
+    </form>
+
+    <div class="auth-footer">
+        حساب ندارید؟
+        <a href="{% url 'accounts:register' %}">ثبت نام</a>
+    </div>
+</div>
+{% endblock %}

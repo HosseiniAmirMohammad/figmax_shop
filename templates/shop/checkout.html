@@ -1,0 +1,994 @@
+<!-- templates/shop/checkout.html -->
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}تسویه حساب | FIGMAX{% endblock %}
+
+{% block content %}
+<style>
+    /*FONT AND RESET*/
+    @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap');
+    
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    .checkout-page {
+        background: #0a0a0a;
+        min-height: 100vh;
+        padding: 140px 20px 40px;
+        direction: rtl;
+        font-family: 'Vazirmatn', sans-serif;
+    }
+    
+    .checkout-page .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        width: 100%;
+    }
+    
+    /* ===== هدر ===== */
+    .checkout-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 35px;
+        padding: 0 10px;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+    
+    .checkout-header h1 {
+        color: #ffffff;
+        font-size: 32px;
+        font-weight: 800;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .checkout-header h1 span {
+        background: linear-gradient(135deg, #c1121f, #ff1a2b);
+        padding: 8px 16px;
+        border-radius: 12px;
+        font-size: 14px;
+        font-weight: 600;
+        color: #fff;
+    }
+    
+    /*CHECKOUT STEPS*/
+    .checkout-steps {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        background: rgba(255,255,255,0.03);
+        padding: 8px 16px;
+        border-radius: 50px;
+        border: 1px solid rgba(255,255,255,0.05);
+    }
+    
+    .step {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        color: #666;
+        font-size: 13px;
+        font-weight: 500;
+        transition: 0.3s;
+        padding: 4px 8px;
+        border-radius: 20px;
+    }
+    
+    .step.active {
+        color: #c1121f;
+        background: rgba(193,18,31,0.1);
+    }
+    
+    .step .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #333;
+        display: inline-block;
+        transition: 0.3s;
+    }
+    
+    .step.active .dot {
+        background: #c1121f;
+        box-shadow: 0 0 20px rgba(193,18,31,0.4);
+    }
+    
+    .step-line {
+        width: 30px;
+        height: 2px;
+        background: #333;
+        transition: 0.3s;
+    }
+    
+    .step-line.active {
+        background: #c1121f;
+    }
+    
+    /*GRID*/
+    .checkout-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        padding: 0 10px;
+    }
+    
+    /*CARDS*/
+    .checkout-card {
+        background: linear-gradient(145deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+        border-radius: 20px;
+        padding: 30px;
+        border: 1px solid rgba(255,255,255,0.06);
+        backdrop-filter: blur(10px);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .checkout-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 100%;
+        height: 3px;
+        background: linear-gradient(90deg, transparent, #c1121f, transparent);
+        opacity: 0;
+        transition: opacity 0.4s;
+    }
+    
+    .checkout-card:hover::before {
+        opacity: 1;
+    }
+    
+    .checkout-card:hover {
+        border-color: rgba(193,18,31,0.2);
+        transform: translateY(-2px);
+        box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+    
+    .card-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 25px;
+    }
+    
+    .card-header .icon {
+        width: 44px;
+        height: 44px;
+        background: linear-gradient(135deg, rgba(193,18,31,0.15), rgba(193,18,31,0.05));
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+        flex-shrink: 0;
+    }
+    
+    .card-header h2 {
+        color: #ffffff;
+        font-size: 20px;
+        font-weight: 700;
+        margin: 0;
+    }
+    
+    .card-header .badge {
+        background: rgba(193,18,31,0.2);
+        color: #c1121f;
+        padding: 2px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+        margin-right: auto;
+    }
+    
+    /*FORM*/
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+    }
+    
+    .form-group {
+        margin-bottom: 16px;
+    }
+    
+    .form-group label {
+        color: #aaaaaa;
+        font-size: 13px;
+        font-weight: 500;
+        display: block;
+        margin-bottom: 6px;
+        transition: color 0.3s;
+    }
+    
+    .form-group:focus-within label {
+        color: #c1121f;
+    }
+    
+    .form-group input,
+    .form-group textarea {
+        width: 100%;
+        padding: 12px 16px;
+        background: rgba(255,255,255,0.05);
+        border: 1.5px solid rgba(255,255,255,0.08);
+        border-radius: 12px;
+        color: #ffffff;
+        font-family: 'Vazirmatn', sans-serif;
+        font-size: 15px;
+        transition: all 0.3s;
+        outline: none;
+        -webkit-appearance: none;
+        min-height: 48px;
+    }
+    
+    .form-group input:focus,
+    .form-group textarea:focus {
+        border-color: #c1121f;
+        background: rgba(255,255,255,0.08);
+        box-shadow: 0 0 0 4px rgba(193,18,31,0.08);
+    }
+    
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+        color: #555;
+        font-size: 13px;
+    }
+    
+    .form-group textarea {
+        min-height: 110px;
+        resize: vertical;
+    }
+    
+    .form-group .input-icon {
+        position: relative;
+    }
+    
+    .form-group .input-icon input {
+        padding-right: 44px;
+    }
+    
+    .form-group .input-icon .icon-pos {
+        position: absolute;
+        right: 14px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #555;
+        font-size: 18px;
+        pointer-events: none;
+    }
+    
+    /*BTNS*/
+    .btn-submit {
+        width: 100%;
+        padding: 16px;
+        background: linear-gradient(135deg, #c1121f, #8a0f1a);
+        color: #ffffff;
+        border: none;
+        border-radius: 12px;
+        font-size: 16px;
+        font-weight: 700;
+        font-family: 'Vazirmatn', sans-serif;
+        cursor: pointer;
+        transition: all 0.3s;
+        min-height: 54px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 5px;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .btn-submit::after {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(45deg, transparent, rgba(255,255,255,0.05), transparent);
+        transform: rotate(45deg) translateX(-100%);
+        transition: transform 0.6s;
+    }
+    
+    .btn-submit:hover::after {
+        transform: rotate(45deg) translateX(100%);
+    }
+    
+    .btn-submit:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 35px rgba(193,18,31,0.35);
+    }
+    
+    .btn-submit:active {
+        transform: scale(0.98);
+    }
+    
+    /* ===== آیتم‌های سفارش ===== */
+    .items-list {
+        max-height: 320px;
+        overflow-y: auto;
+        margin-bottom: 20px;
+        padding-left: 5px;
+    }
+    
+    .items-list::-webkit-scrollbar {
+        width: 3px;
+    }
+    
+    .items-list::-webkit-scrollbar-track {
+        background: rgba(255,255,255,0.03);
+        border-radius: 10px;
+    }
+    
+    .items-list::-webkit-scrollbar-thumb {
+        background: #c1121f;
+        border-radius: 10px;
+    }
+    
+    .item-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 0;
+        border-bottom: 1px solid rgba(255,255,255,0.04);
+        gap: 12px;
+        transition: all 0.3s;
+    }
+    
+    .item-row:hover {
+        background: rgba(255,255,255,0.02);
+        margin: 0 -10px;
+        padding: 12px 10px;
+        border-radius: 8px;
+    }
+    
+    .item-info {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex: 1;
+        min-width: 0;
+    }
+    
+    .item-info img {
+        width: 44px;
+        height: 44px;
+        object-fit: cover;
+        border-radius: 10px;
+        flex-shrink: 0;
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(255,255,255,0.05);
+    }
+    
+    .item-details {
+        min-width: 0;
+        flex: 1;
+    }
+    
+    .item-title {
+        color: #ffffff;
+        font-size: 14px;
+        font-weight: 500;
+        display: block;
+        word-break: break-word;
+        line-height: 1.3;
+    }
+    
+    .item-qty {
+        color: #888;
+        font-size: 12px;
+        display: block;
+        margin-top: 3px;
+    }
+    
+    .item-price {
+        color: #c1121f;
+        font-weight: 700;
+        font-size: 14px;
+        flex-shrink: 0;
+        white-space: nowrap;
+    }
+    
+    /*SUMMARY DETAILS*/
+    .summary-details {
+        border-top: 2px solid rgba(193,18,31,0.15);
+        padding-top: 15px;
+    }
+    
+    .summary-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px 0;
+        font-size: 14px;
+        gap: 10px;
+    }
+    
+    .summary-row .label {
+        color: #888;
+    }
+    
+    .summary-row .value {
+        color: #fff;
+        font-weight: 500;
+    }
+    
+    .summary-row .value.free {
+        color: #4CAF50;
+    }
+    
+    .summary-total {
+        display: flex;
+        justify-content: space-between;
+        padding: 16px 0 8px;
+        margin-top: 5px;
+        border-top: 2px solid rgba(193,18,31,0.25);
+        gap: 10px;
+    }
+    
+    .summary-total .label {
+        color: #fff;
+        font-size: 18px;
+        font-weight: 700;
+    }
+    
+    .summary-total .value {
+        color: #c1121f;
+        font-size: 24px;
+        font-weight: 800;
+        background: linear-gradient(135deg, #c1121f, #ff1a2b);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    
+    /*PAYMENT*/
+    .payment-section {
+        margin-top: 20px;
+        padding: 16px 20px;
+        background: linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+        border-radius: 12px;
+        border: 1px solid rgba(255,255,255,0.05);
+        text-align: center;
+    }
+    
+    .payment-section p {
+        color: #888;
+        font-size: 13px;
+        margin: 0;
+    }
+    
+    .payment-icons {
+        display: flex;
+        justify-content: center;
+        gap: 16px;
+        margin-top: 10px;
+        font-size: 26px;
+    }
+    
+    .payment-icons span {
+        transition: all 0.3s;
+        cursor: default;
+    }
+    
+    .payment-icons span:hover {
+        transform: translateY(-3px) scale(1.1);
+    }
+    
+    /* ============================================
+       ریسپانسیو موبایل
+    ============================================ */
+    
+    @media (max-width: 992px) {
+        .checkout-grid {
+            grid-template-columns: 1fr;
+            gap: 25px;
+        }
+        
+        .checkout-page {
+            padding: 130px 15px 30px;
+        }
+        
+        .checkout-steps {
+            padding: 6px 12px;
+        }
+        
+        .step {
+            font-size: 11px;
+            padding: 3px 6px;
+        }
+        
+        .step-line {
+            width: 20px;
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .checkout-page {
+            padding: 120px 12px 25px;
+        }
+        
+        .checkout-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        
+        .checkout-header h1 {
+            font-size: 24px;
+        }
+        
+        .checkout-header h1 span {
+            font-size: 12px;
+            padding: 5px 12px;
+        }
+        
+        .checkout-steps {
+            width: 100%;
+            justify-content: center;
+            padding: 6px 12px;
+            border-radius: 30px;
+        }
+        
+        .step {
+            font-size: 11px;
+            padding: 3px 6px;
+            gap: 4px;
+        }
+        
+        .step .dot {
+            width: 6px;
+            height: 6px;
+        }
+        
+        .step-line {
+            width: 18px;
+        }
+        
+        .checkout-grid {
+            gap: 20px;
+            padding: 0;
+        }
+        
+        .checkout-card {
+            padding: 20px;
+            border-radius: 16px;
+        }
+        
+        .checkout-card:hover {
+            transform: none;
+        }
+        
+        .card-header h2 {
+            font-size: 17px;
+        }
+        
+        .card-header .icon {
+            width: 38px;
+            height: 38px;
+            font-size: 18px;
+        }
+        
+        .form-row {
+            grid-template-columns: 1fr;
+            gap: 0;
+        }
+        
+        .form-group {
+            margin-bottom: 12px;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            padding: 10px 14px;
+            font-size: 16px;
+            min-height: 44px;
+            border-radius: 10px;
+        }
+        
+        .form-group label {
+            font-size: 12px;
+        }
+        
+        .btn-submit {
+            padding: 14px;
+            font-size: 15px;
+            min-height: 48px;
+            border-radius: 10px;
+        }
+        
+        .item-info img {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+        }
+        
+        .item-title {
+            font-size: 13px;
+        }
+        
+        .item-price {
+            font-size: 13px;
+        }
+        
+        .summary-total .label {
+            font-size: 16px;
+        }
+        
+        .summary-total .value {
+            font-size: 20px;
+        }
+        
+        .payment-icons {
+            font-size: 22px;
+            gap: 12px;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .checkout-page {
+            padding: 110px 8px 20px;
+        }
+        
+        .checkout-header h1 {
+            font-size: 20px;
+        }
+        
+        .checkout-header h1 span {
+            font-size: 10px;
+            padding: 4px 10px;
+        }
+        
+        .checkout-steps {
+            padding: 4px 10px;
+            gap: 4px;
+        }
+        
+        .step {
+            font-size: 10px;
+            padding: 2px 4px;
+            gap: 3px;
+        }
+        
+        .step .dot {
+            width: 5px;
+            height: 5px;
+        }
+        
+        .step-line {
+            width: 14px;
+        }
+        
+        .checkout-grid {
+            gap: 15px;
+        }
+        
+        .checkout-card {
+            padding: 16px;
+            border-radius: 14px;
+        }
+        
+        .card-header h2 {
+            font-size: 15px;
+        }
+        
+        .card-header .icon {
+            width: 34px;
+            height: 34px;
+            font-size: 16px;
+        }
+        
+        .card-header .badge {
+            font-size: 10px;
+            padding: 2px 10px;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            padding: 8px 12px;
+            font-size: 16px;
+            min-height: 40px;
+            border-radius: 8px;
+        }
+        
+        .form-group textarea {
+            min-height: 80px;
+        }
+        
+        .btn-submit {
+            padding: 12px;
+            font-size: 14px;
+            min-height: 44px;
+            border-radius: 8px;
+        }
+        
+        .item-row {
+            padding: 10px 0;
+        }
+        
+        .item-info img {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+        }
+        
+        .item-title {
+            font-size: 12px;
+        }
+        
+        .item-price {
+            font-size: 12px;
+        }
+        
+        .summary-row {
+            font-size: 13px;
+            padding: 6px 0;
+        }
+        
+        .summary-total {
+            padding: 12px 0 6px;
+        }
+        
+        .summary-total .label {
+            font-size: 15px;
+        }
+        
+        .summary-total .value {
+            font-size: 18px;
+        }
+        
+        .payment-section {
+            padding: 12px 16px;
+            margin-top: 15px;
+        }
+        
+        .payment-section p {
+            font-size: 11px;
+        }
+        
+        .payment-icons {
+            font-size: 20px;
+            gap: 10px;
+        }
+        
+        .payment-icons span:hover {
+            transform: none;
+        }
+    }
+    
+    @media (max-width: 360px) {
+        .checkout-page {
+            padding: 100px 5px 15px;
+        }
+        
+        .step {
+            font-size: 9px;
+            padding: 2px 3px;
+        }
+        
+        .step-line {
+            width: 10px;
+        }
+        
+        .checkout-card {
+            padding: 12px;
+            border-radius: 12px;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            padding: 6px 10px;
+            font-size: 16px;
+            min-height: 36px;
+        }
+        
+        .btn-submit {
+            padding: 10px;
+            font-size: 13px;
+            min-height: 40px;
+        }
+        
+        .item-info img {
+            width: 28px;
+            height: 28px;
+        }
+        
+        .item-title {
+            font-size: 11px;
+        }
+        
+        .item-price {
+            font-size: 11px;
+        }
+        
+        .summary-total .value {
+            font-size: 16px;
+        }
+    }
+    
+    /* ===== انیمیشن‌ها ===== */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .checkout-card {
+        animation: fadeInUp 0.6s ease-out forwards;
+    }
+    
+    .checkout-card:nth-child(1) {
+        animation-delay: 0.1s;
+    }
+    
+    .checkout-card:nth-child(2) {
+        animation-delay: 0.2s;
+    }
+</style>
+
+<!--MAIN CONTENT-->
+<div class="checkout-page">
+    <div class="container">
+        
+        <!--CHECKOUT HEADER-->
+        <div class="checkout-header">
+            <h1>
+                📋 تکمیل سفارش
+                <span>مرحله نهایی</span>
+            </h1>
+            
+            <!--CHECKOUT STEP-->
+            <div class="checkout-steps">
+                <div class="step">
+                    <span class="dot"></span>
+                    سبد خرید
+                </div>
+                <div class="step-line"></div>
+                <div class="step active">
+                    <span class="dot"></span>
+                    اطلاعات
+                </div>
+                <div class="step-line"></div>
+                <div class="step">
+                    <span class="dot"></span>
+                    پرداخت
+                </div>
+            </div>
+        </div>
+        
+        <!--GRID-->
+        <div class="checkout-grid">
+            
+            <!-- ===== خلاصه سفارش ===== -->
+            <div class="checkout-card" style="order: 1;">
+                <div class="card-header">
+                    <div class="icon">🛍️</div>
+                    <h2>خلاصه سفارش</h2>
+                    <span class="badge">{{ items|length }} محصول</span>
+                </div>
+                
+                <div class="items-list">
+                    {% for item in items %}
+                    <div class="item-row">
+                        <div class="item-info">
+                            {% with item.product.images.first as image %}
+                            <img src="{% if image %}{{ image.image.url }}{% else %}{% static 'images/default-product.jpg' %}{% endif %}" 
+                                 alt="{{ item.product.title }}"
+                                 loading="lazy">
+                            {% endwith %}
+                            <div class="item-details">
+                                <span class="item-title">{{ item.product.title }}</span>
+                                <span class="item-qty">تعداد: {{ item.quantity }}</span>
+                            </div>
+                        </div>
+                        <span class="item-price">{{ item.product.price|intcomma }} تومان</span>
+                    </div>
+                    {% empty %}
+                    <div style="text-align:center;padding:30px 0;color:#666;">
+                        <div style="font-size:40px;margin-bottom:10px;">🛒</div>
+                        <p style="font-size:14px;">سبد خرید شما خالی است</p>
+                    </div>
+                    {% endfor %}
+                </div>
+                
+                <div class="summary-details">
+                    <div class="summary-row">
+                        <span class="label">جمع کل</span>
+                        <span class="value">{{ total_price|intcomma }} تومان</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="label">هزینه ارسال</span>
+                        <span class="value free"></span>
+                    </div>
+                    <div class="summary-total">
+                        <span class="label">قابل پرداخت</span>
+                        <span class="value">{{ total_price|intcomma }} تومان</span>
+                    </div>
+                </div>
+                
+                <div class="payment-section">
+                    <p>🔒 پرداخت امن از طریق درگاه‌های معتبر بانکی</p>
+                    <div class="payment-icons">
+                        <span>💳</span>
+                        <span>🏦</span>
+                        <span>📱</span>
+                        <span>🪙</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!--FORM DETAILS-->
+            <div class="checkout-card" style="order: 2;">
+                <div class="card-header">
+                    <div class="icon">📍</div>
+                    <h2>اطلاعات ارسال</h2>
+                </div>
+                
+                <form method="POST" id="checkoutForm">
+                    {% csrf_token %}
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>نام *</label>
+                            <input type="text" name="first_name" required placeholder="نام خود را وارد کنید">
+                        </div>
+                        <div class="form-group">
+                            <label>نام خانوادگی *</label>
+                            <input type="text" name="last_name" required placeholder="نام خانوادگی">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>شماره تماس *</label>
+                        <div class="input-icon">
+                            <span class="icon-pos"></span>
+                            <input type="tel" name="phone" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>ایمیل</label>
+                        <div class="input-icon">
+                            <span class="icon-pos"></span>
+                            <input type="email" name="email">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>کد پستی</label>
+                        <div class="input-icon">
+                            <span class="icon-pos"></span>
+                            <input type="text" name="postal_code">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>آدرس کامل *</label>
+                        <textarea name="address" required rows="4" placeholder="آدرس کامل خود را وارد کنید..."></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn-submit">
+                     ثبت سفارش و انتقال به درگاه پرداخت
+                    </button>
+                </form>
+            </div>
+            
+        </div>
+    </div>
+</div>
+{% endblock %}

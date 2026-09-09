@@ -1,0 +1,11 @@
+# static/robots.txt
+
+User-agent: *
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /accounts/
+Disallow: /checkout/
+Disallow: /cart/
+Disallow: /media/
+Allow: /
+Sitemap: https://yourdomain.com/sitemap.xml

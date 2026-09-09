@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>سفارش‌های من | FIGMAX</title>
+<link rel="stylesheet" href="/static/css/order.css">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-row nav-row-top">
+        <a href="/" class="logo-link">
+          <img src="/static/images/logo-white.png" alt="FIGMAX Logo" class="logo-img logo-white" />
+          <img src="/static/images/logo-red.png" alt="FIGMAX Logo" class="logo-img logo-red" />
+        </a>
+      </div>
+      <div class="nav-row nav-row-bottom">
+        <ul class="nav-menu">
+          <li><a href="/" class="nav-link">خانه</a></li>
+          <li><a href="/products" class="nav-link">محصولات</a></li>
+          <li><a href="#" class="nav-link">درباره ما</a></li>
+          <li><a href="#" class="nav-link">تماس با ما</a></li>
+          {% if user.is_authenticated %}
+            <li><a href="/dashboard/" class="nav-link">پنل کاربری</a></li>
+            {% if user.is_superuser %}
+              <li><a href="{% url 'shop:admin_dashboard' %}" class="nav-link admin-link">پنل مدیریت</a></li>
+            {% endif %}
+            <li><a href="{% url 'accounts:logout' %}" class="nav-link logout-link">خروج</a></li>
+          {% else %}
+            <li><a href="{% url 'accounts:login' %}" class="nav-link">ورود</a></li>
+            <li><a href="{% url 'accounts:register' %}" class="nav-link register-link">ثبت‌نام</a></li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+</nav>
+
+<div class="page">
+
+    <h1 class="title">سفارش‌های من</h1>
+
+    <div class="orders">
+
+        {% if orders %}
+            {% for order in orders %}
+            <div class="order-card">
+                <div>
+                    {% for item in order.items.all %}
+                        <h3>{{ item.product.name }}</h3>
+                    {% endfor %}
+                    <p>کد سفارش: #{{ order.id }}</p>
+                    <p>تاریخ: {{ order.created_at|date:"Y/m/d" }}</p>
+                    <p>مبلغ: {{ order.total_price|floatformat:0 }} تومان</p>
+                </div>
+                <div class="status
+                    {% if order.status == 'pending' %}pending
+                    {% elif order.status == 'processing' %}pending
+                    {% elif order.status == 'shipped' %}success
+                    {% elif order.status == 'delivered' %}delivered
+                    {% else %}cancelled{% endif %}
+                ">{{ order.get_status_display }}</div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="empty-state">
+                <p>هنوز سفارشی ثبت نشده است.</p>
+                <a href="/products" class="btn-shop">مشاهده محصولات</a>
+            </div>
+        {% endif %}
+
+    </div>
+
+</div>
+
+<div class="bg"></div>
+
+<footer>
+    <div class="footer-content">
+      <div class="footer-logo">
+        <h3>FIGMAX<span style="color:#ff0707;"> SHOP</span></h3>
+        <p>مرجع تخصصی مجسمه‌های کلکسیونی</p>
+      </div>
+      <div class="footer-links">
+        <h4>دسترسی سریع</h4>
+        <a href="#">محصولات</a>
+        <a href="#">درباره ما</a>
+        <a href="#">تماس با ما</a>
+      </div>
+      <div class="footer-links">
+        <h4>شبکه‌های اجتماعی</h4>
+        <div class="social-icons">
+          <a class="social-icon">
+            <img src="/static/images/instagram-white.png" class="social-img social-white">
+            <img src="/static/images/instagram-red.png" class="social-img social-red">
+          </a>
+          <a class="social-icon">
+            <img src="/static/images/telegram-white.png" class="social-img social-white">
+            <img src="/static/images/telegram-red.png" class="social-img social-red">
+          </a>
+          <a class="social-icon">
+            <img src="/static/images/bale-white.png" class="social-img social-white">
+            <img src="/static/images/bale-red.png" class="social-img social-red">
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="copyright">&copy; 2026 FIGMAX</div>
+</footer>
+
+</body>
+</html>

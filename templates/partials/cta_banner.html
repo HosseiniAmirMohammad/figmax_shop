@@ -1,0 +1,32 @@
+{% load static %}
+{% if settings %}
+<div class="cta-banner" style="
+    background: linear-gradient(135deg, rgba(0,0,0,{{ settings.cta_overlay_opacity|default:'0.7' }}), rgba(0,0,0,{{ settings.cta_overlay_opacity|default:'0.6' }})),
+                url('{% if settings.cta_background_image %}{{ settings.cta_background_image.url }}{% else %}{% static 'images/minibanner.jpg' %}{% endif %}');
+    background-size: cover;
+    background-position: center;
+    border-radius: {{ settings.cta_border_radius|default:'30px' }};
+    min-height: {{ settings.cta_height|default:'450px' }};
+    padding: 60px 40px;
+">
+    <div class="cta-content">
+        <h3 style="color: {{ settings.cta_title_color|default:'#ffffff' }};">
+            {{ settings.cta_title }}
+        </h3>
+        {% if settings.cta_subtitle %}
+        <p style="color: {{ settings.cta_subtitle_color|default:'#cccccc' }}; font-size: 18px; margin-bottom: 20px;">
+            {{ settings.cta_subtitle }}
+        </p>
+        {% endif %}
+        <a href="{{ settings.cta_button_link|default:'/products/' }}" 
+           class="btn-primary" 
+           style="
+               background: {{ settings.cta_button_color|default:'#c1121f' }} !important;
+               color: {{ settings.cta_button_text_color|default:'#ffffff' }} !important;
+               border-color: {{ settings.cta_button_color|default:'#c1121f' }} !important;
+           ">
+            {{ settings.cta_button_text }}
+        </a>
+    </div>
+</div>
+{% endif %}

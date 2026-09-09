@@ -1,0 +1,261 @@
+/*-------------------------------------------
+CHECKOUT - کامل و ریسپانسیو
+-------------------------------------------*/
+:root {
+    --red: #c1121f;
+    --white: #ffffff;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background: #0a0a0a;
+    color: white;
+    font-family: 'Vazirmatn', sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+/*-------------------------------------------
+CHECKOUT WRAPPER
+-------------------------------------------*/
+.checkout-wrapper {
+    display: flex;
+    gap: 30px;
+    padding: 140px 40px 60px;
+    max-width: 1400px;
+    margin: 0 auto;
+    align-items: flex-start;
+}
+
+/*-------------------------------------------
+CHECKOUT FORM
+-------------------------------------------*/
+.checkout-form {
+    flex: 1.2;
+}
+
+.checkout-form input,
+.checkout-form textarea {
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 14px 18px;
+    background: #0a0a0a;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    color: white;
+    font-size: 15px;
+    font-weight: 500;
+    font-family: 'Vazirmatn', sans-serif;
+    outline: none;
+    transition: 0.25s ease;
+    box-sizing: border-box;
+}
+
+.checkout-form input::placeholder,
+.checkout-form textarea::placeholder {
+    color: #777;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.checkout-form input:focus,
+.checkout-form textarea:focus {
+    border-color: #c1121f;
+    box-shadow: 0 0 0 3px rgba(193, 18, 31, 0.15);
+    background: #0f0f0f;
+}
+
+.checkout-form textarea {
+    height: 140px;
+    resize: none;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+/*-------------------------------------------
+CHECKOUT BUTTON
+-------------------------------------------*/
+.checkout-form button {
+    width: 100%;
+    padding: 16px;
+    background: #c1121f;
+    border: none;
+    color: white;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 16px;
+    font-family: 'Vazirmatn', sans-serif;
+    transition: 0.3s;
+    min-height: 48px;
+}
+
+.checkout-form button:hover {
+    background: #ff1a2b;
+    transform: translateY(-2px);
+}
+
+/*-------------------------------------------
+SUMMARY
+-------------------------------------------*/
+.checkout-summary {
+    flex: 1;
+    background: #121212;
+    padding: 30px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    height: fit-content;
+    position: sticky;
+    top: 140px;
+}
+
+.checkout-summary h2 {
+    margin-bottom: 20px;
+    color: #c1121f;
+    font-family: 'Vazirmatn', sans-serif;
+}
+
+.item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    font-family: 'Vazirmatn', sans-serif;
+}
+
+.total {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 18px;
+    color: #fff;
+    font-family: 'Vazirmatn', sans-serif;
+}
+
+.total span:last-child {
+    color: #c1121f;
+    font-weight: bold;
+}
+
+/*-------------------------------------------
+RESPONSIVE - قوی و با اولویت بالا
+-------------------------------------------*/
+
+/* تبلت و موبایل بزرگ */
+@media (max-width: 992px) {
+    .checkout-wrapper {
+        flex-direction: column;
+        padding: 140px 20px 40px;
+    }
+    
+    .checkout-summary {
+        position: static;
+        width: 100%;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* موبایل */
+@media (max-width: 768px) {
+    .checkout-wrapper {
+        padding: 120px 15px 30px;
+        gap: 20px;
+    }
+    
+    .checkout-form input,
+    .checkout-form textarea {
+        padding: 12px 14px;
+        font-size: 14px;
+    }
+    
+    .checkout-form button {
+        padding: 14px;
+        font-size: 14px;
+    }
+    
+    .checkout-summary {
+        padding: 20px;
+    }
+}
+
+/* موبایل کوچک */
+@media (max-width: 480px) {
+    .checkout-wrapper {
+        padding: 100px 10px 20px;
+        gap: 15px;
+    }
+    
+    .checkout-form input,
+    .checkout-form textarea {
+        padding: 10px 12px;
+        font-size: 13px;
+        margin-bottom: 10px;
+        border-radius: 8px;
+    }
+    
+    .checkout-form button {
+        padding: 12px;
+        font-size: 13px;
+        border-radius: 8px;
+        min-height: 44px;
+    }
+    
+    .checkout-summary {
+        padding: 15px;
+        border-radius: 12px;
+    }
+    
+    .checkout-summary h2 {
+        font-size: 18px;
+        margin-bottom: 15px;
+    }
+    
+    .item {
+        font-size: 13px;
+    }
+    
+    .total {
+        font-size: 16px;
+    }
+}
+
+/* برای صفحه‌های خیلی کوچک */
+@media (max-width: 360px) {
+    .checkout-wrapper {
+        padding: 90px 5px 15px;
+        gap: 10px;
+    }
+    
+    .checkout-form input,
+    .checkout-form textarea {
+        padding: 8px 10px;
+        font-size: 12px;
+        margin-bottom: 8px;
+    }
+    
+    .checkout-form button {
+        padding: 10px;
+        font-size: 12px;
+        min-height: 40px;
+    }
+    
+    .checkout-summary {
+        padding: 10px;
+    }
+    
+    .checkout-summary h2 {
+        font-size: 16px;
+    }
+}

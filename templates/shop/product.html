@@ -1,0 +1,904 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{{ product.formatted_price }}
+
+
+{% block title %}{{ product.title }} | FIGMAX{% endblock %}
+
+{% block extra_css %}
+<style>
+    
+    /*PRODUCT DETAIL PAGE*/
+    
+    .product-detail-page {
+        padding: 140px 20px 40px;
+        background: #0a0a0a;
+        min-height: 100vh;
+    }
+    
+    .product-detail-page .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    
+    /* Return To Main Page */
+    .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: #888;
+        text-decoration: none;
+        font-family: 'Vazirmatn', sans-serif;
+        font-size: 14px;
+        padding: 10px 20px;
+        border-radius: 10px;
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.06);
+        transition: all 0.3s ease;
+        margin-bottom: 25px;
+    }
+    
+    .back-link:hover {
+        color: #c1121f;
+        border-color: rgba(193,18,31,0.2);
+        background: rgba(193,18,31,0.05);
+        transform: translateX(-4px);
+    }
+    
+    .back-link .arrow {
+        display: inline-block;
+        transition: transform 0.3s ease;
+    }
+    
+    .back-link:hover .arrow {
+        transform: translateX(-4px);
+    }
+    
+    /*MAIN CARD*/
+    .product-main-card {
+        background: linear-gradient(145deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+        border-radius: 20px;
+        border: 1px solid rgba(255,255,255,0.06);
+        backdrop-filter: blur(10px);
+        overflow: hidden;
+        padding: 30px;
+        margin-bottom: 40px;
+        position: relative;
+    }
+    
+    .product-main-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 100%;
+        height: 3px;
+        background: linear-gradient(90deg, transparent, #c1121f, transparent);
+        opacity: 0.5;
+    }
+    
+    .product-main-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+    }
+    
+    /*GALLERY*/
+    .gallery-section {
+        position: relative;
+    }
+    
+    .gallery-main {
+        position: relative;
+        border-radius: 14px;
+        overflow: hidden;
+        background: rgba(0,0,0,0.3);
+        aspect-ratio: 1/1;
+    }
+    
+    .gallery-main img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: all 0.3s ease;
+    }
+    
+    .gallery-thumbs {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+        margin-top: 12px;
+    }
+    
+    .gallery-thumbs .thumb {
+        border-radius: 10px;
+        overflow: hidden;
+        cursor: pointer;
+        border: 2px solid transparent;
+        transition: all 0.3s ease;
+        aspect-ratio: 1/1;
+        background: rgba(0,0,0,0.2);
+    }
+    
+    .gallery-thumbs .thumb:hover {
+        border-color: rgba(193,18,31,0.3);
+    }
+    
+    .gallery-thumbs .thumb.active {
+        border-color: #c1121f;
+        box-shadow: 0 0 20px rgba(193,18,31,0.2);
+    }
+    
+    .gallery-thumbs .thumb img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    
+    /*PRODUCT INFO*/
+    .product-info-section {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+    
+    .product-info-section .badges {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+    
+    .product-info-section .badge {
+        padding: 4px 14px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+        font-family: 'Vazirmatn', sans-serif;
+    }
+    
+    .badge-category {
+        background: rgba(193,18,31,0.15);
+        color: #c1121f;
+        border: 1px solid rgba(193,18,31,0.1);
+    }
+    
+    .badge-featured {
+        background: rgba(243,156,18,0.15);
+        color: #f39c12;
+        border: 1px solid rgba(243,156,18,0.1);
+    }
+    
+    .badge-stock {
+        background: rgba(46,204,113,0.15);
+        color: #2ecc71;
+        border: 1px solid rgba(46,204,113,0.1);
+    }
+    
+    .badge-outstock {
+        background: rgba(244,67,54,0.15);
+        color: #f44336;
+        border: 1px solid rgba(244,67,54,0.1);
+    }
+    
+    .product-info-section h1 {
+        color: #fff;
+        font-size: 32px;
+        font-weight: 800;
+        font-family: 'Vazirmatn', sans-serif;
+        margin: 0;
+    }
+    
+    .product-info-section .price {
+        font-size: 28px;
+        font-weight: 700;
+        color: #c1121f;
+        font-family: 'Vazirmatn', sans-serif;
+    }
+    
+    .product-info-section .price small {
+        font-size: 16px;
+        color: #666;
+        font-weight: 400;
+    }
+    
+    .product-info-section .description {
+        color: #aaa;
+        font-size: 15px;
+        line-height: 1.8;
+        font-family: 'Vazirmatn', sans-serif;
+    }
+    
+    /*DETAILS*/
+    .specs-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin: 10px 0;
+    }
+    
+    .spec-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px 12px;
+        background: rgba(255,255,255,0.02);
+        border-radius: 8px;
+        border: 1px solid rgba(255,255,255,0.04);
+    }
+    
+    .spec-item .label {
+        color: #666;
+        font-size: 13px;
+        font-family: 'Vazirmatn', sans-serif;
+    }
+    
+    .spec-item .value {
+        color: #fff;
+        font-size: 13px;
+        font-weight: 500;
+        font-family: 'Vazirmatn', sans-serif;
+    }
+    
+    /*BUY BTN*/
+    .add-to-cart-section {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        margin-top: 10px;
+        flex-wrap: wrap;
+    }
+    
+    .qty-control {
+        display: flex;
+        align-items: center;
+        background: rgba(255,255,255,0.05);
+        border-radius: 10px;
+        overflow: hidden;
+        border: 1px solid rgba(255,255,255,0.08);
+    }
+    
+    .qty-control button {
+        background: transparent;
+        border: none;
+        color: #fff;
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+        cursor: pointer;
+        transition: 0.3s;
+        font-family: 'Vazirmatn', sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .qty-control button:hover {
+        background: rgba(193,18,31,0.2);
+        color: #c1121f;
+    }
+    
+    .qty-control input {
+        width: 50px;
+        height: 40px;
+        background: transparent;
+        border: none;
+        border-left: 1px solid rgba(255,255,255,0.05);
+        border-right: 1px solid rgba(255,255,255,0.05);
+        color: #fff;
+        text-align: center;
+        font-size: 16px;
+        font-weight: 600;
+        outline: none;
+        font-family: 'Vazirmatn', sans-serif;
+    }
+    
+    .qty-control input::-webkit-inner-spin-button,
+    .qty-control input::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+    
+    .qty-control input[type=number] {
+        -moz-appearance: textfield;
+    }
+    
+    .btn-add-cart {
+        flex: 1;
+        padding: 12px 30px;
+        background: linear-gradient(135deg, #c1121f, #8a0f1a);
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: 700;
+        font-family: 'Vazirmatn', sans-serif;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        min-height: 48px;
+    }
+    
+    .btn-add-cart:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 30px rgba(193,18,31,0.3);
+        background: linear-gradient(135deg, #d41a2a, #a01020);
+    }
+    
+    .btn-add-cart:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none !important;
+    }
+    
+    /*CHARACTER STORY*/
+    .story-section {
+        background: linear-gradient(145deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+        border-radius: 18px;
+        padding: 30px;
+        border: 1px solid rgba(255,255,255,0.06);
+        margin-bottom: 40px;
+    }
+    
+    .story-section h3 {
+        color: #fff;
+        font-size: 20px;
+        font-weight: 700;
+        font-family: 'Vazirmatn', sans-serif;
+        margin-bottom: 14px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .story-section p {
+        color: #aaa;
+        font-size: 15px;
+        line-height: 2;
+        font-family: 'Vazirmatn', sans-serif;
+    }
+    
+    /*SP*/
+    .similar-section .section-title {
+        text-align: center;
+        margin-bottom: 35px;
+    }
+    
+    .similar-section .section-title h2 {
+        font-size: 32px;
+        font-weight: 700;
+        color: #fff;
+        font-family: 'Vazirmatn', sans-serif;
+    }
+    
+    .similar-section .section-title h2 span {
+        color: #c1121f;
+    }
+    
+    .similar-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 20px;
+    }
+    
+    /*SCG*/
+    .similar-card {
+        background: rgba(255,255,255,0.02);
+        border-radius: 14px;
+        overflow: hidden;
+        border: 1px solid rgba(255,255,255,0.05);
+        transition: all 0.4s ease;
+    }
+    
+    .similar-card:hover {
+        transform: translateY(-6px);
+        border-color: rgba(193,18,31,0.2);
+        box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+    }
+    
+    .similar-card .image {
+        height: 200px;
+        overflow: hidden;
+        background: rgba(0,0,0,0.2);
+    }
+    
+    .similar-card .image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.4s ease;
+    }
+    
+    .similar-card:hover .image img {
+        transform: scale(1.05);
+    }
+    
+    .similar-card .info {
+        padding: 16px;
+    }
+    
+    .similar-card .info h4 {
+        color: #fff;
+        font-size: 15px;
+        font-weight: 600;
+        font-family: 'Vazirmatn', sans-serif;
+        margin-bottom: 4px;
+    }
+    
+    .similar-card .info .price-similar {
+        color: #c1121f;
+        font-size: 16px;
+        font-weight: 700;
+        font-family: 'Vazirmatn', sans-serif;
+    }
+    
+    .similar-card .info .price-similar small {
+        font-size: 12px;
+        color: #666;
+        font-weight: 400;
+    }
+    
+    .similar-card .btn-similar {
+        display: block;
+        width: 100%;
+        padding: 8px;
+        background: transparent;
+        border: 1px solid rgba(193,18,31,0.3);
+        color: #fff;
+        border-radius: 8px;
+        text-align: center;
+        text-decoration: none;
+        font-family: 'Vazirmatn', sans-serif;
+        font-size: 13px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        margin-top: 10px;
+    }
+    
+    .similar-card .btn-similar:hover {
+        background: #c1121f;
+        border-color: #c1121f;
+        box-shadow: 0 4px 20px rgba(193,18,31,0.2);
+    }
+    
+    /* ===========================================
+       RESPONSIVE
+    ============================================ */
+    
+    @media (max-width: 992px) {
+        .product-main-grid {
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+        
+        .product-detail-page {
+            padding: 130px 15px 30px;
+        }
+        
+        .specs-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .product-detail-page {
+            padding: 120px 12px 25px;
+        }
+        
+        .product-main-card {
+            padding: 20px;
+            border-radius: 16px;
+        }
+        
+        .product-info-section h1 {
+            font-size: 24px;
+        }
+        
+        .product-info-section .price {
+            font-size: 22px;
+        }
+        
+        .gallery-thumbs {
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+        }
+        
+        .add-to-cart-section {
+            flex-direction: column;
+        }
+        
+        .qty-control {
+            width: 100%;
+        }
+        
+        .qty-control input {
+            flex: 1;
+        }
+        
+        .btn-add-cart {
+            width: 100%;
+        }
+        
+        .story-section {
+            padding: 20px;
+            border-radius: 14px;
+        }
+        
+        .story-section h3 {
+            font-size: 18px;
+        }
+        
+        .story-section p {
+            font-size: 14px;
+        }
+        
+        .similar-grid {
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        
+        .similar-card .image {
+            height: 150px;
+        }
+        
+        .similar-card .info h4 {
+            font-size: 13px;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .product-detail-page {
+            padding: 110px 8px 20px;
+        }
+        
+        .product-main-card {
+            padding: 14px;
+            border-radius: 14px;
+        }
+        
+        .product-info-section h1 {
+            font-size: 20px;
+        }
+        
+        .product-info-section .price {
+            font-size: 18px;
+        }
+        
+        .product-info-section .description {
+            font-size: 14px;
+        }
+        
+        .gallery-thumbs {
+            grid-template-columns: repeat(4, 1fr);
+            gap: 6px;
+        }
+        
+        .similar-grid {
+            grid-template-columns: 1fr;
+            gap: 14px;
+        }
+        
+        .similar-card .image {
+            height: 180px;
+        }
+        
+        .back-link {
+            font-size: 13px;
+            padding: 6px 14px;
+        }
+    }
+    
+    @media (max-width: 360px) {
+        .product-detail-page {
+            padding: 100px 5px 15px;
+        }
+        
+        .product-main-card {
+            padding: 10px;
+            border-radius: 12px;
+        }
+        
+        .product-info-section h1 {
+            font-size: 18px;
+        }
+        
+        .product-info-section .price {
+            font-size: 16px;
+        }
+        
+        .spec-item .label,
+        .spec-item .value {
+            font-size: 12px;
+        }
+    }
+    
+    /*ANIMATION*/
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .product-main-card {
+        animation: fadeInUp 0.6s ease-out forwards;
+        animation-delay: 0.1s;
+    }
+    
+    .story-section {
+        animation: fadeInUp 0.6s ease-out forwards;
+        animation-delay: 0.2s;
+    }
+    
+    .similar-card {
+        animation: fadeInUp 0.6s ease-out forwards;
+    }
+    
+    .similar-card:nth-child(1) { animation-delay: 0.15s; }
+    .similar-card:nth-child(2) { animation-delay: 0.25s; }
+    .similar-card:nth-child(3) { animation-delay: 0.35s; }
+    .similar-card:nth-child(4) { animation-delay: 0.45s; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="product-detail-page">
+    <div class="container">
+        
+        <!--RETURN TO MAIN PAGE-->
+        <a href="/" class="back-link">
+            <span class="arrow">←</span>
+            بازگشت به صفحه اصلی
+        </a>
+        
+        <!--MAIN CARD-->
+        <div class="product-main-card">
+            <div class="product-main-grid">
+                
+                <!--GALLERY-->
+                <div class="gallery-section">
+                    <div class="gallery-main" id="mainGallery">
+                        {% with product.images.first as main_image %}
+                        <img src="{% if main_image %}{{ main_image.image.url }}{% else %}{% static 'images/default-product.jpg' %}{% endif %}" 
+                             alt="{{ product.title }}" 
+                             id="mainImage" />
+                        {% endwith %}
+                    </div>
+                    <div class="gallery-thumbs">
+                        {% for image in product.images.all %}
+                        <div class="thumb {% if forloop.first %}active{% endif %}" 
+                             onclick="changeImage('{{ image.image.url }}', this)">
+                            <img src="{{ image.image.url }}" alt="{{ image.alt_text|default:product.title }}" />
+                        </div>
+                        {% empty %}
+                        <div class="thumb active">
+                            <img src="{% static 'images/default-product.jpg' %}" alt="تصویر پیش‌فرض" />
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <!--INFO-->
+                <div class="product-info-section">
+                    <div class="badges">
+                        {% if product.category %}
+                        <span class="badge badge-category">{{ product.category.name }}</span>
+                        {% endif %}
+                        {% if product.is_featured %}
+                        <span class="badge badge-featured">⭐ ویژه</span>
+                        {% endif %}
+                        {% if product.stock > 0 %}
+                        <span class="badge badge-stock">✅ موجود</span>
+                        {% else %}
+                        <span class="badge badge-outstock">❌ ناموجود</span>
+                        {% endif %}
+                    </div>
+                    
+                    <h1>{{ product.title }}</h1>
+                    
+                    <div class="price">{{ product.price|intcomma }} <small>تومان</small></div>
+                    
+                    <p class="description">{{ product.short_description|default:product.about_product|truncatechars:200 }}</p>
+                    
+                    <!--DETAILS-->
+                    <div class="specs-grid">
+                        <div class="spec-item">
+                            <span class="label">موجودی</span>
+                            <span class="value">{{ product.stock }} عدد</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="label">وضعیت</span>
+                            <span class="value">{% if product.stock > 0 %}✅ موجود{% else %}❌ ناموجود{% endif %}</span>
+                        </div>
+                    </div>
+                    
+                    <!--BUY BTN-->
+                    <div class="add-to-cart-section">
+                        <div class="qty-control">
+                            <button type="button" id="qtyMinus">−</button>
+                            <input type="number" id="qtyInput" value="1" min="1" max="{{ product.stock }}" />
+                            <button type="button" id="qtyPlus">+</button>
+                        </div>
+                        <button type="button" class="btn-add-cart" id="addToCartBtn" data-product-id="{{ product.id }}" {% if product.stock == 0 %}disabled{% endif %}>
+                            {% if product.stock > 0 %}
+                            🛒 افزودن به سبد خرید
+                            {% else %}
+                            ناموجود
+                            {% endif %}
+                        </button>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        <!--CHARACTER STORY-->
+        {% if product.character_story %}
+        <div class="story-section">
+            <h3>⚔️ داستان شخصیت</h3>
+            <p>{{ product.character_story|linebreaks }}</p>
+        </div>
+        {% endif %}
+        
+        <!--SMILAR PRODUCTS-->
+        {% if similar_products %}
+        <div class="similar-section">
+            <div class="section-title">
+                <h2>محصولات <span>مشابه</span></h2>
+            </div>
+            <div class="similar-grid">
+                {% for similar in similar_products %}
+                <div class="similar-card">
+                    <div class="image">
+                        {% with similar.images.first as img %}
+                        <img src="{% if img %}{{ img.image.url }}{% else %}{% static 'images/default-product.jpg' %}{% endif %}" 
+                             alt="{{ similar.title }}" loading="lazy" />
+                        {% endwith %}
+                    </div>
+                    <div class="info">
+                        <h4>{{ similar.title }}</h4>
+                        <div class="price-similar">{{ similar.price|intcomma }} <small>تومان</small></div>
+                        <a href="{{ similar.get_absolute_url }}" class="btn-similar">مشاهده و خرید</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+        
+    </div>
+</div>
+
+<!-- ===========================================
+SCRIPTS
+============================================ -->
+<script>
+    // ===========================================
+    // INTERACTIVE GALLERY WITH RED FLASH
+    // ===========================================
+    let currentImageSrc = document.getElementById('mainImage')?.src || '';
+
+    function changeImage(src, element) {
+        const mainImg = document.getElementById('mainImage');
+        const galleryMain = document.getElementById('mainGallery');
+        
+        if (!mainImg || !galleryMain) return;
+        
+        currentImageSrc = src;
+        
+        // 1. افکت خروج تصویر قبلی
+        mainImg.style.transform = 'scale(1.1)';
+        mainImg.style.opacity = '0';
+        mainImg.style.filter = 'blur(4px)';
+        
+        // 2. ایجاد لایه قرمز با افکت شیشه‌ای
+        const flash = document.createElement('div');
+        flash.style.position = 'absolute';
+        flash.style.top = '0';
+        flash.style.left = '0';
+        flash.style.width = '100%';
+        flash.style.height = '100%';
+        flash.style.background = 'radial-gradient(circle at center, #ff1a2b, #c1121f)';
+        flash.style.zIndex = '10';
+        flash.style.opacity = '0';
+        flash.style.pointerEvents = 'none';
+        flash.style.transition = 'all 0.15s ease';
+        galleryMain.appendChild(flash);
+        
+        // 3. نمایش فلش قرمز
+        requestAnimationFrame(() => {
+            flash.style.opacity = '1';
+        });
+        
+        // 4. بعد از 150 میلی‌ثانیه عکس رو عوض کن
+        setTimeout(() => {
+            mainImg.src = src;
+            mainImg.style.transform = 'scale(1)';
+            mainImg.style.opacity = '1';
+            mainImg.style.filter = 'blur(0)';
+            flash.style.opacity = '0';
+            
+            setTimeout(() => {
+                flash.remove();
+            }, 300);
+        }, 150);
+        
+        // 5. تغییر کلاس active
+        document.querySelectorAll('.thumb').forEach(function(thumb) {
+            thumb.classList.remove('active');
+        });
+        if (element) {
+            element.classList.add('active');
+        }
+    }
+
+    // ===========================================
+    // QUANTITY CONTROL
+    // ===========================================
+    document.addEventListener('DOMContentLoaded', function() {
+        const qtyInput = document.getElementById('qtyInput');
+        const qtyMinus = document.getElementById('qtyMinus');
+        const qtyPlus = document.getElementById('qtyPlus');
+        
+        if (qtyMinus && qtyPlus && qtyInput) {
+            const maxStock = parseInt(qtyInput.max) || 999;
+            
+            qtyMinus.addEventListener('click', function() {
+                let val = parseInt(qtyInput.value);
+                if (val > 1) qtyInput.value = val - 1;
+            });
+            
+            qtyPlus.addEventListener('click', function() {
+                let val = parseInt(qtyInput.value);
+                if (val < maxStock) qtyInput.value = val + 1;
+            });
+            
+            qtyInput.addEventListener('change', function() {
+                let val = parseInt(qtyInput.value);
+                if (isNaN(val) || val < 1) qtyInput.value = 1;
+                if (val > maxStock) qtyInput.value = maxStock;
+            });
+        }
+        
+        // ===========================================
+        // ADD TO CART
+        // ===========================================
+        const addToCartBtn = document.getElementById('addToCartBtn');
+        if (addToCartBtn) {
+            addToCartBtn.addEventListener('click', function() {
+                const qty = parseInt(qtyInput.value) || 1;
+                alert('✅ ' + qty + ' عدد از "' + '{{ product.title }}' + '" به سبد خرید اضافه شد!');
+            });
+        }
+        
+        // ===========================================
+        // 3D EFFECT ON PRODUCT CARDS (similar)
+        // ===========================================
+        document.querySelectorAll('.similar-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                if (window.innerWidth <= 768) return;
+                const rect = card.getBoundingClientRect();
+                const x = (e.clientX - rect.left) / rect.width;
+                const y = (e.clientY - rect.top) / rect.height;
+                
+                const rotateY = (x - 0.5) * 10;
+                const rotateX = (y - 0.5) * -10;
+                
+                card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-6px)`;
+                card.style.transition = 'transform 0.05s linear';
+                card.style.boxShadow = `${(x - 0.5) * 30}px ${(y - 0.5) * 30}px 30px rgba(193, 18, 31, 0.15)`;
+                card.style.borderColor = 'rgba(193, 18, 31, 0.2)';
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg) translateY(0px)';
+                card.style.transition = 'transform 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1)';
+                card.style.boxShadow = 'none';
+                card.style.borderColor = 'rgba(255, 255, 255, 0.05)';
+            });
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,59 @@
+<!-- templates/shop/orders.html -->
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}سفارش‌های من | FIGMAX{% endblock %}
+
+{% block content %}
+<div class="container" style="padding-top:120px;min-height:70vh;">
+    <h1 style="font-family:Vazirmatn,sans-serif;color:#fff;font-size:32px;margin-bottom:30px;">📦 سفارش‌های من</h1>
+
+    <div class="orders">
+        {% if orders %}
+            {% for order in orders %}
+            <div class="order-card" style="background:rgba(255,255,255,0.02);border-radius:16px;padding:20px;margin-bottom:15px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:15px;border:1px solid rgba(255,255,255,0.05);">
+                <div>
+                    <h3 style="font-family:Vazirmatn,sans-serif;color:#fff;font-size:16px;margin-bottom:5px;">
+                        {% for item in order.shop_items.all|slice:":2" %}
+                            {{ item.product.title }}{% if not forloop.last %}, {% endif %}
+                        {% endfor %}
+                        {% if order.shop_items.count > 2 %} و {{ order.shop_items.count|add:"-2" }} محصول دیگر{% endif %}
+                    </h3>
+                    <p style="color:#aaa;font-family:Vazirmatn,sans-serif;font-size:14px;margin:3px 0;">
+                        <span style="color:#888;">شماره سفارش:</span> #{{ order.order_number }}
+                    </p>
+                    <p style="color:#aaa;font-family:Vazirmatn,sans-serif;font-size:14px;margin:3px 0;">
+                        <span style="color:#888;">تاریخ:</span> {{ order.created_at|date:"Y/m/d - H:i" }}
+                    </p>
+                    <p style="color:#c1121f;font-family:Vazirmatn,sans-serif;font-weight:bold;font-size:18px;margin-top:5px;">
+                        {{ order.total_price|intcomma }} تومان
+                    </p>
+                </div>
+                <div style="display:flex;flex-direction:column;align-items:center;gap:10px;">
+                    <span class="status" style="padding:4px 16px;border-radius:20px;font-size:14px;font-weight:bold;font-family:Vazirmatn,sans-serif;
+                        {% if order.status == 'pending' %}background:rgba(255,193,7,0.2);color:#ffc107;
+                        {% elif order.status == 'paid' or order.status == 'processing' %}background:rgba(33,150,243,0.2);color:#2196f3;
+                        {% elif order.status == 'shipped' %}background:rgba(33,150,243,0.2);color:#2196f3;
+                        {% elif order.status == 'delivered' %}background:rgba(76,175,80,0.2);color:#4CAF50;
+                        {% else %}background:rgba(244,67,54,0.2);color:#f44336;{% endif %}">
+                        {{ order.get_status_display }}
+                    </span>
+                    <a href="{% url 'shop:order_detail' order.id %}" style="color:#c1121f;text-decoration:none;font-family:Vazirmatn,sans-serif;font-size:14px;font-weight:bold;transition:0.3s;border:1px solid rgba(193,18,31,0.3);padding:4px 16px;border-radius:8px;">
+                        مشاهده جزئیات
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="empty-state" style="text-align:center;padding:80px 20px;">
+                <div style="font-size:80px;margin-bottom:20px;">📦</div>
+                <p style="color:#aaa;font-family:Vazirmatn,sans-serif;font-size:18px;margin-bottom:20px;">هنوز سفارشی ثبت نشده است.</p>
+                <a href="/" class="btn-shop" style="display:inline-block;background:linear-gradient(135deg,#c1121f,#8a0f1a);color:#fff;padding:14px 40px;border-radius:10px;text-decoration:none;font-family:Vazirmatn,sans-serif;font-weight:bold;transition:0.3s;">
+                    🛍️ مشاهده محصولات
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

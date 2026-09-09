@@ -1,0 +1,879 @@
+<!-- apps/shop/templates/shop/about.html -->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}درباره ما | FIGMAX{% endblock %}
+
+{% block content %}
+<style>
+    /*
+       ABOUT PAGE*/
+    
+    @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap');
+    
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    .about-page {
+        background: #0a0a0a;
+        min-height: 100vh;
+        padding: 140px 20px 40px;
+        direction: rtl;
+        font-family: 'Vazirmatn', sans-serif;
+    }
+    
+    .about-page .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        width: 100%;
+    }
+    
+    /*HEADER*/
+    .about-header {
+        text-align: center;
+        padding: 0 10px 40px;
+    }
+    
+    .about-header h1 {
+        font-family: 'Vazirmatn', sans-serif;
+        font-size: 42px;
+        font-weight: 900;
+        color: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+    
+    .about-header h1 span {
+        background: linear-gradient(135deg, #c1121f, #ff1a2b);
+        padding: 8px 20px;
+        border-radius: 14px;
+        font-size: 24px;
+        color: #fff;
+    }
+    
+    .about-header .subtitle {
+        color: rgba(255, 255, 255, 0.4);
+        font-size: 16px;
+        margin-top: 12px;
+        font-family: 'Vazirmatn', sans-serif;
+    }
+    
+    /*MAIN CARD*/
+    .about-card {
+        background: linear-gradient(145deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+        border-radius: 24px;
+        padding: 50px 60px;
+        border: 1px solid rgba(255,255,255,0.06);
+        backdrop-filter: blur(10px);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+        margin-bottom: 40px;
+    }
+    
+    .about-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 100%;
+        height: 4px;
+        background: linear-gradient(90deg, transparent, #c1121f, transparent);
+        opacity: 0.6;
+    }
+    
+    .about-card:hover {
+        border-color: rgba(193,18,31,0.2);
+        box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+    
+    /*ABOUT TEXT*/
+    .about-text {
+        text-align: center;
+        max-width: 900px;
+        margin: 0 auto;
+    }
+    
+    .about-text .brand-icon {
+        font-size: 56px;
+        display: block;
+        margin-bottom: 16px;
+    }
+    
+    .about-text .brand-name {
+        display: inline-block;
+        font-size: 36px;
+        font-weight: 900;
+        margin-bottom: 20px;
+        background: linear-gradient(135deg, #c1121f, #ff1a2b);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    
+    .about-text .main-text {
+        font-size: 20px;
+        line-height: 2.2;
+        color: #d0d0d0;
+        font-weight: 400;
+        font-family: 'Vazirmatn', sans-serif;
+        margin-bottom: 20px;
+    }
+    
+    .about-text .main-text strong {
+        color: #c1121f;
+        font-weight: 700;
+    }
+    
+    .about-text .highlight {
+        color: #c1121f;
+        font-weight: 600;
+    }
+    
+    .about-text .divider {
+        width: 80px;
+        height: 3px;
+        background: linear-gradient(90deg, transparent, #c1121f, transparent);
+        margin: 30px auto 25px;
+        border-radius: 3px;
+    }
+    
+    .about-text .tagline {
+        font-size: 24px;
+        font-weight: 700;
+        color: #c1121f;
+        letter-spacing: 1px;
+    }
+    
+    /*FEATS*/
+    .features-grid-about {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 18px;
+        margin-bottom: 35px;
+    }
+    
+    .feature-about-item {
+        background: rgba(255,255,255,0.02);
+        border-radius: 16px;
+        padding: 28px 20px;
+        text-align: center;
+        border: 1px solid rgba(255,255,255,0.04);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .feature-about-item::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 100%;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, #c1121f, transparent);
+        opacity: 0;
+        transition: opacity 0.4s;
+    }
+    
+    .feature-about-item:hover::before {
+        opacity: 1;
+    }
+    
+    .feature-about-item:hover {
+        transform: translateY(-6px);
+        border-color: rgba(193,18,31,0.2);
+        background: rgba(255,255,255,0.04);
+        box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+    }
+    
+    .feature-about-item .icon {
+        font-size: 38px;
+        margin-bottom: 12px;
+        display: block;
+    }
+    
+    .feature-about-item h3 {
+        color: #fff;
+        font-size: 16px;
+        font-weight: 700;
+        font-family: 'Vazirmatn', sans-serif;
+        margin-bottom: 4px;
+    }
+    
+    .feature-about-item p {
+        color: #888;
+        font-size: 13px;
+        font-family: 'Vazirmatn', sans-serif;
+        margin: 0;
+    }
+    
+    /* ===== بخش پایین ===== */
+    .about-bottom-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 25px;
+        margin-bottom: 35px;
+    }
+    
+    .about-box {
+        background: linear-gradient(145deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+        border-radius: 18px;
+        padding: 35px 30px;
+        border: 1px solid rgba(255,255,255,0.05);
+        text-align: center;
+        transition: all 0.4s ease;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .about-box::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 100%;
+        height: 3px;
+        background: linear-gradient(90deg, transparent, #c1121f, transparent);
+        opacity: 0;
+        transition: opacity 0.4s;
+    }
+    
+    .about-box:hover::before {
+        opacity: 1;
+    }
+    
+    .about-box:hover {
+        border-color: rgba(193,18,31,0.15);
+        box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+        transform: translateY(-4px);
+    }
+    
+    .about-box .big-icon {
+        font-size: 56px;
+        margin-bottom: 14px;
+        display: block;
+        animation: floatAbout 4s ease-in-out infinite;
+    }
+    
+    .about-box:nth-child(2) .big-icon {
+        animation-delay: 0.5s;
+    }
+    
+    @keyframes floatAbout {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+    }
+    
+    .about-box h3 {
+        color: #fff;
+        font-size: 20px;
+        font-weight: 700;
+        font-family: 'Vazirmatn', sans-serif;
+        margin-bottom: 8px;
+    }
+    
+    .about-box p {
+        color: #888;
+        font-size: 15px;
+        font-family: 'Vazirmatn', sans-serif;
+        margin: 0;
+        line-height: 1.7;
+    }
+    
+    /*CONTECT US*/
+    .contact-section {
+        background: linear-gradient(145deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+        border-radius: 20px;
+        padding: 40px 50px;
+        border: 1px solid rgba(255,255,255,0.06);
+        text-align: center;
+        transition: all 0.4s ease;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .contact-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 100%;
+        height: 3px;
+        background: linear-gradient(90deg, transparent, #c1121f, transparent);
+        opacity: 0.5;
+    }
+    
+    .contact-section:hover {
+        border-color: rgba(193,18,31,0.2);
+        box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+    
+    .contact-section h2 {
+        color: #fff;
+        font-size: 28px;
+        font-weight: 700;
+        font-family: 'Vazirmatn', sans-serif;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+    
+    .contact-section h2 span {
+        color: #c1121f;
+    }
+    
+    .contact-section .contact-desc {
+        color: #888;
+        font-size: 16px;
+        font-family: 'Vazirmatn', sans-serif;
+        margin-bottom: 20px;
+    }
+    
+    .contact-social-icons {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+    }
+    
+    .contact-social-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 56px;
+        height: 56px;
+        background: rgba(255,255,255,0.03);
+        border-radius: 14px;
+        border: 1px solid rgba(255,255,255,0.06);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+        text-decoration: none;
+    }
+    
+    .contact-social-icon::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 100%;
+        height: 3px;
+        background: linear-gradient(90deg, transparent, #c1121f, transparent);
+        opacity: 0;
+        transition: opacity 0.4s;
+    }
+    
+    .contact-social-icon:hover::before {
+        opacity: 1;
+    }
+    
+    .contact-social-icon:hover {
+        transform: translateY(-4px);
+        border-color: rgba(193,18,31,0.3);
+        background: rgba(193,18,31,0.05);
+        box-shadow: 0 12px 40px rgba(193,18,31,0.15);
+    }
+    
+    .contact-social-icon img {
+        width: 30px;
+        height: 30px;
+        object-fit: contain;
+        transition: all 0.3s ease;
+    }
+    
+    .contact-social-icon .social-img-white {
+        opacity: 1;
+    }
+    
+    .contact-social-icon .social-img-red {
+        opacity: 0;
+        position: absolute;
+    }
+    
+    .contact-social-icon:hover .social-img-white {
+        opacity: 0;
+    }
+    
+    .contact-social-icon:hover .social-img-red {
+        opacity: 1;
+        filter: drop-shadow(0 0 15px rgba(193,18,31,0.4));
+    }
+    
+    /* ===========================================
+       ریسپانسیو
+    ============================================ */
+    
+    @media (max-width: 992px) {
+        .about-page {
+            padding: 130px 15px 30px;
+        }
+        
+        .about-header h1 {
+            font-size: 34px;
+        }
+        
+        .about-header h1 span {
+            font-size: 20px;
+            padding: 6px 16px;
+        }
+        
+        .about-card {
+            padding: 40px 35px;
+        }
+        
+        .about-text .main-text {
+            font-size: 19px;
+        }
+        
+        .features-grid-about {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        
+        .about-bottom-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .contact-section {
+            padding: 30px 25px;
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .about-page {
+            padding: 120px 12px 25px;
+        }
+        
+        .about-header h1 {
+            font-size: 28px;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .about-header h1 span {
+            font-size: 18px;
+            padding: 5px 14px;
+            border-radius: 12px;
+        }
+        
+        .about-header .subtitle {
+            font-size: 14px;
+        }
+        
+        .about-card {
+            padding: 30px 24px;
+            border-radius: 20px;
+        }
+        
+        .about-text .brand-icon {
+            font-size: 44px;
+        }
+        
+        .about-text .brand-name {
+            font-size: 28px;
+        }
+        
+        .about-text .main-text {
+            font-size: 17px;
+            line-height: 2;
+        }
+        
+        .about-text .tagline {
+            font-size: 20px;
+        }
+        
+        .about-text .divider {
+            width: 60px;
+            margin: 22px auto 18px;
+        }
+        
+        .features-grid-about {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+        
+        .feature-about-item {
+            padding: 20px 14px;
+            border-radius: 14px;
+        }
+        
+        .feature-about-item .icon {
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+        
+        .feature-about-item h3 {
+            font-size: 14px;
+        }
+        
+        .feature-about-item p {
+            font-size: 12px;
+        }
+        
+        .about-bottom-grid {
+            gap: 16px;
+        }
+        
+        .about-box {
+            padding: 25px 20px;
+            border-radius: 16px;
+        }
+        
+        .about-box .big-icon {
+            font-size: 44px;
+        }
+        
+        .about-box h3 {
+            font-size: 17px;
+        }
+        
+        .about-box p {
+            font-size: 14px;
+        }
+        
+        .contact-section {
+            padding: 25px 20px;
+            border-radius: 16px;
+        }
+        
+        .contact-section h2 {
+            font-size: 22px;
+        }
+        
+        .contact-section .contact-desc {
+            font-size: 14px;
+        }
+        
+        .contact-social-icon {
+            width: 48px;
+            height: 48px;
+        }
+        
+        .contact-social-icon img {
+            width: 26px;
+            height: 26px;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .about-page {
+            padding: 110px 8px 20px;
+        }
+        
+        .about-header h1 {
+            font-size: 24px;
+        }
+        
+        .about-header h1 span {
+            font-size: 16px;
+            padding: 4px 12px;
+            border-radius: 10px;
+        }
+        
+        .about-header .subtitle {
+            font-size: 13px;
+        }
+        
+        .about-card {
+            padding: 24px 16px;
+            border-radius: 16px;
+        }
+        
+        .about-text .brand-icon {
+            font-size: 38px;
+            margin-bottom: 12px;
+        }
+        
+        .about-text .brand-name {
+            font-size: 24px;
+            margin-bottom: 14px;
+        }
+        
+        .about-text .main-text {
+            font-size: 15px;
+            line-height: 1.9;
+        }
+        
+        .about-text .tagline {
+            font-size: 17px;
+        }
+        
+        .about-text .divider {
+            width: 50px;
+            margin: 18px auto 14px;
+        }
+        
+        .features-grid-about {
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+        
+        .feature-about-item {
+            padding: 16px 10px;
+            border-radius: 12px;
+        }
+        
+        .feature-about-item .icon {
+            font-size: 26px;
+        }
+        
+        .feature-about-item h3 {
+            font-size: 13px;
+        }
+        
+        .feature-about-item p {
+            font-size: 11px;
+        }
+        
+        .about-bottom-grid {
+            gap: 12px;
+        }
+        
+        .about-box {
+            padding: 20px 16px;
+            border-radius: 14px;
+        }
+        
+        .about-box .big-icon {
+            font-size: 38px;
+            margin-bottom: 10px;
+        }
+        
+        .about-box h3 {
+            font-size: 15px;
+        }
+        
+        .about-box p {
+            font-size: 13px;
+        }
+        
+        .contact-section {
+            padding: 20px 16px;
+            border-radius: 14px;
+        }
+        
+        .contact-section h2 {
+            font-size: 18px;
+        }
+        
+        .contact-section .contact-desc {
+            font-size: 13px;
+        }
+        
+        .contact-social-icons {
+            gap: 14px;
+        }
+        
+        .contact-social-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+        }
+        
+        .contact-social-icon img {
+            width: 24px;
+            height: 24px;
+        }
+    }
+    
+    @media (max-width: 360px) {
+        .about-page {
+            padding: 100px 5px 15px;
+        }
+        
+        .about-header h1 {
+            font-size: 20px;
+        }
+        
+        .about-header h1 span {
+            font-size: 14px;
+            padding: 3px 10px;
+        }
+        
+        .about-card {
+            padding: 18px 12px;
+            border-radius: 14px;
+        }
+        
+        .about-text .main-text {
+            font-size: 14px;
+        }
+        
+        .features-grid-about {
+            gap: 6px;
+        }
+        
+        .feature-about-item {
+            padding: 12px 8px;
+        }
+        
+        .feature-about-item .icon {
+            font-size: 22px;
+        }
+        
+        .feature-about-item h3 {
+            font-size: 12px;
+        }
+        
+        .about-box .big-icon {
+            font-size: 32px;
+        }
+        
+        .about-box h3 {
+            font-size: 14px;
+        }
+        
+        .about-box p {
+            font-size: 12px;
+        }
+        
+        .contact-social-icon {
+            width: 38px;
+            height: 38px;
+        }
+        
+        .contact-social-icon img {
+            width: 20px;
+            height: 20px;
+        }
+    }
+    
+    /* ===== انیمیشن ===== */
+    @keyframes fadeInUpAbout {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .about-card {
+        animation: fadeInUpAbout 0.6s ease-out forwards;
+        animation-delay: 0.1s;
+    }
+    
+    .feature-about-item {
+        animation: fadeInUpAbout 0.6s ease-out forwards;
+    }
+    
+    .feature-about-item:nth-child(1) { animation-delay: 0.15s; }
+    .feature-about-item:nth-child(2) { animation-delay: 0.25s; }
+    .feature-about-item:nth-child(3) { animation-delay: 0.35s; }
+    .feature-about-item:nth-child(4) { animation-delay: 0.45s; }
+    
+    .about-box {
+        animation: fadeInUpAbout 0.6s ease-out forwards;
+    }
+    
+    .about-box:nth-child(1) { animation-delay: 0.2s; }
+    .about-box:nth-child(2) { animation-delay: 0.3s; }
+    
+    .contact-section {
+        animation: fadeInUpAbout 0.6s ease-out forwards;
+        animation-delay: 0.4s;
+    }
+</style>
+
+<!--MAIN CONTENT-->
+<div class="about-page">
+    <div class="container">
+        
+        <!--HEADER-->
+        <div class="about-header">
+            <h1>
+                درباره <span>FIGMAX</span>
+            </h1>
+            <p class="subtitle">مرجع تخصصی فیگورهای کلکسیونی با کیفیت بی‌نظیر</p>
+        </div>
+        
+        <!--MAIN CARD-->
+        <div class="about-card">
+            <div class="about-text">
+                <span class="brand-icon">✨</span>
+                <span class="brand-name">FIGMAX</span>
+                
+                <p class="main-text">
+                    ما <strong>فیگمکس</strong> هستیم، مرجع فروش فیگورهای خاص کلکسیونی که مثلشونو هیچ جا ندیدین.<br>
+                    ما اینجا فیگورهایی تولید میکنیم با <span class="highlight">جزییات بالا</span> و <span class="highlight">حرفه‌ای</span> و 
+                    قیمتی <span class="highlight">باورنکردنی</span> برای علاقه‌مندان، گیمرها و کالکتورها.
+                </p>
+                
+                <div class="divider"></div>
+                
+                <span class="tagline">🌟 با فیگمکس کلکسیونتو کامل کن.</span>
+            </div>
+        </div>
+        
+        <!--FEAT-->
+        <div class="features-grid-about">
+            <div class="feature-about-item">
+                <span class="icon">🎨</span>
+                <h3>جزییات بالا</h3>
+                <p>طراحی دقیق و حرفه‌ای</p>
+            </div>
+            <div class="feature-about-item">
+                <span class="icon">🏆</span>
+                <h3>کیفیت بی‌نظیر</h3>
+                <p>با بهترین مواد اولیه</p>
+            </div>
+            <div class="feature-about-item">
+                <span class="icon">💰</span>
+                <h3>قیمت باورنکردنی</h3>
+                <p>مناسب برای همه</p>
+            </div>
+            <div class="feature-about-item">
+                <span class="icon">🎯</span>
+                <h3>ویژه کالکتورها</h3>
+                <p>برای علاقه‌مندان و گیمرها</p>
+            </div>
+        </div>
+        
+        <!--DOWN-->
+        <div class="about-bottom-grid">
+            <div class="about-box">
+                <span class="big-icon">🎮</span>
+                <h3>برای گیمرها</h3>
+                <p>فیگورهای شخصیت‌های محبوب بازی‌های ویدیویی با بالاترین کیفیت</p>
+            </div>
+            <div class="about-box">
+                <span class="big-icon">🌟</span>
+                <h3>برای کالکتورها</h3>
+                <p>مجموعه‌ای بی‌نظیر از فیگورهای نایاب و خاص برای کلکسیون شما</p>
+            </div>
+        </div>
+        
+        <!--CONTECT-->
+        <div class="contact-section">
+            <h2><span>ارتباط با ما</span></h2>
+            <p class="contact-desc">برای ارتباط سریع با ما از طریق شبکه‌های اجتماعی زیر اقدام کنید</p>
+            
+            <div class="contact-social-icons">
+                <!--TELEGRAM-->
+                <a href="#" class="contact-social-icon" title="تلگرام">
+                    <img src="/static/images/telegram-white.png" class="social-img-white" alt="تلگرام">
+                    <img src="/static/images/telegram-red.png" class="social-img-red" alt="تلگرام">
+                </a>
+                
+                <!--BALE-->
+                <a href="#" class="contact-social-icon" title="بله">
+                    <img src="/static/images/bale-white.png" class="social-img-white" alt="بله">
+                    <img src="/static/images/bale-red.png" class="social-img-red" alt="بله">
+                </a>
+            </div>
+        </div>
+        
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,498 @@
+/*-------------------------------------------
+PRODUCT - کامل و ریسپانسیو
+-------------------------------------------*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Vazirmatn", sans-serif;
+}
+
+:root {
+    --bg: #0a0a0a;
+    --card: #121212;
+    --red: #c1121f;
+    --red-glow: rgba(193, 18, 31, 0.5);
+    --transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+}
+
+body {
+    background: var(--bg);
+    color: white;
+    overflow-x: hidden;
+    padding-top: 130px;
+}
+
+/*-------------------------------------------
+CONTAINER
+-------------------------------------------*/
+.container {
+    width: 90%;
+    max-width: 1400px;
+    margin: auto;
+    position: relative;
+    z-index: 2;
+    padding: 0 15px;
+}
+
+/*-------------------------------------------
+PRODUCT HERO
+-------------------------------------------*/
+.product-hero {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 40px;
+    width: 100%;
+    height: 420px;
+    background: #111;
+}
+
+.product-hero img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.product-hero-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 40px;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.85) 60%);
+}
+
+.product-hero-title {
+    font-size: 42px;
+    font-weight: 900;
+    color: #fff;
+    margin-bottom: 8px;
+    line-height: 1.2;
+    font-family: 'Vazirmatn', sans-serif;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.8);
+}
+
+.product-hero-sub {
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 300;
+    font-family: 'Vazirmatn', sans-serif;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+}
+
+.badge-item {
+    display: inline-block;
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    background: rgba(193, 18, 31, 0.2);
+    border: 1px solid rgba(193, 18, 31, 0.3);
+    color: #c1121f;
+    font-family: 'Vazirmatn', sans-serif;
+}
+
+.badge-item.gold {
+    background: rgba(255, 215, 0, 0.15);
+    border-color: rgba(255, 215, 0, 0.3);
+    color: #ffd700;
+}
+
+/*-------------------------------------------
+COMBINED BOX
+-------------------------------------------*/
+.combined-box {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    padding: 40px;
+    margin-bottom: 50px;
+    transition: all 0.5s ease;
+}
+
+.combined-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+}
+
+.combined-gallery {
+    grid-column: 1 / 2;
+}
+
+.gallery-main {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #111;
+    aspect-ratio: 1 / 1;
+    margin-bottom: 15px;
+}
+
+.zoom-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    cursor: zoom-in;
+}
+
+#mainImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all 0.3s ease;
+}
+
+.gallery-thumbs {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.thumb {
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    opacity: 0.6;
+}
+
+.thumb:hover {
+    opacity: 1;
+    border-color: rgba(193, 18, 31, 0.4);
+}
+
+.thumb.active {
+    opacity: 1;
+    border-color: #c1121f;
+}
+
+.thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/*-------------------------------------------
+INFO SIDE
+-------------------------------------------*/
+.combined-info {
+    grid-column: 2 / 3;
+}
+
+.combined-info h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 15px;
+    font-family: 'Vazirmatn', sans-serif;
+}
+
+.combined-info h2:not(:first-child) {
+    margin-top: 30px;
+}
+
+.desc {
+    font-size: 16px;
+    line-height: 2;
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 300;
+    font-family: 'Vazirmatn', sans-serif;
+}
+
+.desc strong {
+    color: #c1121f;
+}
+
+.spec-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    font-family: 'Vazirmatn', sans-serif;
+}
+
+.spec-label {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.spec-value {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/*-------------------------------------------
+PURCHASE SECTION
+-------------------------------------------*/
+.purchase-section {
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.price-box {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+.price-box span:first-child {
+    color: #aaa;
+    font-size: 14px;
+    font-family: 'Vazirmatn', sans-serif;
+}
+
+.price-box .price-value {
+    color: #c1121f;
+    font-size: 28px;
+    font-weight: 900;
+    margin-right: 10px;
+    font-family: 'Vazirmatn', sans-serif;
+}
+
+.stock-box {
+    margin-bottom: 15px;
+}
+
+.stock-box span:first-child {
+    color: #aaa;
+    font-size: 14px;
+    font-family: 'Vazirmatn', sans-serif;
+}
+
+.stock-box .in-stock {
+    color: #4CAF50;
+}
+
+.stock-box .out-of-stock {
+    color: #f44336;
+}
+
+.add-to-cart-box {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.qty-control {
+    display: flex;
+    align-items: center;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.qty-control button {
+    background: rgba(255, 255, 255, 0.05);
+    border: none;
+    color: #fff;
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+    font-family: 'Vazirmatn', sans-serif;
+}
+
+.qty-control button:hover {
+    background: rgba(193, 18, 31, 0.3);
+}
+
+.qty-control input {
+    width: 60px;
+    height: 40px;
+    background: transparent;
+    border: none;
+    color: #fff;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 700;
+    outline: none;
+    font-family: 'Vazirmatn', sans-serif;
+}
+
+#addToCartBtn {
+    flex: 1;
+    min-width: 180px;
+    background: linear-gradient(135deg, #c1121f, #8a0f1a);
+    color: #fff;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Vazirmatn', sans-serif;
+    min-height: 48px;
+}
+
+#addToCartBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(193, 18, 31, 0.4);
+}
+
+/*-------------------------------------------
+STORY
+-------------------------------------------*/
+.combined-story {
+    grid-column: 1 / -1;
+    margin-top: 30px;
+    padding-top: 30px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.combined-story h3 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 15px;
+    font-family: 'Vazirmatn', sans-serif;
+}
+
+.combined-story p {
+    font-size: 16px;
+    line-height: 2;
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 300;
+    font-family: 'Vazirmatn', sans-serif;
+}
+
+/*-------------------------------------------
+SIMILAR PRODUCTS
+-------------------------------------------*/
+.section-title {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.section-title h2 {
+    font-size: 32px;
+    font-weight: 700;
+    color: #fff;
+    font-family: 'Vazirmatn', sans-serif;
+}
+
+.section-title h2 span {
+    color: #c1121f;
+}
+
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px;
+}
+
+/* فقط برای موبایل - صفحه محصول */
+    @media (max-width: 768px) {
+        .product-hero {
+            height: 250px !important;
+        }
+        
+        .product-hero-title {
+            font-size: 24px !important;
+        }
+        
+        .product-hero-sub {
+            font-size: 14px !important;
+        }
+        
+        .product-hero-overlay {
+            padding: 20px !important;
+        }
+        
+        .combined-box {
+            padding: 15px !important;
+        }
+        
+        .combined-inner {
+            grid-template-columns: 1fr !important;
+            gap: 20px !important;
+        }
+        
+        .combined-gallery {
+            grid-column: 1 !important;
+        }
+        
+        .combined-info {
+            grid-column: 1 !important;
+        }
+        
+        .combined-story {
+            grid-column: 1 !important;
+        }
+        
+        .thumb {
+            width: 55px !important;
+            height: 55px !important;
+        }
+        
+        .spec-row {
+            flex-direction: column !important;
+            gap: 5px !important;
+        }
+        
+        .price-box .price-value {
+            font-size: 22px !important;
+        }
+        
+        .add-to-cart-box {
+            flex-direction: column !important;
+            align-items: stretch !important;
+        }
+        
+        #addToCartBtn {
+            width: 100% !important;
+        }
+        
+        .products-grid {
+            grid-template-columns: 1fr 1fr !important;
+            gap: 10px !important;
+        }
+        
+        .section-title h2 {
+            font-size: 24px !important;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .product-hero {
+            height: 200px !important;
+        }
+        
+        .product-hero-title {
+            font-size: 20px !important;
+        }
+        
+        .product-hero-sub {
+            font-size: 12px !important;
+        }
+        
+        .product-hero-overlay {
+            padding: 12px !important;
+        }
+        
+        .thumb {
+            width: 45px !important;
+            height: 45px !important;
+        }
+        
+        .badge-item {
+            font-size: 10px !important;
+            padding: 2px 10px !important;
+        }
+        
+        .products-grid {
+            grid-template-columns: 1fr !important;
+        }
+    }

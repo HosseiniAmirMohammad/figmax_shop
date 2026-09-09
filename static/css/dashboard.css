@@ -1,0 +1,584 @@
+ /* ===========================================
+       DASHBOARD STYLES
+    ============================================ */
+    .dashboard-wrapper {
+        padding-top: 130px;
+        min-height: 100vh;
+        background: var(--bg);
+    }
+
+    .dashboard-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 20px 40px;
+        display: flex;
+        gap: 25px;
+        align-items: flex-start;
+    }
+
+    /* ===== SIDEBAR ===== */
+    .sidebar {
+        width: 260px;
+        flex-shrink: 0;
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 16px;
+        padding: 20px 16px;
+        position: sticky;
+        top: 150px;
+    }
+
+    .user-info {
+        text-align: center;
+        padding-bottom: 16px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        margin-bottom: 16px;
+    }
+
+    .user-avatar {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #c1121f, #8a0f1a);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 26px;
+        font-weight: 700;
+        color: #fff;
+        margin: 0 auto 8px;
+        font-family: 'Vazirmatn', sans-serif;
+        border: 2px solid rgba(193, 18, 31, 0.3);
+    }
+
+    .user-name {
+        color: #fff;
+        font-size: 15px;
+        font-weight: 600;
+        font-family: 'Vazirmatn', sans-serif;
+    }
+
+    .user-email {
+        color: #888;
+        font-size: 12px;
+        font-family: 'Vazirmatn', sans-serif;
+        margin-top: 2px;
+    }
+
+    .user-badge {
+        color: #aaa;
+        font-size: 12px;
+        font-family: 'Vazirmatn', sans-serif;
+        margin-top: 4px;
+    }
+
+    .sidebar-menu {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .sidebar-menu li {
+        margin-bottom: 4px;
+        list-style: none;
+    }
+
+    .sidebar-menu a {
+        display: block;
+        color: #aaa;
+        text-decoration: none;
+        padding: 10px 14px;
+        border-radius: 10px;
+        transition: all 0.3s ease;
+        font-size: 14px;
+        font-family: 'Vazirmatn', sans-serif;
+    }
+
+    .sidebar-menu a:hover {
+        background: rgba(193, 18, 31, 0.15);
+        color: #fff;
+    }
+
+    .sidebar-menu .active a {
+        background: var(--red);
+        color: #fff;
+    }
+
+    /* ===== CONTENT ===== */
+    .dashboard-content {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .welcome-card {
+        background: var(--card);
+        border-radius: 16px;
+        padding: 24px 28px;
+        margin-bottom: 24px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .welcome-card h1 {
+        font-size: 22px;
+        font-weight: 700;
+        color: #fff;
+        margin-bottom: 4px;
+        font-family: 'Vazirmatn', sans-serif;
+    }
+
+    .welcome-card p {
+        color: #aaa;
+        font-size: 14px;
+        font-family: 'Vazirmatn', sans-serif;
+    }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+        margin-bottom: 24px;
+    }
+
+    .stat-card {
+        background: var(--card);
+        padding: 20px;
+        border-radius: 14px;
+        text-align: center;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        transition: all 0.3s ease;
+    }
+
+    .stat-card:hover {
+        border-color: var(--red);
+        transform: translateY(-3px);
+    }
+
+    .stat-card h3 {
+        color: var(--red);
+        font-size: 26px;
+        font-weight: 700;
+        margin-bottom: 4px;
+        font-family: 'Vazirmatn', sans-serif;
+    }
+
+    .stat-card p {
+        color: #aaa;
+        font-size: 13px;
+        font-family: 'Vazirmatn', sans-serif;
+    }
+
+    .orders-box {
+        background: var(--card);
+        border-radius: 16px;
+        padding: 24px 28px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .orders-box h2 {
+        font-size: 18px;
+        font-weight: 700;
+        color: #fff;
+        margin-bottom: 16px;
+        font-family: 'Vazirmatn', sans-serif;
+    }
+
+    .order-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .order-item:last-child {
+        border-bottom: none;
+    }
+
+    .order-item .order-info {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    .order-item .order-info .order-title {
+        color: #fff;
+        font-size: 14px;
+        font-weight: 500;
+        font-family: 'Vazirmatn', sans-serif;
+    }
+
+    .order-item .order-info .order-date {
+        color: #888;
+        font-size: 12px;
+        font-family: 'Vazirmatn', sans-serif;
+    }
+
+    .order-status {
+        padding: 4px 14px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 500;
+        font-family: 'Vazirmatn', sans-serif;
+    }
+
+    .order-status.pending {
+        color: #f39c12;
+        background: rgba(243, 156, 18, 0.15);
+    }
+
+    .order-status.success {
+        color: #2ecc71;
+        background: rgba(46, 204, 113, 0.15);
+    }
+
+    .order-status.cancelled {
+        color: #888;
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    .order-price {
+        color: #c1121f;
+        font-weight: 600;
+        font-size: 14px;
+        font-family: 'Vazirmatn', sans-serif;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 30px 20px;
+        color: #888;
+    }
+
+    .empty-state p {
+        font-size: 14px;
+        font-family: 'Vazirmatn', sans-serif;
+        margin-bottom: 12px;
+    }
+
+    .btn-shop {
+        display: inline-block;
+        padding: 8px 24px;
+        background: var(--red);
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        font-family: 'Vazirmatn', sans-serif;
+        cursor: pointer;
+    }
+
+    .btn-shop:hover {
+        opacity: 0.85;
+        transform: translateY(-2px);
+    }
+
+    /* ===========================================
+       RESPONSIVE
+    ============================================ */
+
+    /* تبلت */
+    @media (max-width: 992px) {
+        .dashboard-container {
+            flex-direction: column;
+            padding: 0 15px 30px;
+            gap: 20px;
+        }
+
+        .sidebar {
+            width: 100%;
+            position: static;
+            padding: 16px;
+            border-radius: 14px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            text-align: left;
+            padding-bottom: 12px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            font-size: 20px;
+            margin: 0;
+        }
+
+        .user-name {
+            font-size: 14px;
+        }
+
+        .user-email {
+            font-size: 12px;
+        }
+
+        .user-badge {
+            font-size: 12px;
+        }
+
+        .sidebar-menu {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 0;
+            flex: 1;
+            min-width: 90px;
+        }
+
+        .sidebar-menu a {
+            text-align: center;
+            padding: 8px 12px;
+            font-size: 12px;
+            border-radius: 8px;
+        }
+
+        .stats-grid {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .stat-card {
+            padding: 16px 12px;
+        }
+
+        .stat-card h3 {
+            font-size: 22px;
+        }
+
+        .welcome-card {
+            padding: 20px 24px;
+        }
+
+        .welcome-card h1 {
+            font-size: 20px;
+        }
+    }
+
+    /* موبایل */
+    @media (max-width: 768px) {
+        .dashboard-wrapper {
+            padding-top: 110px;
+        }
+
+        .dashboard-container {
+            padding: 0 10px 20px;
+            gap: 14px;
+        }
+
+        .sidebar {
+            padding: 12px;
+            border-radius: 12px;
+        }
+
+        .user-info {
+            gap: 10px;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+
+        .user-avatar {
+            width: 42px;
+            height: 42px;
+            font-size: 17px;
+        }
+
+        .user-name {
+            font-size: 13px;
+        }
+
+        .user-email {
+            font-size: 11px;
+        }
+
+        .user-badge {
+            font-size: 11px;
+        }
+
+        .sidebar-menu {
+            gap: 4px;
+        }
+
+        .sidebar-menu li {
+            min-width: 70px;
+        }
+
+        .sidebar-menu a {
+            padding: 6px 10px;
+            font-size: 11px;
+            border-radius: 6px;
+        }
+
+        .welcome-card {
+            padding: 14px 16px;
+            border-radius: 12px;
+            margin-bottom: 16px;
+        }
+
+        .welcome-card h1 {
+            font-size: 17px;
+        }
+
+        .welcome-card p {
+            font-size: 12px;
+        }
+
+        .stats-grid {
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .stat-card {
+            padding: 12px 10px;
+            border-radius: 10px;
+        }
+
+        .stat-card h3 {
+            font-size: 18px;
+        }
+
+        .stat-card p {
+            font-size: 11px;
+        }
+
+        .orders-box {
+            padding: 14px 16px;
+            border-radius: 12px;
+        }
+
+        .orders-box h2 {
+            font-size: 16px;
+            margin-bottom: 12px;
+        }
+
+        .order-item {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 4px;
+            padding: 10px 0;
+        }
+
+        .order-item .order-info .order-title {
+            font-size: 13px;
+        }
+
+        .order-item .order-info .order-date {
+            font-size: 11px;
+        }
+
+        .order-status {
+            font-size: 11px;
+            padding: 2px 12px;
+        }
+
+        .order-price {
+            font-size: 13px;
+        }
+    }
+
+    /* موبایل کوچک */
+    @media (max-width: 480px) {
+        .dashboard-wrapper {
+            padding-top: 95px;
+        }
+
+        .dashboard-container {
+            padding: 0 6px 16px;
+            gap: 10px;
+        }
+
+        .sidebar {
+            padding: 10px 8px;
+            border-radius: 10px;
+        }
+
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            font-size: 14px;
+        }
+
+        .user-name {
+            font-size: 12px;
+        }
+
+        .user-email {
+            font-size: 10px;
+        }
+
+        .user-badge {
+            font-size: 10px;
+        }
+
+        .sidebar-menu li {
+            min-width: 55px;
+        }
+
+        .sidebar-menu a {
+            padding: 5px 8px;
+            font-size: 10px;
+            border-radius: 5px;
+        }
+
+        .welcome-card {
+            padding: 10px 12px;
+            border-radius: 10px;
+            margin-bottom: 12px;
+        }
+
+        .welcome-card h1 {
+            font-size: 15px;
+        }
+
+        .welcome-card p {
+            font-size: 11px;
+        }
+
+        .stats-grid {
+            gap: 6px;
+            margin-bottom: 12px;
+        }
+
+        .stat-card {
+            padding: 10px 8px;
+            border-radius: 8px;
+        }
+
+        .stat-card h3 {
+            font-size: 16px;
+        }
+
+        .stat-card p {
+            font-size: 10px;
+        }
+
+        .orders-box {
+            padding: 10px 12px;
+            border-radius: 10px;
+        }
+
+        .orders-box h2 {
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .order-item .order-info .order-title {
+            font-size: 12px;
+        }
+
+        .order-price {
+            font-size: 12px;
+        }
+    }

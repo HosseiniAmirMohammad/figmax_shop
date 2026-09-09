@@ -1,0 +1,381 @@
+<!-- templates/shop/index.html -->
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}{{ settings.site_name|default:'FIGMAX' }}{% endblock %}
+
+{% block content %}
+    
+    <!--HERO SECTION -->
+    <section class="hero" id="heroSection"
+             style="
+                 background: linear-gradient(rgba(0,0,0,{{ settings.hero_banner_overlay_opacity|default:'0.5' }}), rgba(0,0,0,{{ settings.hero_banner_overlay_opacity|default:'0.6' }})), 
+                             url('{% if settings.hero_background_image %}{{ settings.hero_background_image.url }}{% else %}{% static 'images/banner.jpg' %}{% endif %}');
+                 background-size: cover;
+                 background-position: center;
+                 background-repeat: no-repeat;
+                 min-height: {{ settings.hero_banner_height|default:'100vh' }};
+             ">
+        <div class="container">
+            <h1 style="
+                color: {{ settings.hero_title_color|default:'#ffffff' }};
+                font-size: {{ settings.hero_title_font_size|default:'80px' }};
+                font-weight: {{ settings.hero_title_font_weight|default:'900' }};
+            ">
+                <span style="color: {{ settings.hero_title_first_word_color|default:'#c1121f' }};">FIGMAX</span>
+                <span class="shop-text" style="color: {{ settings.hero_title_second_word_color|default:'#ffffff' }};">SHOP</span>
+            </h1>
+            <p style="
+                color: {{ settings.hero_subtitle_color|default:'#dddddd' }};
+                font-size: {{ settings.hero_subtitle_font_size|default:'20px' }};
+            ">
+                {{ settings.hero_subtitle }}
+            </p>
+        </div>
+    </section>
+
+    
+    <!--BANNER SLIDER-->
+    {% if banners %}
+    <section style="padding: 30px 0 20px;">
+      <div class="container">
+        <div class="banner-slider-container">
+          <div class="banner-slider" id="bannerSlider">
+            {% for banner in banners %}
+            <div class="banner-slide {% if forloop.first %}active{% endif %}" 
+                 {% if banner.link %}onclick="location.href='{{ banner.link }}'"{% endif %}
+                 style="cursor: pointer;">
+              <img src="{{ banner.image.url }}" alt="{{ banner.title|default:'اسلاید بنر' }}" loading="lazy" />
+              {% if banner.title or banner.subtitle %}
+              <div class="banner-overlay">
+                {% if banner.title %}
+                <h2>{{ banner.title }}</h2>
+                {% endif %}
+                {% if banner.subtitle %}
+                <p>{{ banner.subtitle }}</p>
+                {% endif %}
+              </div>
+              {% endif %}
+            </div>
+            {% endfor %}
+          </div>
+          
+          <!--BTN NEXT AND PREV-->
+          <button class="slider-btn prev" id="prevBtn">❮</button>
+          <button class="slider-btn next" id="nextBtn">❯</button>
+          
+          <!-- نقطه‌های پایین اسلایدر -->
+          <div class="slider-dots" id="sliderDots">
+            {% for banner in banners %}
+            <span class="dot {% if forloop.first %}active{% endif %}"></span>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </section>
+    {% endif %}
+
+    
+    <!--PRODUCTS SECTION-->
+    <section>
+      <div class="container">
+        <div class="section-title scroll-reveal">
+          <h2>{{ settings.featured_products_title|default:'محصولات ما' }}</h2>
+          {% if settings.featured_products_subtitle %}
+          <p style="color: #888; margin-top: 10px; font-size: 16px;">{{ settings.featured_products_subtitle }}</p>
+          {% endif %}
+        </div>
+        <div class="products-grid" id="productsGrid">
+          {% for product in featured_products %}
+          <div class="product-card scroll-reveal">
+            <div class="product-image">
+              {% with product.images.first as main_image %}
+              <img src="{% if main_image %}{{ main_image.image.url }}{% else %}{% static 'images/default-product.jpg' %}{% endif %}" 
+                   alt="{{ product.title }}" loading="lazy" />
+              {% endwith %}
+              {% if product.category %}
+              <div class="product-badge">{{ product.category.name }}</div>
+              {% endif %}
+            </div>
+            <div class="product-info">
+              <h3 class="product-title">{{ product.title }}</h3>
+              <p style="color: #aaa; font-size: 14px; margin-bottom: 10px;">
+                {{ product.short_description|truncatechars:50 }}
+              </p>
+              <div class="product-price">{{ product.formatted_price }} <small>تومان</small></div>
+              <a href="{{ product.get_absolute_url }}" class="btn-buy">مشاهده و خرید</a>
+            </div>
+          </div>
+          {% empty %}
+          <p style="color:#aaa;text-align:center;grid-column:1/-1;padding:40px;">
+            هنوز محصولی اضافه نشده است. از پنل ادمین محصول جدید اضافه کنید.
+          </p>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+
+    
+    <!--FEATURES SECTION-->
+    {% if settings.show_features_section != False %}
+    <section style="background: linear-gradient(180deg, transparent, rgba(193, 18, 31, 0.03), transparent);">
+      <div class="container">
+        <div class="section-title scroll-reveal">
+          <h2>{{ settings.features_title|default:'چرا <span>ما؟</span>'|safe }}</h2>
+        </div>
+        <div class="features">
+          <div class="feature-item scroll-reveal">
+            <div class="feature-icon">🎨</div>
+            <h3>رنگ‌آمیزی دستی</h3>
+            <p>هر بخش با دقت بالا و به صورت دستی رنگ‌آمیزی می‌شود</p>
+          </div>
+          <div class="feature-item scroll-reveal">
+            <div class="feature-icon">⚡</div>
+            <h3>طراحی وفادار</h3>
+            <p>بر اساس مدل‌های اصلی</p>
+          </div>
+          <div class="feature-item scroll-reveal">
+            <div class="feature-icon">📦</div>
+            <h3>ارسال سریع</h3>
+            <p>ارسال به سراسر کشور</p>
+          </div>
+          <div class="feature-item scroll-reveal">
+            <div class="feature-icon">🔒</div>
+            <h3>پرداخت امن</h3>
+            <p>پرداخت از طریق درگاه‌های معتبر بانکی</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    {% endif %}
+
+    
+    <!--CTA BANNER-->
+    <section>
+      <div class="container">
+        <div class="cta-banner scroll-reveal" 
+             style="
+                 background: linear-gradient(135deg, rgba(0,0,0,{{ settings.cta_overlay_opacity|default:'0.7' }}), rgba(0,0,0,{{ settings.cta_overlay_opacity|default:'0.6' }})),
+                             url('{% if settings.cta_background_image %}{{ settings.cta_background_image.url }}{% else %}{% static 'images/minibanner.jpg' %}{% endif %}');
+                 background-size: cover;
+                 background-position: center;
+                 border-radius: {{ settings.cta_border_radius|default:'30px' }};
+                 min-height: {{ settings.cta_height|default:'450px' }};
+                 padding: 60px 40px;
+                 display: flex;
+                 align-items: center;
+                 justify-content: center;
+                 text-align: center;
+                 border: 2px solid rgba(193, 18, 31, 0);
+                 transition: border-color 0.5s ease, box-shadow 0.5s ease;
+             "
+             onmouseover="this.style.borderColor='rgba(193,18,31,0.8)'; this.style.boxShadow='0 0 60px rgba(193,18,31,0.3)'"
+             onmouseout="this.style.borderColor='rgba(193,18,31,0)'; this.style.boxShadow='none'">
+          <div class="cta-content">
+            <h3 style="
+                color: {{ settings.cta_title_color|default:'#ffffff' }};
+                font-size: 48px;
+                margin-bottom: 20px;
+            ">
+              {{ settings.cta_title }}
+            </h3>
+            {% if settings.cta_subtitle %}
+            <p style="
+                color: {{ settings.cta_subtitle_color|default:'#cccccc' }};
+                font-size: 18px;
+                margin-bottom: 20px;
+            ">
+              {{ settings.cta_subtitle }}
+            </p>
+            {% endif %}
+            <a href="{{ settings.cta_button_link|default:'/products/' }}" 
+               class="btn-primary" 
+               style="
+                   background: {{ settings.cta_button_color|default:'#c1121f' }} !important;
+                   color: {{ settings.cta_button_text_color|default:'#ffffff' }} !important;
+                   border-color: {{ settings.cta_button_color|default:'#c1121f' }} !important;
+                   display: inline-block;
+                   padding: 18px 50px;
+                   border-radius: 50px;
+                   font-size: 18px;
+                   font-weight: bold;
+                   text-decoration: none;
+                   cursor: pointer;
+                   transition: all 0.3s ease;
+               "
+               onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 0 40px rgba(193,18,31,0.5)'"
+               onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none'">
+              {{ settings.cta_button_text }}
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===========================================
+    SCRIPTS
+    ============================================ -->
+    <script>
+      // ===========================================
+      // 1. Large red light effect following mouse
+      // ===========================================
+      var hero = document.getElementById("heroSection");
+      if (hero) {
+        hero.addEventListener("mousemove", function (e) {
+          var rect = hero.getBoundingClientRect();
+          var x = ((e.clientX - rect.left) / rect.width) * 100;
+          var y = ((e.clientY - rect.top) / rect.height) * 100;
+          hero.style.setProperty("--mouse-x", x + "%");
+          hero.style.setProperty("--mouse-y", y + "%");
+        });
+      }
+
+      // ===========================================
+      // 2. Floating particles
+      // ===========================================
+      function createParticle() {
+        var heroSection = document.querySelector(".hero");
+        if (!heroSection) return;
+
+        var particle = document.createElement("div");
+        particle.classList.add("particle");
+
+        var size = Math.random() * 5 + 2;
+        particle.style.width = size + "px";
+        particle.style.height = size + "px";
+        particle.style.left = Math.random() * 100 + "%";
+        particle.style.bottom = "0";
+        particle.style.animationDuration = Math.random() * 3 + 2 + "s";
+        particle.style.animationDelay = Math.random() * 1 + "s";
+
+        heroSection.appendChild(particle);
+
+        setTimeout(function () {
+          if (particle && particle.remove) particle.remove();
+        }, 5000);
+      }
+
+      setInterval(createParticle, 250);
+
+      // ===========================================
+      // 3. Scroll Reveal
+      // ===========================================
+      var revealElements = document.querySelectorAll(".scroll-reveal");
+
+      function checkReveal() {
+        for (var i = 0; i < revealElements.length; i++) {
+          var el = revealElements[i];
+          var rect = el.getBoundingClientRect();
+          if (rect.top < window.innerHeight - 100) {
+            el.classList.add("revealed");
+          }
+        }
+      }
+
+      window.addEventListener("scroll", checkReveal);
+      checkReveal();
+
+      // ===========================================
+      // 4. 3D Magnetic Effect on Product Cards
+      // ===========================================
+      document.querySelectorAll('.product-card').forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+          const rect = card.getBoundingClientRect();
+          const x = (e.clientX - rect.left) / rect.width;
+          const y = (e.clientY - rect.top) / rect.height;
+
+          const rotateY = (x - 0.5) * 15;
+          const rotateX = (y - 0.5) * -15;
+
+          card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-10px)`;
+          card.style.transition = 'transform 0.05s linear';
+
+          card.style.setProperty('--glow-x', `${x * 100}%`);
+          card.style.setProperty('--glow-y', `${y * 100}%`);
+
+          card.style.boxShadow = `${(x - 0.5) * 50}px ${(y - 0.5) * 50}px 40px rgba(193, 18, 31, 0.3)`;
+          card.style.borderColor = '#c1121f';
+        });
+
+        card.addEventListener('mouseleave', () => {
+          card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)';
+          card.style.transition = 'transform 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1)';
+          card.style.boxShadow = 'none';
+          card.style.borderColor = 'rgba(255, 255, 255, 0.05)';
+        });
+      });
+
+      // ===========================================
+      // 5. Banner Slider
+      // ===========================================
+      (function () {
+        var slides = document.querySelectorAll(".banner-slide");
+        var dots = document.querySelectorAll(".dot");
+        var prevBtn = document.getElementById("prevBtn");
+        var nextBtn = document.getElementById("nextBtn");
+        var currentIndex = 0;
+        var autoPlayInterval;
+
+        if (slides.length === 0) return;
+
+        function showSlide(index) {
+          if (index >= slides.length) index = 0;
+          if (index < 0) index = slides.length - 1;
+          currentIndex = index;
+
+          slides.forEach(function(slide, i) {
+            slide.classList.remove("active");
+            if (i === currentIndex) slide.classList.add("active");
+          });
+
+          dots.forEach(function(dot, i) {
+            dot.classList.remove("active");
+            if (i === currentIndex) dot.classList.add("active");
+          });
+        }
+
+        function nextSlide() { showSlide(currentIndex + 1); }
+        function prevSlide() { showSlide(currentIndex - 1); }
+
+        function startAutoPlay() {
+          if (autoPlayInterval) clearInterval(autoPlayInterval);
+          autoPlayInterval = setInterval(nextSlide, 5000);
+        }
+
+        function stopAutoPlay() {
+          if (autoPlayInterval) {
+            clearInterval(autoPlayInterval);
+            autoPlayInterval = null;
+          }
+        }
+
+        if (prevBtn) {
+          prevBtn.addEventListener("click", function() {
+            stopAutoPlay();
+            prevSlide();
+            startAutoPlay();
+          });
+        }
+
+        if (nextBtn) {
+          nextBtn.addEventListener("click", function() {
+            stopAutoPlay();
+            nextSlide();
+            startAutoPlay();
+          });
+        }
+
+        dots.forEach(function(dot, index) {
+          dot.addEventListener("click", function() {
+            stopAutoPlay();
+            showSlide(index);
+            startAutoPlay();
+          });
+        });
+
+        showSlide(0);
+        startAutoPlay();
+      })();
+    </script>
+{% endblock %}

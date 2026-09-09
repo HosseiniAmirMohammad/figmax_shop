@@ -1,0 +1,28 @@
+{% load static %}
+{% if settings %}
+<section class="hero" 
+         style="
+             min-height: {{ settings.hero_banner_height|default:'100vh' }};
+             background: linear-gradient(rgba(0,0,0,{{ settings.hero_banner_overlay_opacity|default:'0.4' }}), rgba(0,0,0,{{ settings.hero_banner_overlay_opacity|default:'0.5' }})), 
+                         url('{% if settings.hero_background_image %}{{ settings.hero_background_image.url }}{% else %}{% static 'images/banner.jpg' %}{% endif %}');
+             background-size: cover;
+             background-position: center;
+         ">
+    <div class="container">
+        <h1 style="
+            color: {{ settings.hero_title_color|default:'#ffffff' }};
+            font-size: {{ settings.hero_title_font_size|default:'80px' }};
+            font-weight: {{ settings.hero_title_font_weight|default:'900' }};
+        ">
+            <span style="color: {{ settings.hero_title_first_word_color|default:'#c1121f' }};">FIGMAX</span>
+            <span style="color: {{ settings.hero_title_second_word_color|default:'#ffffff' }};">SHOP</span>
+        </h1>
+        <p style="
+            color: {{ settings.hero_subtitle_color|default:'#dddddd' }};
+            font-size: {{ settings.hero_subtitle_font_size|default:'20px' }};
+        ">
+            {{ settings.hero_subtitle }}
+        </p>
+    </div>
+</section>
+{% endif %}

@@ -1,0 +1,85 @@
+{% extends 'base_auth.html' %}
+
+{% load static %}
+
+{% block title %}ثبت‌نام | FigMax Store{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="/static/css/auth.css">
+{% endblock %}
+
+{% block content %}
+<div class="orb"></div>
+<div class="orb"></div>
+
+<a href="/" class="back-link">
+    <span>←</span> بازگشت به صفحه اصلی
+</a>
+
+<div class="auth-card">
+    <div class="logo">
+        <img src="/static/images/logo-white.png" alt="FIGMAX">
+    </div>
+
+    <h1 class="auth-title">ثبت نام</h1>
+
+    <form method="post">
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+        <div class="form-errors">
+            {% for error in form.non_field_errors %}
+                <div class="error-msg">{{ error }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <div class="form-group">
+            <label>نام کاربری</label>
+            {{ form.username }}
+            {% if form.username.errors %}
+            <div class="field-error">{{ form.username.errors.0 }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label>ایمیل</label>
+            {{ form.email }}
+            {% if form.email.errors %}
+            <div class="field-error">{{ form.email.errors.0 }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label>شماره موبایل</label>
+            {{ form.phone }}
+            {% if form.phone.errors %}
+            <div class="field-error">{{ form.phone.errors.0 }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label>رمز عبور</label>
+            {{ form.password1 }}
+            {% if form.password1.errors %}
+            <div class="field-error">{{ form.password1.errors.0 }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label>تکرار رمز عبور</label>
+            {{ form.password2 }}
+            {% if form.password2.errors %}
+            <div class="field-error">{{ form.password2.errors.0 }}</div>
+            {% endif %}
+        </div>
+
+        <button type="submit" class="auth-btn">ایجاد حساب</button>
+    </form>
+
+    <div class="auth-footer">
+        قبلاً ثبت نام کرده‌اید؟
+        <a href="{% url 'accounts:login' %}">ورود</a>
+    </div>
+</div>
+{% endblock %}

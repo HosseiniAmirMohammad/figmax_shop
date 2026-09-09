@@ -1,0 +1,256 @@
+<!-- templates/shop/checkout.html -->
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}تسویه حساب | FIGMAX{% endblock %}
+
+{% block extra_css %}
+<!-- این استایل‌ها با بالاترین اولویت ممکن اعمال می‌شوند تا جلوی تداخل با فایل‌های دیگر را بگیرند -->
+<style type="text/css">
+    #figmax-checkout-page, #figmax-checkout-page * {
+        box-sizing: border-box !important;
+    }
+    
+    #figmax-checkout-page {
+        background-color: #0a0a0a !important;
+        color: #ffffff !important;
+        font-family: 'Vazirmatn', sans-serif !important;
+        direction: rtl !important;
+        padding: 160px 20px 60px !important;
+        max-width: 1300px !important;
+        margin: 0 auto !important;
+        width: 100% !important;
+        min-height: 100vh !important;
+        display: block !important;
+    }
+
+    #figmax-checkout-page .main-title {
+        color: #ffffff !important;
+        font-size: 26px !important;
+        margin-bottom: 25px !important;
+        font-weight: 700 !important;
+        display: block !important;
+    }
+
+    #figmax-checkout-page .grid-container {
+        display: grid !important;
+        grid-template-columns: 1.2fr 0.8fr !important;
+        gap: 30px !important;
+        width: 100% !important;
+        align-items: start !important;
+    }
+
+    #figmax-checkout-page .checkout-card {
+        background: rgba(255, 255, 255, 0.02) !important;
+        border-radius: 16px !important;
+        padding: 25px !important;
+        border: 1px solid rgba(255, 255, 255, 0.05) !important;
+        width: 100% !important;
+        display: block !important;
+    }
+
+    #figmax-checkout-page .form-row {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 15px !important;
+        width: 100% !important;
+    }
+
+    #figmax-checkout-page .form-group {
+        margin-bottom: 20px !important;
+        width: 100% !important;
+        display: block !important;
+    }
+
+    #figmax-checkout-page .form-group label {
+        color: #aaaaaa !important;
+        display: block !important;
+        margin-bottom: 8px !important;
+        font-size: 14px !important;
+    }
+
+    #figmax-checkout-page .form-control {
+        width: 100% !important;
+        padding: 12px !important;
+        background: rgba(255, 255, 255, 0.05) !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        border-radius: 8px !important;
+        color: #ffffff !important;
+        font-family: 'Vazirmatn', sans-serif !important;
+        font-size: 15px !important;
+        outline: none !important;
+        transition: border-color 0.3s !important;
+    }
+
+    #figmax-checkout-page .form-control:focus {
+        border-color: #c1121f !important;
+    }
+
+    #figmax-checkout-page .btn-submit {
+        width: 100% !important;
+        background: linear-gradient(135deg, #c1121f, #8a0f1a) !important;
+        color: #ffffff !important;
+        padding: 15px !important;
+        border: none !important;
+        border-radius: 10px !important;
+        font-size: 16px !important;
+        font-weight: bold !important;
+        cursor: pointer !important;
+        font-family: 'Vazirmatn', sans-serif !important;
+        transition: opacity 0.3s !important;
+    }
+
+    #figmax-checkout-page .products-list {
+        max-height: 280px !important;
+        overflow-y: auto !important;
+        margin-bottom: 20px !important;
+        display: block !important;
+    }
+
+    #figmax-checkout-page .product-item {
+        display: flex !important;
+        justify-content: space-between !important;
+        padding: 12px 0 !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+        align-items: center !important;
+    }
+
+    /* 📱 مدیا کوئری‌های نجات‌بخش برای موبایل و تبلت */
+    @media screen and (max-width: 992px) {
+        #figmax-checkout-page .grid-container {
+            grid-template-columns: 1fr !important;
+            gap: 25px !important;
+        }
+        #figmax-checkout-page {
+            padding-top: 120px !important;
+        }
+    }
+
+    @media screen and (max-width: 576px) {
+        #figmax-checkout-page {
+            padding: 110px 10px 30px !important;
+        }
+        #figmax-checkout-page .form-row {
+            grid-template-columns: 1fr !important;
+            gap: 0 !important;
+        }
+        #figmax-checkout-page .checkout-card {
+            padding: 15px !important;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div id="figmax-checkout-page">
+    <span class="main-title">📋 تکمیل سفارش</span>
+    
+    <div class="grid-container">
+        <!--FORM SENDING INFOS-->
+        <div class="checkout-card">
+            <h2 style="color: #ffffff; font-size: 19px; margin-top: 0; margin-bottom: 20px; font-family: 'Vazirmatn';">📍 اطلاعات ارسال</h2>
+            
+            <form method="POST" id="checkoutForm">
+                {% csrf_token %}
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>نام *</label>
+                        <input type="text" name="first_name" required class="form-control">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>نام خانوادگی *</label>
+                        <input type="text" name="last_name" required class="form-control">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>شماره تماس *</label>
+                    <input type="tel" name="phone" required class="form-control">
+                </div>
+                
+                <div class="form-group">
+                    <label>ایمیل</label>
+                    <input type="email" name="email" class="form-control">
+                </div>
+                
+                <div class="form-group">
+                    <label>کد پستی</label>
+                    <input type="text" name="postal_code" class="form-control">
+                </div>
+                
+                <div class="form-group">
+                    <label>آدرس کامل *</label>
+                    <textarea name="address" required rows="4" class="form-control" style="resize: vertical; min-height: 100px;"></textarea>
+                </div>
+                
+                <button type="submit" class="btn-submit">
+                    ✅ ثبت سفارش و انتقال به درگاه پرداخت
+                </button>
+            </form>
+        </div>
+        
+        <!--ORDER SUMMARY-->
+        <div class="checkout-card">
+            <h2 style="color: #ffffff; font-size: 19px; margin-top: 0; margin-bottom: 20px; font-family: 'Vazirmatn';">🛍️ خلاصه سفارش</h2>
+            
+            <div class="products-list">
+                {% for item in items %}
+                <div class="product-item">
+                    <div style="display: flex !important; align-items: center !important; gap: 12px !important; flex: 1 !important; min-width: 0 !important;">
+                        {% with item.product.images.first as image %}
+                        <img src="{% if image %}{{ image.image.url }}{% else %}{% static 'images/default-product.jpg' %}{% endif %}" 
+                             alt="{{ item.product.title }}" style="width: 45px !important; height: 45px !important; object-fit: cover !important; border-radius: 6px !important; flex-shrink: 0 !important;">
+                        {% endwith %}
+                        <div style="min-width: 0 !important; flex: 1 !important;">
+                            <span style="color: #ffffff !important; font-size: 14px !important; display: block !important; white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important;">{{ item.product.title }}</span>
+                            <span style="color: #888888 !important; font-size: 12px !important; display: block !important; margin-top: 2px !important;">× {{ item.quantity }}</span>
+                        </div>
+                    </div>
+                    <span style="color: #c1121f !important; font-weight: bold !important; flex-shrink: 0 !important; font-size: 14px !important; margin-right: 10px !important;">{{ item.product.price|intcomma }} تومان</span>
+                </div>
+                {% endfor %}
+            </div>
+            
+            <div style="border-top: 2px solid rgba(193, 18, 31, 0.3) !important; padding-top: 15px !important;">
+                <div style="display: flex !important; justify-content: space-between !important; padding: 8px 0 !important; font-size: 14px !important;">
+                    <span style="color: #aaaaaa !important;">جمع کل:</span>
+                    <span style="font-weight: bold !important;">{{ total_price|intcomma }} تومان</span>
+                </div>
+                <div style="display: flex !important; justify-content: space-between !important; padding: 8px 0 !important; font-size: 14px !important;">
+                    <span style="color: #aaaaaa !important;">هزینه ارسال:</span>
+                    <span style="color: #4CAF50 !important;">رایگان</span>
+                </div>
+                <div style="display: flex !important; justify-content: space-between !important; padding: 15px 0 5px !important; border-top: 1px solid rgba(255, 255, 255, 0.05) !important; margin-top: 10px !important; align-items: center !important;">
+                    <span style="font-weight: bold !important; font-size: 16px !important;">قابل پرداخت:</span>
+                    <span style="color: #c1121f !important; font-size: 20px !important; font-weight: bold !important;">{{ total_price|intcomma }} تومان</span>
+                </div>
+            </div>
+            
+            <div style="margin-top: 20px !important; padding: 15px !important; background: rgba(255, 255, 255, 0.03) !important; border-radius: 10px !important; border: 1px solid rgba(255, 255, 255, 0.05) !important; text-align: center !important;">
+                <p style="color: #888888 !important; font-size: 13px !important; margin: 0 !important;">🔒 پرداخت امن از طریق درگاه‌های معتبر بانکی</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('checkoutForm');
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                const submitBtn = form.querySelector('.btn-submit');
+                if (submitBtn) {
+                    submitBtn.disabled = true;
+                    submitBtn.innerText = '⏳ در حال انتقال به درگاه پرداخت...';
+                    submitBtn.style.setProperty('opacity', '0.7', 'important');
+                }
+            });
+        }
+    });
+</script>
+{% endblock %}

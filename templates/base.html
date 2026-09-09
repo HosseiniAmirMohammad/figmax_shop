@@ -1,0 +1,233 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    
+    <!--SEO-->
+    <title>{% block title %}FIGMAX | مرجع تخصصی فیگورهای کلکسیونی{% endblock %}</title>
+    
+    <!--Meta Description-->
+    <meta name="description" content="{% block meta_description %}FIGMAX مرجع تخصصی فیگورهای کلکسیونی با کیفیت بی‌نظیر. خرید فیگورهای شخصیت‌های محبوب بازی‌ها و انیمه‌ها با قیمت مناسب.{% endblock %}">
+    <meta name="keywords" content="{% block meta_keywords %}فیگور, کلکسیون, مجسمه, FIGMAX, فیگمکس, فیگور کلکسیونی, مجسمه کلکسیونی, خرید فیگور{% endblock %}">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="FIGMAX">
+    <meta name="language" content="fa">
+    <meta name="revisit-after" content="7 days">
+    
+    <!--Open Graph-->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="{% block og_title %}FIGMAX | مرجع تخصصی فیگورهای کلکسیونی{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}مرجع تخصصی فیگورهای کلکسیونی با کیفیت بی‌نظیر. خرید فیگورهای شخصیت‌های محبوب بازی‌ها و انیمه‌ها.{% endblock %}">
+    <meta property="og:image" content="{% block og_image %}{{ request.build_absolute_uri }}{% static 'images/logo-red.png' %}{% endblock %}">
+    <meta property="og:url" content="{% block og_url %}{{ request.build_absolute_uri }}{% endblock %}">
+    <meta property="og:site_name" content="FIGMAX">
+    <meta property="og:locale" content="fa_IR">
+    
+    <!--Twitter Card-->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{% block twitter_title %}FIGMAX | مرجع تخصصی فیگورهای کلکسیونی{% endblock %}">
+    <meta name="twitter:description" content="{% block twitter_description %}مرجع تخصصی فیگورهای کلکسیونی با کیفیت بی‌نظیر{% endblock %}">
+    <meta name="twitter:image" content="{% block twitter_image %}{{ request.build_absolute_uri }}{% static 'images/logo-red.png' %}{% endblock %}">
+    
+    <!--Canonical URL-->
+    <link rel="canonical" href="{% block canonical %}{{ request.build_absolute_uri }}{% endblock %}">
+    
+    <!--Favicon-->
+    <link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}">
+    <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.png' %}">
+    
+    <!--Google Fonts-->
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
+    <!--Main CSS-->
+    <link rel="stylesheet" href="/static/css/main.css?v=1.1">
+    
+    <!--Additional CSS-->
+    {% block extra_css %}{% endblock %}
+    
+    <!--Schema.org (برای گوگل)-->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "FIGMAX",
+        "url": "{{ request.build_absolute_uri }}",
+        "description": "مرجع تخصصی فیگورهای کلکسیونی با کیفیت بی‌نظیر",
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": "{{ request.build_absolute_uri }}/products/?search={search_term_string}",
+            "query-input": "required name=search_term_string"
+        }
+    }
+    </script>
+</head>
+<body>
+    
+     <!--TOP NAV BAR-->
+    <nav class="navbar" role="navigation" aria-label="منوی اصلی">
+        <div class="nav-container">
+            
+            <div class="nav-row-top">
+                
+                <button class="nav-toggle" id="navToggle" aria-label="منو" aria-expanded="false">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                
+                
+                <a href="/" class="logo-link" aria-label="FIGMAX - صفحه اصلی">
+                    <img src="/static/images/logo-white.png" class="logo-img logo-white" alt="FIGMAX لوگو - مرجع فیگورهای کلکسیونی" width="180" height="55" />
+                    <img src="/static/images/logo-red.png" class="logo-img logo-red" alt="FIGMAX لوگو - مرجع فیگورهای کلکسیونی" width="180" height="55" />
+                </a>
+                
+                
+                <a href="{% url 'shop:cart' %}" class="cart-link-mobile" id="cartMobile" aria-label="سبد خرید">
+                    🛒
+                    <span class="cart-badge" id="cartCountMobile">0</span>
+                </a>
+            </div>
+            
+            
+            <div class="nav-row-bottom" id="navMenu">
+                <ul class="nav-menu">
+                    <li><a href="/" class="nav-link" aria-current="page">خانه</a></li>
+                    <li><a href="{% url 'shop:product_list' %}" class="nav-link">محصولات</a></li>
+                    <li><a href="{% url 'shop:about' %}" class="nav-link">درباره ما</a></li>
+                    
+                    {% if user.is_authenticated %}
+                        <li><a href="{% url 'accounts:dashboard' %}" class="nav-link">پنل کاربری</a></li>
+                        {% if user.is_superuser %}
+                            <li><a href="{% url 'shop:admin_dashboard' %}" class="nav-link admin-link">پنل مدیریت</a></li>
+                        {% endif %}
+                        <li><a href="{% url 'accounts:logout' %}" class="nav-link logout-link">خروج</a></li>
+                    {% else %}
+                        <li><a href="{% url 'accounts:login' %}" class="nav-link">ورود</a></li>
+                        <li><a href="{% url 'accounts:register' %}" class="nav-link register-link">ثبت‌نام</a></li>
+                    {% endif %}
+                    
+                    
+                    <li class="cart-item-desktop">
+                        <a href="{% url 'shop:cart' %}" class="cart-link" aria-label="سبد خرید">
+                            🛒
+                            <span class="cart-badge" id="cartCountDesktop">0</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+     
+    <!--MESSAGES-->
+    {% if messages %}
+    <div class="messages" role="alert">
+        {% for message in messages %}
+            <div class="message {{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    
+    <!--MAIN CONTENT-->
+    <main role="main">
+        {% block content %}{% endblock %}
+    </main>
+
+    
+    <!--FOOTER-->
+    <footer role="contentinfo">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <h3>FIGMAX<span style="color:#ff0707;"> SHOP</span></h3>
+                <p>مرجع تخصصی مجسمه‌های کلکسیونی</p>
+            </div>
+            <div class="footer-links">
+                <h4>دسترسی سریع</h4>
+                <a href="{% url 'shop:product_list' %}">محصولات</a>
+                <a href="{% url 'shop:about' %}">درباره ما</a>
+                <a href="{% url 'shop:product_list' %}">فیگورهای کلکسیونی</a>
+                <a href="{% url 'shop:product_list' %}">مجسمه‌های کلکسیونی</a>
+            </div>
+            <div class="footer-links">
+                <h4>شبکه‌های اجتماعی</h4>
+                <div class="social-icons">
+                    <a class="social-icon" href="#" aria-label="اینستاگرام FIGMAX">
+                        <img src="/static/images/instagram-white.png" class="social-img social-white" alt="اینستاگرام FIGMAX" width="32" height="32">
+                        <img src="/static/images/instagram-red.png" class="social-img social-red" alt="اینستاگرام FIGMAX" width="32" height="32">
+                    </a>
+                    <a class="social-icon" href="#" aria-label="تلگرام FIGMAX">
+                        <img src="/static/images/telegram-white.png" class="social-img social-white" alt="تلگرام FIGMAX" width="32" height="32">
+                        <img src="/static/images/telegram-red.png" class="social-img social-red" alt="تلگرام FIGMAX" width="32" height="32">
+                    </a>
+                    <a class="social-icon" href="#" aria-label="بله FIGMAX">
+                        <img src="/static/images/bale-white.png" class="social-img social-white" alt="بله FIGMAX" width="32" height="32">
+                        <img src="/static/images/bale-red.png" class="social-img social-red" alt="بله FIGMAX" width="32" height="32">
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">&copy; 2026 FIGMAX. تمامی حقوق محفوظ است.</div>
+    </footer>
+
+    
+    <!--SCRIPTS-->
+    <script>
+        function getCartCount() {
+            fetch("{% url 'shop:cart_count' %}")
+                .then(response => response.json())
+                .then(data => {
+                    // به‌روزرسانی سبد خرید موبایل
+                    var cartBadgeMobile = document.getElementById('cartCountMobile');
+                    if (cartBadgeMobile) {
+                        if (data.count > 0) {
+                            cartBadgeMobile.textContent = data.count;
+                            cartBadgeMobile.style.display = 'flex';
+                        } else {
+                            cartBadgeMobile.style.display = 'none';
+                        }
+                    }
+                    // به‌روزرسانی سبد خرید دسکتاپ
+                    var cartBadgeDesktop = document.getElementById('cartCountDesktop');
+                    if (cartBadgeDesktop) {
+                        if (data.count > 0) {
+                            cartBadgeDesktop.textContent = data.count;
+                            cartBadgeDesktop.style.display = 'flex';
+                        } else {
+                            cartBadgeDesktop.style.display = 'none';
+                        }
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggle = document.getElementById('navToggle');
+            const menu = document.getElementById('navMenu');
+            
+            if (toggle && menu) {
+                toggle.addEventListener('click', function() {
+                    const isOpen = this.classList.toggle('active');
+                    menu.classList.toggle('open');
+                    this.setAttribute('aria-expanded', isOpen);
+                });
+                
+                menu.querySelectorAll('.nav-link').forEach(link => {
+                    link.addEventListener('click', function() {
+                        toggle.classList.remove('active');
+                        menu.classList.remove('open');
+                        toggle.setAttribute('aria-expanded', 'false');
+                    });
+                });
+            }
+            
+            getCartCount();
+        });
+    </script>
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

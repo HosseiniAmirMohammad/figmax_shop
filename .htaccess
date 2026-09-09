@@ -1,0 +1,41 @@
+# .htaccess
+
+# ============================================
+# امنیت - جلوگیری از دسترسی به فایل‌های حساس
+# ============================================
+<FilesMatch "\.(env|git|sqlite3|py|log)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# ============================================
+# امنیت - جلوگیری از لیست شدن پوشه‌ها
+# ============================================
+Options -Indexes
+
+# ============================================
+# هدایت به HTTPS
+# ============================================
+RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# ============================================
+# هدرهای امنیتی
+# ============================================
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "DENY"
+    Header set X-XSS-Protection "1; mode=block"
+    Header set Referrer-Policy "same-origin"
+    Header set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+</IfModule>
+
+# ============================================
+# جلوگیری از دسترسی به پوشه‌های حساس
+# ============================================
+RedirectMatch 403 ^/config/.*$
+RedirectMatch 403 ^/apps/.*$
+RedirectMatch 403 ^/venv/.*$
+RedirectMatch 403 ^/logs/.*$
+RedirectMatch 403 ^/\.env$
