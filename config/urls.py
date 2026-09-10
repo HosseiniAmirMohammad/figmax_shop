@@ -16,6 +16,8 @@ urlpatterns = [
     path('admin-dashboard/', user_passes_test(superuser_required)(include('apps.shop.urls'))),
 ]
 
+# Always serve media files (needed for production with SQLite)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
