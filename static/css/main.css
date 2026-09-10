@@ -67,8 +67,10 @@ NAVBAR - دسکتاپ
 }
 
 .logo-link {
-  display: inline-block;
-  position: relative;
+  position: absolute;
+  top: 50%;
+  left: 53%;
+  transform: translate(-50%, -50%);
   width: 180px;
   height: 55px;
   transition: all 0.3s ease;
