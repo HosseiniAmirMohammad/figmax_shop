@@ -62,6 +62,7 @@ NAVBAR - دسکتاپ
   display: flex;
   justify-content: center;
   padding-top: 10px;
+  padding-right: 50px;
   width: 100%;
   position: relative;
 }
@@ -76,7 +77,7 @@ NAVBAR - دسکتاپ
 .logo-img {
   position: absolute;
   top: 0;
-  left: 0px;
+  left: -px;
   height: 100%;
   width: auto;
   transition: opacity 0.3s ease;
