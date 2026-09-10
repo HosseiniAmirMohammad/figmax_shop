@@ -47,13 +47,14 @@ NAVBAR - دسکتاپ
   padding: 0 30px;
 }
 
-/* ردیف بالا - فقط لوگو (وسط) */
+/* ردیف بالا - لوگو وسط، آیکون‌ها راست */
 .nav-row-top {
   display: flex;
   justify-content: center;
   align-items: center;
   padding-bottom: 12px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  position: relative;
 }
 
 /* ردیف پایین - منو */
@@ -106,6 +107,20 @@ NAVBAR - دسکتاپ
 /* سبد خرید موبایل - مخفی در دسکتاپ */
 .cart-link-mobile {
   display: none !important;
+}
+
+/* آیکون‌های ناوبار - سمت راست */
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-right: auto;
+}
+
+/* عنصر برای متعادل کردن لوگو */
+.nav-spacer {
+  width: 150px;
+  flex-shrink: 0;
 }
 
 .nav-menu {
