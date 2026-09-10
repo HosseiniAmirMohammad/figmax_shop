@@ -982,10 +982,10 @@ RESPONSIVE
   /* ===== لوگو - یکم به راست ===== */
   .logo-link {
     position: absolute !important;
-    left: 57% !important;  /* ← از 50% به 52% */
+    left: 50% !important;  /* ← از 50% به 52% */
     top: 50% !important;
     transform: translate(-50%, -50%) !important;
-    width: 100px !important;
+    width: 32px !important;
     height: 32px !important;
     flex-shrink: 0 !important;
     margin: 0 !important;
@@ -1419,10 +1419,6 @@ RESPONSIVE
     -webkit-backdrop-filter: blur(20px) !important;
   }
   
-  .logo-link {
-    width: 75px !important;
-    height: 24px !important;
-  }
   
   .nav-toggle span {
     width: 20px !important;
