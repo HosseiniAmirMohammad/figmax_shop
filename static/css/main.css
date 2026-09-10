@@ -76,7 +76,7 @@ NAVBAR - دسکتاپ
 .logo-img {
   position: absolute;
   top: 0;
-  left: -10px;
+  left: 0px;
   height: 100%;
   width: auto;
   transition: opacity 0.3s ease;
