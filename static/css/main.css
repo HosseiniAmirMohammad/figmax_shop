@@ -59,12 +59,9 @@ NAVBAR - دسکتاپ
 /* ردیف پایین - منو */
 .nav-row-bottom {
   display: flex;
-  margin-right: 3px;
   justify-content: center;
-  padding-right: 100px;
-  padding-left: 100px;
   padding-top: 10px;
-  width: 110%;
+  width: 100%;
 }
 
 .logo-link {
