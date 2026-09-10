@@ -44,7 +44,7 @@ NAVBAR - دسکتاپ
 .nav-container {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 0 30px;
+  padding-left: 80px;
 }
 
 /* ردیف بالا - لوگو وسط، آیکون‌ها راست */
