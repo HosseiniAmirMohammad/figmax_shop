@@ -60,9 +60,11 @@ NAVBAR - دسکتاپ
 /* ردیف پایین - منو */
 .nav-row-bottom {
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   padding-top: 10px;
   width: 100%;
+  padding-left: 0;
+  padding-right: calc(50% - 90px);
 }
 
 .logo-link {
@@ -130,8 +132,7 @@ NAVBAR - دسکتاپ
   margin: 0;
   padding: 0;
   align-items: center;
-  justify-content: center;
-  width: 100%;
+  width: auto;
 }
 
 .nav-menu li {
