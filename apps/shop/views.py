@@ -27,8 +27,9 @@ def get_settings():
 
 def index(request):
     """صفحه اصلی فروشگاه"""
+    # نمایش همه محصولات فعال (نه فقط ویژه)
     featured_products = safe_queryset(
-        Product.objects.filter(is_active=True, is_featured=True)[:6]
+        Product.objects.filter(is_active=True).order_by('-created_at')[:6]
     )
     banners = safe_queryset(
         BannerSlide.objects.filter(is_active=True).order_by('order')
