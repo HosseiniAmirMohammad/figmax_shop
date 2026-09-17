@@ -73,8 +73,6 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "axes.middleware.AxesMiddleware",
-    "django.middleware.cache.UpdateCacheMiddleware",  # ← کش
-    "django.middleware.cache.FetchFromCacheMiddleware",  # ← کش
 ]
 
 # CACHES FOR IMPROVING SPEED
