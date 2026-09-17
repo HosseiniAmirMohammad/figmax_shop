@@ -24,6 +24,7 @@ else:
 # ALLOWED_HOSTS
 if IS_RAILWAY:
     ALLOWED_HOSTS = [
+        "figmaxshop.ir",
         "localhost",
         "127.0.0.1",
         ".up.railway.app",  # تمام دامنه‌های Railway
