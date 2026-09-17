@@ -20,7 +20,29 @@ def serve_media(request, file_path):
             return HttpResponse(f.read(), content_type=content_type or 'application/octet-stream')
     raise Http404("File not found")
 
+# ============================================
+# فایل تایید اینماد (e-namad)
+# فایل خالی 79221564.txt در ریشه وب‌سایت (settings.BASE_DIR) قرار دارد
+# و از طریق آدرس https://figmaxshop.ir/79221564.txt در دسترس می‌باشد
+# ============================================
+ENAMAD_VERIFICATION_FILE = "79221564.txt"
+
+
+def enamad_verification(request):
+    """سرو کردن فایل خالی تایید اینماد از ریشه پروژه"""
+    file_path = os.path.join(settings.BASE_DIR, ENAMAD_VERIFICATION_FILE)
+    if os.path.exists(file_path):
+        with open(file_path, "rb") as f:
+            content = f.read()
+        response = HttpResponse(content, content_type="text/plain; charset=utf-8")
+        response["Content-Length"] = str(len(content))
+        return response
+    raise Http404("File not found")
+
+
 urlpatterns = [
+    # فایل تایید اینماد - https://figmaxshop.ir/79221564.txt
+    path(ENAMAD_VERIFICATION_FILE, enamad_verification, name='enamad_verification'),
     path('admin/', admin.site.urls),
     path('', include('apps.shop.urls')),
     path('', include('apps.accounts.urls')),
