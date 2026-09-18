@@ -495,6 +495,33 @@ SOCIAL ICONS
   margin: 0 auto;
 }
 
+/*-------------------------------------------
+ ENAMAD - نماد اعتماد الکترونیکی
+-------------------------------------------*/
+.footer-links .enamad-link {
+  display: inline-block;
+  background: #ffffff;
+  padding: 9px;
+  border-radius: 14px;
+  line-height: 0;
+  margin-bottom: 10px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.footer-links .enamad-link:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 24px rgba(193, 18, 31, 0.45);
+}
+
+.footer-links .enamad-img {
+  display: block;
+  width: 100px;
+  width: clamp(84px, 20vw, 108px);
+  height: auto;
+  max-width: 100%;
+}
+
 /* ===========================================
 RESPONSIVE
 =========================================== */
