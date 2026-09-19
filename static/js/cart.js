@@ -1,8 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
 
-  // ===========================================
-  // QUANTITY CONTROLS
-  // ===========================================
   document.querySelectorAll('.cart-item').forEach(function(item) {
 
     const minusBtn = item.querySelector('.minus');
@@ -10,14 +7,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const qtyInput = item.querySelector('.qty');
     const removeBtn = item.querySelector('.remove');
 
-    // افزایش تعداد
     plusBtn.addEventListener('click', function() {
       let val = parseInt(qtyInput.value) || 1;
       qtyInput.value = val + 1;
       updateTotal();
     });
 
-    // کاهش تعداد
     minusBtn.addEventListener('click', function() {
       let val = parseInt(qtyInput.value) || 1;
       if (val > 1) {
@@ -26,7 +21,6 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
 
-    // تغییر دستی
     qtyInput.addEventListener('change', function() {
       let val = parseInt(this.value) || 1;
       if (val < 1) val = 1;
@@ -34,7 +28,6 @@ document.addEventListener('DOMContentLoaded', function() {
       updateTotal();
     });
 
-    // حذف آیتم
     removeBtn.addEventListener('click', function() {
       item.style.opacity = '0';
       item.style.transform = 'translateX(50px)';
@@ -46,9 +39,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
   });
 
-  // ===========================================
-  // UPDATE TOTAL
-  // ===========================================
   function updateTotal() {
     let total = 0;
 
@@ -63,7 +53,6 @@ document.addEventListener('DOMContentLoaded', function() {
       totalSpan.innerHTML = total.toLocaleString('fa-IR');
     }
 
-    // اگه سبد خالی شد
     if (document.querySelectorAll('.cart-item').length === 0) {
       document.querySelector('.cart-items').innerHTML = `
         <div style="text-align:center;padding:60px 20px;color:#888;">

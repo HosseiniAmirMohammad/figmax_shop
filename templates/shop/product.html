@@ -3,13 +3,11 @@
 {% load humanize %}
 {{ product.formatted_price }}
 
-
 {% block title %}{{ product.title }} | FIGMAX{% endblock %}
 
 {% block extra_css %}
 <style>
     
-    /*PRODUCT DETAIL PAGE*/
     
     .product-detail-page {
         padding: 140px 20px 40px;
@@ -22,7 +20,6 @@
         margin: 0 auto;
     }
     
-    /* Return To Main Page */
     .back-link {
         display: inline-flex;
         align-items: center;
@@ -55,7 +52,6 @@
         transform: translateX(-4px);
     }
     
-    /*MAIN CARD*/
     .product-main-card {
         background: linear-gradient(145deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
         border-radius: 20px;
@@ -84,7 +80,6 @@
         gap: 40px;
     }
     
-    /*GALLERY*/
     .gallery-section {
         position: relative;
     }
@@ -136,7 +131,6 @@
         object-fit: cover;
     }
     
-    /*PRODUCT INFO*/
     .product-info-section {
         display: flex;
         flex-direction: column;
@@ -209,7 +203,6 @@
         font-family: 'Vazirmatn', sans-serif;
     }
     
-    /*DETAILS*/
     .specs-grid {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -239,7 +232,6 @@
         font-family: 'Vazirmatn', sans-serif;
     }
     
-    /*BUY BTN*/
     .add-to-cart-section {
         display: flex;
         gap: 12px;
@@ -329,7 +321,6 @@
         transform: none !important;
     }
     
-    /*CHARACTER STORY*/
     .story-section {
         background: linear-gradient(145deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
         border-radius: 18px;
@@ -356,7 +347,6 @@
         font-family: 'Vazirmatn', sans-serif;
     }
     
-    /*SP*/
     .similar-section .section-title {
         text-align: center;
         margin-bottom: 35px;
@@ -379,7 +369,6 @@
         gap: 20px;
     }
     
-    /*SCG*/
     .similar-card {
         background: rgba(255,255,255,0.02);
         border-radius: 14px;
@@ -459,9 +448,6 @@
         box-shadow: 0 4px 20px rgba(193,18,31,0.2);
     }
     
-    /* ===========================================
-       RESPONSIVE
-    ============================================ */
     
     @media (max-width: 992px) {
         .product-main-grid {
@@ -610,7 +596,6 @@
         }
     }
     
-    /*ANIMATION*/
     @keyframes fadeInUp {
         from {
             opacity: 0;
@@ -647,17 +632,14 @@
 <div class="product-detail-page">
     <div class="container">
         
-        <!--RETURN TO MAIN PAGE-->
         <a href="/" class="back-link">
             <span class="arrow">←</span>
             بازگشت به صفحه اصلی
         </a>
         
-        <!--MAIN CARD-->
         <div class="product-main-card">
             <div class="product-main-grid">
                 
-                <!--GALLERY-->
                 <div class="gallery-section">
                     <div class="gallery-main" id="mainGallery">
                         {% with product.images.first as main_image %}
@@ -680,7 +662,6 @@
                     </div>
                 </div>
                 
-                <!--INFO-->
                 <div class="product-info-section">
                     <div class="badges">
                         {% if product.category %}
@@ -702,7 +683,6 @@
                     
                     <p class="description">{{ product.short_description|default:product.about_product|truncatechars:200 }}</p>
                     
-                    <!--DETAILS-->
                     <div class="specs-grid">
                         <div class="spec-item">
                             <span class="label">موجودی</span>
@@ -714,7 +694,6 @@
                         </div>
                     </div>
                     
-                    <!--BUY BTN-->
                     <div class="add-to-cart-section">
                         <div class="qty-control">
                             <button type="button" id="qtyMinus">−</button>
@@ -734,7 +713,6 @@
             </div>
         </div>
         
-        <!--CHARACTER STORY-->
         {% if product.character_story %}
         <div class="story-section">
             <h3>⚔️ داستان شخصیت</h3>
@@ -742,7 +720,6 @@
         </div>
         {% endif %}
         
-        <!--SMILAR PRODUCTS-->
         {% if similar_products %}
         <div class="similar-section">
             <div class="section-title">
@@ -771,13 +748,7 @@
     </div>
 </div>
 
-<!-- ===========================================
-SCRIPTS
-============================================ -->
 <script>
-    // ===========================================
-    // INTERACTIVE GALLERY WITH RED FLASH
-    // ===========================================
     let currentImageSrc = document.getElementById('mainImage')?.src || '';
 
     function changeImage(src, element) {
@@ -788,12 +759,10 @@ SCRIPTS
         
         currentImageSrc = src;
         
-        // 1. افکت خروج تصویر قبلی
         mainImg.style.transform = 'scale(1.1)';
         mainImg.style.opacity = '0';
         mainImg.style.filter = 'blur(4px)';
         
-        // 2. ایجاد لایه قرمز با افکت شیشه‌ای
         const flash = document.createElement('div');
         flash.style.position = 'absolute';
         flash.style.top = '0';
@@ -807,12 +776,10 @@ SCRIPTS
         flash.style.transition = 'all 0.15s ease';
         galleryMain.appendChild(flash);
         
-        // 3. نمایش فلش قرمز
         requestAnimationFrame(() => {
             flash.style.opacity = '1';
         });
         
-        // 4. بعد از 150 میلی‌ثانیه عکس رو عوض کن
         setTimeout(() => {
             mainImg.src = src;
             mainImg.style.transform = 'scale(1)';
@@ -825,7 +792,6 @@ SCRIPTS
             }, 300);
         }, 150);
         
-        // 5. تغییر کلاس active
         document.querySelectorAll('.thumb').forEach(function(thumb) {
             thumb.classList.remove('active');
         });
@@ -834,9 +800,6 @@ SCRIPTS
         }
     }
 
-    // ===========================================
-    // QUANTITY CONTROL
-    // ===========================================
     document.addEventListener('DOMContentLoaded', function() {
         const qtyInput = document.getElementById('qtyInput');
         const qtyMinus = document.getElementById('qtyMinus');
@@ -862,9 +825,6 @@ SCRIPTS
             });
         }
         
-        // ===========================================
-        // ADD TO CART
-        // ===========================================
         const addToCartBtn = document.getElementById('addToCartBtn');
         if (addToCartBtn) {
             addToCartBtn.addEventListener('click', function() {
@@ -873,9 +833,6 @@ SCRIPTS
             });
         }
         
-        // ===========================================
-        // 3D EFFECT ON PRODUCT CARDS (similar)
-        // ===========================================
         document.querySelectorAll('.similar-card').forEach(card => {
             card.addEventListener('mousemove', (e) => {
                 if (window.innerWidth <= 768) return;

@@ -10,12 +10,9 @@ body{
     color:white;
 }
 
-/* =========================
-   ORDERS PAGE - MODERN CARDS
-========================= */
 
 .page {
-  padding: 160px 40px 80px; /* فاصله از navbar */
+  padding: 160px 40px 80px; 
   max-width: 1200px;
   margin: 0 auto;
 }
@@ -27,7 +24,6 @@ body{
   text-align: center;
 }
 
-/* background glow behind cards */
 .orders {
   display: flex;
   flex-direction: column;
@@ -45,7 +41,6 @@ body{
   filter: blur(40px);
 }
 
-/* CARD */
 .order-card {
   background: linear-gradient(145deg, #121212, #0f0f0f);
   border: 1px solid rgba(255,255,255,0.06);
@@ -61,7 +56,6 @@ body{
   overflow: hidden;
 }
 
-/* hover glow */
 .order-card::after {
   content: "";
   position: absolute;
@@ -80,7 +74,6 @@ body{
   opacity: 1;
 }
 
-/* text */
 .order-card h3 {
   margin-bottom: 5px;
   font-size: 18px;
@@ -92,7 +85,6 @@ body{
   margin-top: 4px;
 }
 
-/* STATUS BADGES */
 .status {
   padding: 8px 14px;
   border-radius: 999px;
@@ -101,7 +93,6 @@ body{
   letter-spacing: 0.3px;
 }
 
-/* states */
 .pending {
   background: rgba(243,156,18,0.15);
   color: #f39c12;
@@ -120,7 +111,6 @@ body{
   box-shadow: 0 0 15px rgba(52,152,219,0.1);
 }
 
-/* MOBILE */
 @media (max-width: 768px) {
   .order-card {
     flex-direction: column;
@@ -133,16 +123,12 @@ body{
   }
 }
 
-/* =========================
-   ULTRA GAMING BACKGROUND
-========================= */
 
 body {
   position: relative;
   overflow-x: hidden;
 }
 
-/* main dark base gradient */
 body::before {
   content: "";
   position: fixed;
@@ -155,7 +141,6 @@ body::before {
   z-index: -3;
 }
 
-/* moving glow blobs */
 .bg::before,
 .bg::after {
   content: "";
@@ -188,7 +173,6 @@ body::before {
   100% { transform: translate(0,0) scale(1); }
 }
 
-/* subtle noise overlay (gives premium feel) */
 body::after {
   content: "";
   position: fixed;
@@ -198,9 +182,6 @@ body::after {
   z-index: -1;
   pointer-events: none;
 }
-/* ===========================================
-NAVBAR
-=========================================== */
 .navbar {
   position: absolute;
   top: 0;
@@ -350,9 +331,6 @@ NAVBAR
   }
 }
 
-/* ===========================================
-FOOTER
-=========================================== */
 footer {
   background: linear-gradient(to top, #050505, #0a0a0a);
   padding: 50px 0 20px;
@@ -437,9 +415,6 @@ footer::before {
   transform: translateX(-6px);
 }
 
-/* ===========================================
-SOCIAL ICONS
-=========================================== */
 .social-icons {
   display: flex;
   gap: 12px;
@@ -495,9 +470,6 @@ SOCIAL ICONS
   margin: 0 auto;
 }
 
-/*-------------------------------------------
- ENAMAD - نماد اعتماد الکترونیکی
--------------------------------------------*/
 .footer-links .enamad-link {
   display: inline-block;
   background: #ffffff;
@@ -522,9 +494,6 @@ SOCIAL ICONS
   max-width: 100%;
 }
 
-/* ===========================================
-RESPONSIVE
-=========================================== */
 @media (max-width: 768px) {
   .cart-item {
     flex-direction: column;

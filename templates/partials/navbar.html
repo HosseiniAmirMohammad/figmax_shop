@@ -1,10 +1,8 @@
-<!-- templates/partials/navbar.html -->
 {% load static %}
 
 <nav class="navbar">
     <div class="nav-container">
         <div class="nav-row nav-row-top">
-            <!-- سبد خرید و دکمه‌های کاربری (دسکتاپ و موبایل) - سمت راست -->
             <div class="nav-actions">
                 <a href="{% url 'shop:cart' %}" class="cart-link">
                     🛒
@@ -22,24 +20,20 @@
                 {% endif %}
             </div>
             
-            <!--LOGO - وسط دقیق -->
             <a href="/" class="logo-link">
                 <img src="{% static 'images/logo-white.png' %}" alt="FIGMAX Logo" class="logo-img logo-white" />
                 <img src="{% static 'images/logo-red.png' %}" alt="FIGMAX Logo" class="logo-img logo-red" />
             </a>
             
-            <!-- دکمه همبرگری (فقط موبایل) -->
             <button class="nav-toggle" id="navToggle" aria-label="منو">
                 <span></span>
                 <span></span>
                 <span></span>
             </button>
             
-            <!-- عنصر برای متعادل کردن لوگو -->
             <div class="nav-spacer"></div>
         </div>
         
-        <!-- منوی پایین (فقط دسکتاپ) -->
         <div class="nav-row nav-row-bottom" id="navMenu">
             <ul class="nav-menu">
                 <li><a href="/" class="nav-link">خانه</a></li>
@@ -51,7 +45,6 @@
 </nav>
 
 <script>
-    // منوی همبرگری
     document.addEventListener('DOMContentLoaded', function() {
         const toggle = document.getElementById('navToggle');
         const menu = document.getElementById('navMenu');

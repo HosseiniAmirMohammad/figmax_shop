@@ -1,4 +1,3 @@
-<!-- apps/shop/templates/shop/about.html -->
 {% extends 'base.html' %}
 {% load static %}
 
@@ -6,8 +5,6 @@
 
 {% block content %}
 <style>
-    /*
-       ABOUT PAGE*/
     
     @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap');
     
@@ -31,7 +28,6 @@
         width: 100%;
     }
     
-    /*HEADER*/
     .about-header {
         text-align: center;
         padding: 0 10px 40px;
@@ -64,7 +60,6 @@
         font-family: 'Vazirmatn', sans-serif;
     }
     
-    /*MAIN CARD*/
     .about-card {
         background: linear-gradient(145deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
         border-radius: 24px;
@@ -93,7 +88,6 @@
         box-shadow: 0 20px 60px rgba(0,0,0,0.3);
     }
     
-    /*ABOUT TEXT*/
     .about-text {
         text-align: center;
         max-width: 900px;
@@ -151,7 +145,6 @@
         letter-spacing: 1px;
     }
     
-    /*FEATS*/
     .features-grid-about {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
@@ -214,7 +207,6 @@
         margin: 0;
     }
     
-    /* ===== بخش پایین ===== */
     .about-bottom-grid {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -287,7 +279,6 @@
         line-height: 1.7;
     }
     
-    /*CONTECT US*/
     .contact-section {
         background: linear-gradient(145deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
         border-radius: 20px;
@@ -408,9 +399,6 @@
         filter: drop-shadow(0 0 15px rgba(193,18,31,0.4));
     }
     
-    /* ===========================================
-       ریسپانسیو
-    ============================================ */
     
     @media (max-width: 992px) {
         .about-page {
@@ -747,7 +735,6 @@
         }
     }
     
-    /* ===== انیمیشن ===== */
     @keyframes fadeInUpAbout {
         from {
             opacity: 0;
@@ -786,11 +773,9 @@
     }
 </style>
 
-<!--MAIN CONTENT-->
 <div class="about-page">
     <div class="container">
         
-        <!--HEADER-->
         <div class="about-header">
             <h1>
                 درباره <span>FIGMAX</span>
@@ -798,7 +783,6 @@
             <p class="subtitle">مرجع تخصصی فیگورهای کلکسیونی با کیفیت بی‌نظیر</p>
         </div>
         
-        <!--MAIN CARD-->
         <div class="about-card">
             <div class="about-text">
                 <span class="brand-icon">✨</span>
@@ -816,7 +800,6 @@
             </div>
         </div>
         
-        <!--FEAT-->
         <div class="features-grid-about">
             <div class="feature-about-item">
                 <span class="icon">🎨</span>
@@ -840,7 +823,6 @@
             </div>
         </div>
         
-        <!--DOWN-->
         <div class="about-bottom-grid">
             <div class="about-box">
                 <span class="big-icon">🎮</span>
@@ -854,19 +836,16 @@
             </div>
         </div>
         
-        <!--CONTECT-->
         <div class="contact-section">
             <h2><span>ارتباط با ما</span></h2>
             <p class="contact-desc">برای ارتباط سریع با ما از طریق شبکه‌های اجتماعی زیر اقدام کنید</p>
             
             <div class="contact-social-icons">
-                <!--TELEGRAM-->
                 <a href="#" class="contact-social-icon" title="تلگرام">
                     <img src="/static/images/telegram-white.png" class="social-img-white" alt="تلگرام">
                     <img src="/static/images/telegram-red.png" class="social-img-red" alt="تلگرام">
                 </a>
                 
-                <!--BALE-->
                 <a href="#" class="contact-social-icon" title="بله">
                     <img src="/static/images/bale-white.png" class="social-img-white" alt="بله">
                     <img src="/static/images/bale-red.png" class="social-img-red" alt="بله">

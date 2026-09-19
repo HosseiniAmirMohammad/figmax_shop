@@ -6,15 +6,12 @@
         const nextBtn = document.getElementById("nextBtn");
         let autoPlayInterval;
 
-        // Function to display the specified slide
         function showSlide(index) {
-          // Normalize index
           if (index >= slides.length) index = 0;
           if (index < 0) index = slides.length - 1;
 
           currentIndex = index;
 
-          // Update slides
           slides.forEach((slide, i) => {
             slide.classList.remove("active");
             if (i === currentIndex) {
@@ -22,7 +19,6 @@
             }
           });
 
-          // Update indicator dots
           dots.forEach((dot, i) => {
             dot.classList.remove("active");
             if (i === currentIndex) {
@@ -31,23 +27,19 @@
           });
         }
 
-        // Function to go to next slide
         function nextSlide() {
           showSlide(currentIndex + 1);
         }
 
-        // Function to go to previous slide
         function prevSlide() {
           showSlide(currentIndex - 1);
         }
 
-        // Start autoplay (every 5 seconds)
         function startAutoPlay() {
           if (autoPlayInterval) clearInterval(autoPlayInterval);
           autoPlayInterval = setInterval(nextSlide, 5000);
         }
 
-        // Stop autoplay (when user interacts with slider)
         function stopAutoPlay() {
           if (autoPlayInterval) {
             clearInterval(autoPlayInterval);
@@ -55,7 +47,6 @@
           }
         }
 
-        // Button event handlers
         if (prevBtn) {
           prevBtn.addEventListener("click", () => {
             stopAutoPlay();
@@ -72,7 +63,6 @@
           });
         }
 
-        // Dot indicator event handlers
         dots.forEach((dot, index) => {
           dot.addEventListener("click", () => {
             stopAutoPlay();
@@ -81,7 +71,6 @@
           });
         });
 
-        // Initialize slider
         if (slides.length > 0) {
           showSlide(0);
           startAutoPlay();
@@ -99,9 +88,6 @@
         });
       }
 
-      // ===========================================
-      // 2. Floating particles starting from bottom of banner
-      // ===========================================
       function createParticle() {
         var heroSection = document.querySelector(".hero");
         if (!heroSection) return;
@@ -109,34 +95,25 @@
         var particle = document.createElement("div");
         particle.classList.add("particle");
 
-        // Random size between 2 and 7 pixels
         var size = Math.random() * 5 + 2;
         particle.style.width = size + "px";
         particle.style.height = size + "px";
 
-        // Random horizontal position across banner width
         particle.style.left = Math.random() * 100 + "%";
-        // Starts from bottom of banner
         particle.style.bottom = "0";
 
-        // Random movement duration
         particle.style.animationDuration = Math.random() * 3 + 2 + "s";
         particle.style.animationDelay = Math.random() * 1 + "s";
 
         heroSection.appendChild(particle);
 
-        // Remove particle after animation completes
         setTimeout(function () {
           if (particle && particle.remove) particle.remove();
         }, 5000);
       }
 
-      // Create new particle every 250ms (for higher density)
       setInterval(createParticle, 250);
 
-      // ===========================================
-      // 3. Scroll Reveal Animation
-      // ===========================================
       var revealElements = document.querySelectorAll(".scroll-reveal");
 
       function checkReveal() {
@@ -151,11 +128,7 @@
 
       window.addEventListener("scroll", checkReveal);
       checkReveal();
-    // ===========================================
-// 4. 3D Magnetic Effect on Product Cards
-// ===========================================
 document.querySelectorAll('.product-card').forEach(card => {
-  // Mouse move effect - creates 3D tilt and glow
   card.addEventListener('mousemove', (e) => {
     const rect = card.getBoundingClientRect();
     const x = (e.clientX - rect.left) / rect.width;

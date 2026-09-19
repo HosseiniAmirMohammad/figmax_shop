@@ -7,7 +7,6 @@
 {% block content %}
 <style>
     
-    /*PRODUCTS PAGE*/
     
     @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap');
     
@@ -31,7 +30,6 @@
         width: 100%;
     }
     
-    /* ===== هدر ===== */
     .products-header {
         text-align: center;
         padding: 0 10px 30px;
@@ -65,7 +63,6 @@
         font-family: 'Vazirmatn', sans-serif;
     }
     
-    /* ===== FILTER ===== */
     .filter-section {
         display: flex;
         justify-content: space-between;
@@ -164,7 +161,6 @@
         color: #c1121f;
     }
     
-    /* =====PRODUCTS COUNT===== */
     .products-count {
         text-align: center;
         color: rgba(255, 255, 255, 0.4);
@@ -178,7 +174,6 @@
         font-weight: 700;
     }
     
-    /* =====PROUDCTS GRID===== */
     .products-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -186,7 +181,6 @@
         margin-bottom: 40px;
     }
     
-    /* =====PRODUCT CARD===== */
     .product-card {
         background: linear-gradient(145deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
         border: 1px solid rgba(255,255,255,0.06);
@@ -401,7 +395,6 @@
         box-shadow: none;
     }
     
-    /* =====PAGINATION===== */
     .pagination {
         display: flex;
         justify-content: center;
@@ -451,7 +444,6 @@
         cursor: not-allowed;
     }
     
-    /* =====EMPTY===== */
     .empty-products {
         text-align: center;
         padding: 80px 20px;
@@ -505,7 +497,6 @@
     }
     
     
-    /* ریسپانسیو*/
     
     @media (max-width: 992px) {
         .products-page {
@@ -746,7 +737,6 @@
         }
     }
     
-    /* ===== انیمیشن ===== */
     @keyframes fadeInUp {
         from {
             opacity: 0;
@@ -776,11 +766,9 @@
     .product-card:nth-child(12) { animation-delay: 0.60s; }
 </style>
 
-<!--MAIN CONTENT-->
 <div class="products-page">
     <div class="container">
         
-        <!--HEADER-->
         <div class="products-header">
             <h1>
                 محصولات
@@ -789,7 +777,6 @@
             <p>مجموعه‌ای از نفیس‌ترین فیگورهای کلکسیونی با طراحی و رنگ‌آمیزی دستی</p>
         </div>
         
-        <!--FILTER-->
         <div class="filter-section">
             <div class="filter-left">
                 <label for="category-filter">دسته‌بندی:</label>
@@ -817,12 +804,10 @@
             </div>
         </div>
         
-        <!--COUNT-->
         <div class="products-count">
             نمایش <span id="visibleCount">{{ products|length }}</span> از <span>{{ products|length }}</span> محصول
         </div>
         
-        <!--GRID-->
         <div class="products-grid" id="productsGrid">
             {% for product in products %}
             <div class="product-card scroll-reveal" data-category="{{ product.category.slug|default:'' }}" data-price="{{ product.price }}" data-title="{{ product.title }}" data-date="{{ product.created_at|date:'YmdHis' }}">
@@ -874,7 +859,6 @@
             {% endfor %}
         </div>
         
-        <!--PAGINATION-->
         {% if products.has_other_pages %}
         <div class="pagination">
             {% if products.has_previous %}
@@ -903,9 +887,6 @@
 </div>
 
 <script>
-    // ===========================================
-    // SCROLL REVEAL
-    // ===========================================
     var revealElements = document.querySelectorAll('.scroll-reveal');
 
     function checkReveal() {
@@ -921,12 +902,8 @@
     window.addEventListener('scroll', checkReveal);
     checkReveal();
 
-    // ===========================================
-    // 3D MAGNETIC EFFECT ON PRODUCT CARDS
-    // ===========================================
     document.querySelectorAll('.product-card').forEach(card => {
         card.addEventListener('mousemove', (e) => {
-            // فقط در دسکتاپ (بزرگتر از 768px)
             if (window.innerWidth <= 768) return;
             
             const rect = card.getBoundingClientRect();
@@ -954,9 +931,6 @@
         });
     });
 
-    // ===========================================
-    // FILTER PRODUCTS
-    // ===========================================
     function filterProducts() {
         const category = document.getElementById('category-filter').value;
         const sort = document.getElementById('sort-filter').value;
@@ -992,9 +966,6 @@
         document.getElementById('productsCount').textContent = visibleCount + ' محصول';
     }
 
-    // ===========================================
-    // VIEW TOGGLE
-    // ===========================================
     function setView(view) {
         const grid = document.getElementById('productsGrid');
         const buttons = document.querySelectorAll('.view-toggle button');

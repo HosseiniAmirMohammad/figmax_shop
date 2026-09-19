@@ -1,6 +1,3 @@
-/*-------------------------------------------
-RESET & VARIABLES
--------------------------------------------*/
 * {
   margin: 0;
   padding: 0;
@@ -24,9 +21,6 @@ body {
   padding-top: 130px;
 }
 
-/*-------------------------------------------
-NAVBAR - دسکتاپ
--------------------------------------------*/
 .navbar {
   position: fixed;
   top: 0;
@@ -47,7 +41,6 @@ NAVBAR - دسکتاپ
   padding-left: 80px;
 }
 
-/* ردیف بالا - لوگو وسط، آیکون‌ها راست */
 .nav-row-top {
   display: flex;
   justify-content: center;
@@ -57,7 +50,6 @@ NAVBAR - دسکتاپ
   position: relative;
 }
 
-/* ردیف پایین - منو */
 .nav-row-bottom {
   display: flex;
   justify-content: center;
@@ -100,17 +92,14 @@ NAVBAR - دسکتاپ
   filter: drop-shadow(0 0 25px rgba(193, 18, 31, 0.6));
 }
 
-/* دکمه همبرگری - مخفی در دسکتاپ */
 .nav-toggle {
   display: none !important;
 }
 
-/* سبد خرید موبایل - مخفی در دسکتاپ */
 .cart-link-mobile {
   display: none !important;
 }
 
-/* آیکون‌های ناوبار - سمت راست */
 .nav-actions {
   display: flex;
   align-items: center;
@@ -118,7 +107,6 @@ NAVBAR - دسکتاپ
   margin-right: auto;
 }
 
-/* عنصر برای متعادل کردن لوگو */
 .nav-spacer {
   width: 150px;
   flex-shrink: 0;
@@ -192,7 +180,6 @@ NAVBAR - دسکتاپ
   color: #f1c40f;
 }
 
-/* سبد خرید دسکتاپ - داخل منو */
 .cart-item-desktop {
   margin-right: 5px;
   display: list-item !important;
@@ -229,9 +216,6 @@ NAVBAR - دسکتاپ
   border-radius: 50%;
 }
 
-/*-------------------------------------------
-HERO SECTION
--------------------------------------------*/
 .hero {
   min-height: 100vh;
   display: flex;
@@ -313,9 +297,6 @@ HERO SECTION
   opacity: 0.9;
 }
 
-/*-------------------------------------------
-PARTICLES
--------------------------------------------*/
 .particle {
   position: absolute;
   background: var(--red);
@@ -343,9 +324,6 @@ PARTICLES
   }
 }
 
-/*-------------------------------------------
-CONTAINER
--------------------------------------------*/
 .container {
   width: 90%;
   max-width: 1400px;
@@ -359,9 +337,6 @@ section {
   position: relative;
 }
 
-/*-------------------------------------------
-SECTION TITLE
--------------------------------------------*/
 .section-title {
   text-align: center;
   margin-bottom: 60px;
@@ -389,9 +364,6 @@ SECTION TITLE
   border-radius: 3px;
 }
 
-/*-------------------------------------------
-BANNER SLIDER
--------------------------------------------*/
 .banner-slider-container {
   position: relative;
   width: 100%;
@@ -501,9 +473,6 @@ BANNER SLIDER
   background: #c1121f;
 }
 
-/*-------------------------------------------
-PRODUCTS
--------------------------------------------*/
 .products-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -621,9 +590,6 @@ PRODUCTS
   box-shadow: 0 0 20px var(--red-glow);
 }
 
-/*-------------------------------------------
-FEATURES
--------------------------------------------*/
 .features {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -651,9 +617,6 @@ FEATURES
   margin-bottom: 20px;
 }
 
-/*-------------------------------------------
-CTA BANNER - نسخه دسکتاپ
--------------------------------------------*/
 .cta-banner {
   position: relative;
   background: linear-gradient(135deg, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.6)),
@@ -708,9 +671,6 @@ CTA BANNER - نسخه دسکتاپ
   box-shadow: 0 0 40px rgba(193, 18, 31, 0.5);
 }
 
-/*-------------------------------------------
-FOOTER
--------------------------------------------*/
 footer {
   background: linear-gradient(to top, #050505, #0a0a0a);
   padding: 60px 0 20px;
@@ -800,9 +760,6 @@ footer::before {
   font-size: 13px;
 }
 
-/*-------------------------------------------
- ENAMAD - نماد اعتماد الکترونیکی
--------------------------------------------*/
 .footer-links .enamad-link {
   display: inline-block;
   background: #ffffff;
@@ -827,9 +784,6 @@ footer::before {
   max-width: 100%;
 }
 
-/*-------------------------------------------
-SOCIAL ICONS
--------------------------------------------*/
 .social-icons {
   display: flex;
   gap: 12px;
@@ -875,9 +829,6 @@ SOCIAL ICONS
   filter: drop-shadow(0 0 10px rgba(193, 18, 31, 0.6));
 }
 
-/*-------------------------------------------
-ANIMATIONS
--------------------------------------------*/
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -900,9 +851,6 @@ ANIMATIONS
   transform: translateY(0);
 }
 
-/*-------------------------------------------
-RESPONSIVE
--------------------------------------------*/
 @media (max-width: 992px) {
   .container {
     width: 95%;
@@ -917,7 +865,6 @@ RESPONSIVE
     height: 250px;
   }
   
-  /* CTA - تبلت */
   .cta-banner {
     padding: 60px 40px !important;
     min-height: 300px !important;
@@ -929,9 +876,6 @@ RESPONSIVE
   }
 }
 
-/* ============================================
-   NAVBAR - موبایل (لوگو یکم به راست)
-============================================ */
 @media (max-width: 768px) {
   body {
     padding-top: 0 !important;
@@ -957,7 +901,6 @@ RESPONSIVE
     position: relative !important;
   }
   
-  /* ردیف بالا */
   .nav-row-top {
     display: flex !important;
     justify-content: space-between !important;
@@ -970,7 +913,6 @@ RESPONSIVE
     position: relative !important;
   }
   
-  /* دکمه همبرگر - سمت چپ */
   .nav-toggle {
     display: flex !important;
     flex-direction: column;
@@ -1006,10 +948,9 @@ RESPONSIVE
     transform: rotate(-45deg) translate(4px, -4px);
   }
   
-  /* ===== لوگو - یکم به راست ===== */
   .logo-link {
     position: absolute !important;
-    left: 50% !important;  /* ← از 50% به 52% */
+    left: 50% !important;  
     top: 50% !important;
     transform: translate(-50%, -50%) !important;
     width: 32px !important;
@@ -1024,7 +965,6 @@ RESPONSIVE
     display: block !important;
   }
   
-  /* ====== افکت قرمز روی لوگو در موبایل ====== */
   .logo-link:active .logo-white {
     opacity: 0 !important;
   }
@@ -1034,7 +974,6 @@ RESPONSIVE
     filter: drop-shadow(0 0 25px rgba(193, 18, 31, 0.6)) !important;
   }
   
-  /* سبد خرید - سمت راست */
   .cart-link-mobile {
     display: flex !important;
     position: relative;
@@ -1221,9 +1160,6 @@ RESPONSIVE
     width: 20px !important;
   }
   
-  /* ============================================
-     HERO - بهینه شده برای موبایل
-  ============================================ */
   .hero {
     min-height: 65vh !important;
     padding: 20px 15px 30px !important;
@@ -1264,9 +1200,6 @@ RESPONSIVE
       0 0 60px rgba(193, 18, 31, 0.15) !important;
   }
   
-  /* ============================================
-     CTA - بهینه شده برای موبایل
-  ============================================ */
   .cta-banner {
     padding: 40px 25px !important;
     min-height: 220px !important;
@@ -1421,12 +1354,11 @@ RESPONSIVE
     transform: none !important;
   }
   
-  /* ===== آیکون‌های شبکه‌های اجتماعی - یکم به راست ===== */
   .social-icons {
     justify-content: center !important;
     width: 100% !important;
     gap: 15px !important;
-    padding-left: 28px !important;  /* ← اضافه شد */
+    padding-left: 28px !important;  
   }
   
   .social-icon {
@@ -1500,9 +1432,6 @@ RESPONSIVE
     margin-bottom: 15px !important;
   }
   
-  /* ============================================
-     HERO - موبایل کوچک
-  ============================================ */
   .hero {
     min-height: 55vh !important;
     padding: 15px 12px 25px !important;
@@ -1538,9 +1467,6 @@ RESPONSIVE
       0 0 50px rgba(193, 18, 31, 0.1) !important;
   }
   
-  /* ============================================
-     CTA - موبایل کوچک
-  ============================================ */
   .cta-banner {
     padding: 30px 18px !important;
     min-height: 180px !important;
@@ -1620,12 +1546,11 @@ RESPONSIVE
     font-size: 24px !important;
   }
   
-  /* ===== آیکون‌ها وسط - موبایل کوچک ===== */
   .social-icons {
     justify-content: center !important;
     width: 100% !important;
     gap: 12px !important;
-    padding-right: 6px !important;  /* ← اضافه شد */
+    padding-right: 6px !important;  
   }
   
   .social-icon {
@@ -1635,9 +1560,6 @@ RESPONSIVE
 }
 
 @media (max-width: 360px) {
-  /* ============================================
-     HERO - موبایل خیلی کوچک
-  ============================================ */
   .hero {
     min-height: 45vh !important;
     padding: 10px 10px 20px !important;
@@ -1659,9 +1581,6 @@ RESPONSIVE
     line-height: 1.4 !important;
   }
   
-  /* ============================================
-     CTA - موبایل خیلی کوچک
-  ============================================ */
   .cta-banner {
     padding: 20px 14px !important;
     min-height: 150px !important;
@@ -1685,12 +1604,11 @@ RESPONSIVE
     height: 20px !important;
   }
   
-  /* ===== آیکون‌ها وسط - موبایل خیلی کوچک ===== */
   .social-icons {
     justify-content: center !important;
     width: 100% !important;
     gap: 10px !important;
-    padding-right: 5px !important;  /* ← اضافه شد */
+    padding-right: 5px !important;  
   }
   
   .social-icon {

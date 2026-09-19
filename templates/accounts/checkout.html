@@ -1,4 +1,3 @@
-<!-- templates/shop/checkout.html -->
 {% extends 'base.html' %}
 {% load static %}
 {% load humanize %}
@@ -6,7 +5,6 @@
 {% block title %}تسویه حساب | FIGMAX{% endblock %}
 
 {% block extra_css %}
-<!-- این استایل‌ها با بالاترین اولویت ممکن اعمال می‌شوند تا جلوی تداخل با فایل‌های دیگر را بگیرند -->
 <style type="text/css">
     #figmax-checkout-page, #figmax-checkout-page * {
         box-sizing: border-box !important;
@@ -116,7 +114,6 @@
         align-items: center !important;
     }
 
-    /* 📱 مدیا کوئری‌های نجات‌بخش برای موبایل و تبلت */
     @media screen and (max-width: 992px) {
         #figmax-checkout-page .grid-container {
             grid-template-columns: 1fr !important;
@@ -147,7 +144,6 @@
     <span class="main-title">📋 تکمیل سفارش</span>
     
     <div class="grid-container">
-        <!--FORM SENDING INFOS-->
         <div class="checkout-card">
             <h2 style="color: #ffffff; font-size: 19px; margin-top: 0; margin-bottom: 20px; font-family: 'Vazirmatn';">📍 اطلاعات ارسال</h2>
             
@@ -192,7 +188,6 @@
             </form>
         </div>
         
-        <!--ORDER SUMMARY-->
         <div class="checkout-card">
             <h2 style="color: #ffffff; font-size: 19px; margin-top: 0; margin-bottom: 20px; font-family: 'Vazirmatn';">🛍️ خلاصه سفارش</h2>
             

@@ -1,6 +1,3 @@
-/*-------------------------------------------
-CHECKOUT - کامل و ریسپانسیو
--------------------------------------------*/
 :root {
     --red: #c1121f;
     --white: #ffffff;
@@ -19,9 +16,6 @@ body {
     overflow-x: hidden;
 }
 
-/*-------------------------------------------
-CHECKOUT WRAPPER
--------------------------------------------*/
 .checkout-wrapper {
     display: flex;
     gap: 30px;
@@ -31,9 +25,6 @@ CHECKOUT WRAPPER
     align-items: flex-start;
 }
 
-/*-------------------------------------------
-CHECKOUT FORM
--------------------------------------------*/
 .checkout-form {
     flex: 1.2;
 }
@@ -80,9 +71,6 @@ CHECKOUT FORM
     gap: 15px;
 }
 
-/*-------------------------------------------
-CHECKOUT BUTTON
--------------------------------------------*/
 .checkout-form button {
     width: 100%;
     padding: 16px;
@@ -103,9 +91,6 @@ CHECKOUT BUTTON
     transform: translateY(-2px);
 }
 
-/*-------------------------------------------
-SUMMARY
--------------------------------------------*/
 .checkout-summary {
     flex: 1;
     background: #121212;
@@ -146,11 +131,7 @@ SUMMARY
     font-weight: bold;
 }
 
-/*-------------------------------------------
-RESPONSIVE - قوی و با اولویت بالا
--------------------------------------------*/
 
-/* تبلت و موبایل بزرگ */
 @media (max-width: 992px) {
     .checkout-wrapper {
         flex-direction: column;
@@ -167,7 +148,6 @@ RESPONSIVE - قوی و با اولویت بالا
     }
 }
 
-/* موبایل */
 @media (max-width: 768px) {
     .checkout-wrapper {
         padding: 120px 15px 30px;
@@ -190,7 +170,6 @@ RESPONSIVE - قوی و با اولویت بالا
     }
 }
 
-/* موبایل کوچک */
 @media (max-width: 480px) {
     .checkout-wrapper {
         padding: 100px 10px 20px;
@@ -231,7 +210,6 @@ RESPONSIVE - قوی و با اولویت بالا
     }
 }
 
-/* برای صفحه‌های خیلی کوچک */
 @media (max-width: 360px) {
     .checkout-wrapper {
         padding: 90px 5px 15px;
