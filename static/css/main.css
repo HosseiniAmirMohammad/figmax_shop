@@ -224,7 +224,7 @@ body {
   text-align: center;
   position: relative;
   overflow: hidden;
-  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.5)), url('/static/images/banner.jpg');
+  background: var(--hero-gradient, linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.5))), var(--hero-background, url('/static/images/banner.jpg'));
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -1167,7 +1167,7 @@ footer::before {
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.6)), url('/static/images/banner.jpg') !important;
+    background: var(--hero-gradient, linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.6))), var(--hero-background, url('/static/images/banner.jpg')) !important;
     background-size: cover !important;
     background-position: center !important;
   }
@@ -1435,7 +1435,7 @@ footer::before {
   .hero {
     min-height: 55vh !important;
     padding: 15px 12px 25px !important;
-    background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.65)), url('/static/images/banner.jpg') !important;
+    background: var(--hero-gradient, linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.65))), var(--hero-background, url('/static/images/banner.jpg')) !important;
     background-size: cover !important;
     background-position: center !important;
   }

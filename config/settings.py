@@ -2,6 +2,8 @@
 
 import os
 from pathlib import Path
+
+import dj_database_url
 from decouple import config
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -75,6 +77,11 @@ MIDDLEWARE = [
     "axes.middleware.AxesMiddleware",
 ]
 
+AUTHENTICATION_BACKENDS = [
+    "axes.backends.AxesStandaloneBackend",
+    "django.contrib.auth.backends.ModelBackend",
+]
+
 # CACHES FOR IMPROVING SPEED
 CACHES = {
     "default": {
@@ -125,26 +132,37 @@ TEMPLATES = [
 WSGI_APPLICATION = "config.wsgi.application"
 
 
-# دیتابیس - SQLite برای توسعه و حالت بدون PostgreSQL
-if DEBUG or IS_RAILWAY:
+# دیتابیس
+# Railway باید از دیتابیس پایدار استفاده کند؛ SQLite فقط برای توسعه محلی.
+DATABASE_URL = config("DATABASE_URL", default=None)
+
+if DATABASE_URL:
+    DATABASES = {
+        "default": dj_database_url.parse(
+            DATABASE_URL,
+            conn_max_age=600,
+            conn_health_checks=True,
+        )
+    }
+elif IS_RAILWAY:
     DATABASES = {
         "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": BASE_DIR / "db.sqlite3",
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": config("PGDATABASE", default="railway"),
+            "USER": config("PGUSER", default="postgres"),
+            "PASSWORD": config("PGPASSWORD", default=""),
+            "HOST": config("PGHOST", default="localhost"),
+            "PORT": config("PGPORT", default="5432"),
+            "OPTIONS": {
+                "client_encoding": "UTF8",
+            },
         }
     }
 else:
     DATABASES = {
         "default": {
-            "ENGINE": "django.db.backends.postgresql",
-            "NAME": config("DB_NAME", default="figmax_db"),
-            "USER": config("DB_USER", default="figmax_user"),
-            "PASSWORD": config("DB_PASSWORD", default=""),
-            "HOST": config("DB_HOST", default="localhost"),
-            "PORT": config("DB_PORT", default="5432"),
-            "OPTIONS": {
-                "client_encoding": "UTF8",
-            },
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
         }
     }
 
@@ -164,11 +182,10 @@ STATICFILES_DIRS = [
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # استفاده از WhiteNoise برای فایل‌های استاتیک
-# استفاده از WhiteNoise برای فایل‌های استاتیک
 STATICFILES_STORAGE = "whitenoise.storage.StaticFilesStorage"
 
-MEDIA_URL = "/media/"
-MEDIA_ROOT = BASE_DIR / "media"
+MEDIA_URL = config("MEDIA_URL", default="/media/")
+MEDIA_ROOT = Path(config("MEDIA_ROOT", default=str(BASE_DIR / "media")))
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
@@ -290,8 +307,10 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 # CSRF Settings
 CSRF_COOKIE_AGE = 31449600  # 1 سال
 CSRF_TRUSTED_ORIGINS = [
-    "https://yourdomain.com",
-    "https://www.yourdomain.com",
+    "https://figmaxshop.ir",
+    "https://www.figmaxshop.ir",
+    "https://*.up.railway.app",
+    "https://*.railway.app",
 ]
 
 
@@ -314,5 +333,5 @@ NUMBER_GROUPING = 3
 
 
 # نرخ‌گذاری (Rate Limiting) - برای تولید
-if not DEBUG:
-    RATELIMIT_VIEW = "apps.shop.views.ratelimit_view"
+# هیچ view سفارشی برای ratelimit تعریف نشده است؛ بنابراین این مقدار باید غیرفعال باشد.
+# اگر به‌صورت سفارشی نیاز به page برای rate limit داشتید، آن را به یک view واقعی وصل کنید.

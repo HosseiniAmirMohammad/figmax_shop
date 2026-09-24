@@ -3,10 +3,8 @@
 <section class="hero" 
          style="
              min-height: {{ settings.hero_banner_height|default:'100vh' }};
-             background: linear-gradient(rgba(0,0,0,{{ settings.hero_banner_overlay_opacity|default:'0.4' }}), rgba(0,0,0,{{ settings.hero_banner_overlay_opacity|default:'0.5' }})), 
-                         url('{% if settings.hero_background_image %}{{ settings.hero_background_image.url }}{% else %}{% static 'images/banner.jpg' %}{% endif %}');
-             background-size: cover;
-             background-position: center;
+             --hero-gradient: linear-gradient(rgba(0,0,0,{{ settings.hero_banner_overlay_opacity|default:'0.4' }}), rgba(0,0,0,{{ settings.hero_banner_overlay_opacity|default:'0.5' }}));
+             --hero-background: url('{% if settings.hero_background_image %}{{ settings.hero_background_image.url }}{% else %}{% static 'images/banner.jpg' %}{% endif %}');
          ">
     <div class="container">
         <h1 style="
