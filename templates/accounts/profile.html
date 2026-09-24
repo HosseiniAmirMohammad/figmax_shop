@@ -42,6 +42,10 @@
 <main class="profile-page">
     <div class="profile-card">
 
+        <div style="margin-bottom: 18px;">
+            <a href="{% url 'accounts:dashboard' %}" style="display:inline-flex; align-items:center; gap:8px; color:#ddd; text-decoration:none; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06); border-radius:12px; padding:10px 16px; font-size:14px; font-family:'Vazirmatn', sans-serif; transition:all 0.3s ease;">← بازگشت به پنل کاربری</a>
+        </div>
+
         <div class="profile-header">
             <div class="avatar-box">
     {% if profile.avatar %}
@@ -137,17 +141,17 @@
       <div class="footer-links">
         <h4>شبکه‌های اجتماعی</h4>
         <div class="social-icons">
-          <a class="social-icon">
-            <img src="/static/images/instagram-white.png" class="social-img social-white">
-            <img src="/static/images/instagram-red.png" class="social-img social-red">
+          <a class="social-icon" href="https://www.instagram.com/figmaxshop" target="_blank" rel="noopener noreferrer" aria-label="اینستاگرام FIGMAX">
+            <img src="/static/images/instagram-white.png" class="social-img social-white" alt="اینستاگرام FIGMAX">
+            <img src="/static/images/instagram-red.png" class="social-img social-red" alt="اینستاگرام FIGMAX">
           </a>
-          <a class="social-icon">
-            <img src="/static/images/telegram-white.png" class="social-img social-white">
-            <img src="/static/images/telegram-red.png" class="social-img social-red">
+          <a class="social-icon" href="https://t.me/figmaxshop" target="_blank" rel="noopener noreferrer" aria-label="تلگرام FIGMAX">
+            <img src="/static/images/telegram-white.png" class="social-img social-white" alt="تلگرام FIGMAX">
+            <img src="/static/images/telegram-red.png" class="social-img social-red" alt="تلگرام FIGMAX">
           </a>
-          <a class="social-icon">
-            <img src="/static/images/bale-white.png" class="social-img social-white">
-            <img src="/static/images/bale-red.png" class="social-img social-red">
+          <a class="social-icon" href="https://bale.ai/in/figmaxshop" target="_blank" rel="noopener noreferrer" aria-label="بله FIGMAX">
+            <img src="/static/images/bale-white.png" class="social-img social-white" alt="بله FIGMAX">
+            <img src="/static/images/bale-red.png" class="social-img social-red" alt="بله FIGMAX">
           </a>
         </div>
       </div>
