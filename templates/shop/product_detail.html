@@ -420,6 +420,191 @@
         color: #c1121f;
         font-weight: 600;
     }
+
+    .reviews-section {
+        background: linear-gradient(145deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+        border-radius: 18px;
+        padding: 30px 28px;
+        border: 1px solid rgba(255,255,255,0.06);
+        margin: 0 auto 40px;
+        max-width: 900px;
+    }
+
+    .reviews-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+    }
+
+    .reviews-header h3 {
+        color: #fff;
+        font-size: 24px;
+        font-weight: 700;
+        font-family: 'Vazirmatn', sans-serif;
+        margin: 0;
+    }
+
+    .rating-summary {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.06);
+        border-radius: 999px;
+        padding: 8px 14px;
+        color: #f4c542;
+        font-weight: 700;
+    }
+
+    .rating-summary .stars {
+        font-size: 18px;
+        letter-spacing: 2px;
+    }
+
+    .review-form {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        background: rgba(255,255,255,0.02);
+        border: 1px solid rgba(255,255,255,0.05);
+        border-radius: 14px;
+        padding: 18px;
+        margin-top: 18px;
+    }
+
+    .star-picker {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    .star-picker label {
+        cursor: pointer;
+        user-select: none;
+    }
+
+    .star-picker input {
+        display: none;
+    }
+
+    .star-picker .star {
+        font-size: 30px;
+        color: rgba(255,255,255,0.25);
+        transition: color 0.2s ease, transform 0.2s ease;
+    }
+
+    .star-picker input:checked ~ .star,
+    .star-picker input:checked + .star,
+    .star-picker label:hover .star,
+    .star-picker label:hover ~ label .star {
+        color: #f4c542;
+        transform: scale(1.08);
+    }
+
+    .review-form textarea {
+        width: 100%;
+        min-height: 120px;
+        background: rgba(0,0,0,0.15);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 12px;
+        padding: 14px 16px;
+        color: #fff;
+        resize: vertical;
+        font-family: 'Vazirmatn', sans-serif;
+        font-size: 14px;
+    }
+
+    .review-form textarea:focus {
+        outline: 1px solid rgba(193,18,31,0.6);
+        border-color: rgba(193,18,31,0.5);
+    }
+
+    .review-submit {
+        align-self: flex-end;
+        background: linear-gradient(135deg, #c1121f, #8a0f1a);
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        padding: 12px 22px;
+        font-weight: 700;
+        font-family: 'Vazirmatn', sans-serif;
+        cursor: pointer;
+    }
+
+    .review-lock {
+        background: rgba(255,255,255,0.02);
+        border: 1px solid rgba(255,255,255,0.05);
+        color: #ccc;
+        padding: 16px 18px;
+        border-radius: 12px;
+        margin-top: 18px;
+    }
+
+    .review-lock a {
+        color: #ff4d4d;
+        text-decoration: none;
+    }
+
+    .review-list {
+        margin-top: 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    .review-item {
+        background: rgba(255,255,255,0.02);
+        border: 1px solid rgba(255,255,255,0.05);
+        border-radius: 12px;
+        padding: 16px 18px;
+    }
+
+    .review-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-bottom: 8px;
+    }
+
+    .review-user {
+        color: #fff;
+        font-weight: 700;
+        font-family: 'Vazirmatn', sans-serif;
+    }
+
+    .review-date {
+        color: #999;
+        font-size: 12px;
+        font-family: 'Vazirmatn', sans-serif;
+    }
+
+    .review-stars {
+        color: #f4c542;
+        letter-spacing: 1px;
+        font-size: 18px;
+    }
+
+    .review-comment {
+        color: #d5d5d5;
+        line-height: 1.9;
+        margin: 0;
+        font-size: 14px;
+        font-family: 'Vazirmatn', sans-serif;
+        white-space: pre-wrap;
+    }
+
+    .no-reviews {
+        color: #aaa;
+        text-align: center;
+        margin-top: 18px;
+        font-family: 'Vazirmatn', sans-serif;
+    }
     
     .similar-section .section-title {
         text-align: center;
@@ -853,6 +1038,67 @@
         </div>
         {% endif %}
         
+        <section class="reviews-section">
+            <div class="reviews-header">
+                <h3>دیدگاه‌ها و امتیازها</h3>
+                {% if reviews %}
+                <div class="rating-summary">
+                    <span class="stars">★★★★★</span>
+                    <span>{{ average_rating|floatformat:1 }}/5</span>
+                </div>
+                {% endif %}
+            </div>
+
+            {% if user_review %}
+            <div class="review-lock">
+                دیدگاه شما برای این محصول ثبت شده است. شما می‌توانید آن را با ارسال دوباره فرم به‌روزرسانی کنید.
+            </div>
+            {% endif %}
+
+            {% if can_submit_review %}
+            <form method="post" class="review-form">
+                {% csrf_token %}
+                <div class="star-picker" aria-label="انتخاب امتیاز">
+                    {% for i in '12345' %}
+                    <label>
+                        <input type="radio" name="rating" value="{{ forloop.counter }}" {% if user_review and user_review.rating == forloop.counter %}checked{% elif not user_review and forloop.counter == 5 %}checked{% endif %}>
+                        <span class="star">★</span>
+                    </label>
+                    {% endfor %}
+                </div>
+                <textarea name="comment" placeholder="دیدگاه خود را درباره این محصول بنویسید..." required>{{ user_review.comment|default:'' }}</textarea>
+                <button type="submit" class="review-submit">ثبت دیدگاه</button>
+            </form>
+            {% elif user.is_authenticated %}
+            <div class="review-lock">
+                برای ثبت دیدگاه باید این محصول را قبلاً خریداری کرده باشید.
+            </div>
+            {% else %}
+            <div class="review-lock">
+                برای ثبت دیدگاه <a href="{% url 'accounts:login' %}?next={{ request.path }}">وارد شوید</a> و پس از خرید محصول، دیدگاه خود را ارسال کنید.
+            </div>
+            {% endif %}
+
+            {% if reviews %}
+            <div class="review-list">
+                {% for review in reviews %}
+                <article class="review-item">
+                    <div class="review-top">
+                        <div class="review-user">{{ review.user.get_full_name|default:review.user.username }}</div>
+                        <div class="review-date">{{ review.created_at|date:'d/m/Y' }}</div>
+                    </div>
+                    <div class="review-stars">{% for i in '12345' %}{% if forloop.counter <= review.rating %}★{% else %}☆{% endif %}{% endfor %}</div>
+                    {% if review.comment %}
+                    <p class="review-comment">{{ review.comment }}</p>
+                    {% endif %}
+                </article>
+                {% endfor %}
+            </div>
+            {% else %}
+            <p class="no-reviews">هنوز هیچ دیدگاهی برای این محصول ثبت نشده است.</p>
+            {% endif %}
+        </section>
+
         {% if similar_products %}
         <div class="similar-section">
             <div class="section-title">

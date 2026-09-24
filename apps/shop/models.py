@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
 from django.core.exceptions import ValidationError
+from django.core.validators import MaxValueValidator, MinValueValidator
 import os
 import random
 import string
@@ -182,6 +183,38 @@ class SimilarProduct(models.Model):
 
     def __str__(self):
         return f"{self.product.title} ← {self.similar.title}"
+
+
+class ProductReview(models.Model):
+    product = models.ForeignKey(
+        Product,
+        on_delete=models.CASCADE,
+        related_name="reviews",
+        verbose_name="محصول",
+    )
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="product_reviews",
+        verbose_name="کاربر",
+    )
+    rating = models.PositiveSmallIntegerField(
+        "امتیاز",
+        default=5,
+        validators=[MinValueValidator(1), MaxValueValidator(5)],
+    )
+    comment = models.TextField("دیدگاه", blank=True)
+    created_at = models.DateTimeField("تاریخ ثبت", auto_now_add=True)
+    updated_at = models.DateTimeField("آخرین بروزرسانی", auto_now=True)
+
+    class Meta:
+        ordering = ["-created_at"]
+        verbose_name = "دیدگاه محصول"
+        verbose_name_plural = "دیدگاه‌های محصول"
+        unique_together = [["product", "user"]]
+
+    def __str__(self):
+        return f"{self.user.username} - {self.product.title} ({self.rating} ستاره)"
 
 
 class BannerSlide(models.Model):
