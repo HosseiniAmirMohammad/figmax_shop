@@ -236,7 +236,7 @@ class HomeSettings(models.Model):
         "رنگ کلمه دوم", max_length=20, default="#ffffff"
     )
     hero_subtitle_color = models.CharField(
-        "رنگ زیرنویس", max_length=50, default="rgba(255,255,255,0.7)"
+        "رنگ زیرنویس", max_length=255, default="rgba(255,255,255,0.7)"
     )
 
     # FONTS

@@ -3,16 +3,33 @@
 from django.db import migrations, models
 
 
+def truncate_hero_subtitle_color(apps, schema_editor):
+    HomeSettings = apps.get_model("shop", "HomeSettings")
+    for obj in HomeSettings.objects.all():
+        value = obj.hero_subtitle_color or ""
+        if len(value) > 255:
+            obj.hero_subtitle_color = value[:255]
+            obj.save(update_fields=["hero_subtitle_color"])
+
+
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('shop', '0013_alter_bannerslide_subtitle_alter_bannerslide_title'),
+        ("shop", "0013_alter_bannerslide_subtitle_alter_bannerslide_title"),
     ]
 
     operations = [
+        migrations.RunPython(
+            truncate_hero_subtitle_color,
+            reverse_code=migrations.RunPython.noop,
+        ),
         migrations.AlterField(
-            model_name='homesettings',
-            name='hero_subtitle_color',
-            field=models.CharField(default='rgba(255,255,255,0.7)', max_length=50, verbose_name='رنگ زیرنویس'),
+            model_name="homesettings",
+            name="hero_subtitle_color",
+            field=models.CharField(
+                default="rgba(255,255,255,0.7)",
+                max_length=255,
+                verbose_name="رنگ زیرنویس",
+            ),
         ),
     ]
