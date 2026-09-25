@@ -37,7 +37,16 @@ def dashboard_view(request):
 @login_required
 def orders_view(request):
     orders = Order.objects.filter(user=request.user).order_by("-created_at")
-    return render(request, "accounts/my_order.html", {"orders": orders})
+    status_steps = [
+        {"key": "processing", "label": "مرحله اول: درحال آماده سازی"},
+        {"key": "shipped", "label": "مرحله دوم: درحال ارسال"},
+        {"key": "delivered", "label": "مرحله سوم: دریافت شده"},
+    ]
+    return render(
+        request,
+        "accounts/my_order.html",
+        {"orders": orders, "status_steps": status_steps},
+    )
 
 
 @login_required

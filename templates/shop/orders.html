@@ -32,7 +32,7 @@
                 <div style="display:flex;flex-direction:column;align-items:center;gap:10px;">
                     <span class="status" style="padding:4px 16px;border-radius:20px;font-size:14px;font-weight:bold;font-family:Vazirmatn,sans-serif;
                         {% if order.status == 'pending' %}background:rgba(255,193,7,0.2);color:#ffc107;
-                        {% elif order.status == 'paid' or order.status == 'processing' %}background:rgba(33,150,243,0.2);color:#2196f3;
+                        {% elif order.status == 'processing' %}background:rgba(33,150,243,0.2);color:#2196f3;
                         {% elif order.status == 'shipped' %}background:rgba(33,150,243,0.2);color:#2196f3;
                         {% elif order.status == 'delivered' %}background:rgba(76,175,80,0.2);color:#4CAF50;
                         {% else %}background:rgba(244,67,54,0.2);color:#f44336;{% endif %}">

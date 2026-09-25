@@ -437,10 +437,9 @@ class Order(models.Model):
 
     STATUS_CHOICES = (
         ("pending", "در انتظار پرداخت"),
-        ("paid", "پرداخت شده"),
-        ("processing", "در حال پردازش"),
-        ("shipped", "ارسال شده"),
-        ("delivered", "تحویل داده شده"),
+        ("processing", "در حال آماده سازی"),
+        ("shipped", "در حال ارسال"),
+        ("delivered", "دریافت شده"),
         ("cancelled", "لغو شده"),
     )
 

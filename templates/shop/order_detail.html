@@ -21,7 +21,7 @@
                 <span style="color:#888;">وضعیت:</span>
                 <span style="margin-right:10px;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:bold;
                     {% if order.status == 'pending' %}background:rgba(255,193,7,0.2);color:#ffc107;
-                    {% elif order.status == 'paid' or order.status == 'processing' %}background:rgba(33,150,243,0.2);color:#2196f3;
+                    {% elif order.status == 'processing' %}background:rgba(33,150,243,0.2);color:#2196f3;
                     {% elif order.status == 'shipped' %}background:rgba(33,150,243,0.2);color:#2196f3;
                     {% elif order.status == 'delivered' %}background:rgba(76,175,80,0.2);color:#4CAF50;
                     {% else %}background:rgba(244,67,54,0.2);color:#f44336;{% endif %}">
