@@ -94,21 +94,55 @@
         margin: 0 auto;
     }
     
-    .about-text .brand-icon {
-        font-size: 56px;
-        display: block;
-        margin-bottom: 16px;
-    }
-    
-    .about-text .brand-name {
-        display: inline-block;
-        font-size: 36px;
-        font-weight: 900;
+    .brand-logo-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
         margin-bottom: 20px;
-        background: linear-gradient(135deg, #c1121f, #ff1a2b);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
+        position: relative;
+        text-decoration: none;
+    }
+
+    .brand-logo {
+        width: 220px;
+        max-width: 100%;
+        height: auto;
+        object-fit: contain;
+        display: block;
+        transition: all 0.3s ease;
+    }
+
+    .brand-logo-white {
+        opacity: 1;
+    }
+
+    .brand-logo-red {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        transition: all 0.3s ease;
+    }
+
+    .brand-logo-link:hover .brand-logo-white,
+    .brand-logo-link:focus-visible .brand-logo-white {
+        opacity: 0;
+    }
+
+    .brand-logo-link:hover .brand-logo-red,
+    .brand-logo-link:focus-visible .brand-logo-red {
+        opacity: 1;
+    }
+
+    @media (max-width: 768px) {
+        .brand-logo {
+            width: 170px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .brand-logo {
+            width: 140px;
+        }
     }
     
     .about-text .main-text {
@@ -785,8 +819,10 @@
         
         <div class="about-card">
             <div class="about-text">
-                <span class="brand-icon">✨</span>
-                <span class="brand-name">FIGMAX</span>
+                <a href="{% url 'shop:index' %}" class="brand-logo-link" aria-label="بازگشت به صفحه اصلی">
+                    <img src="{% static 'images/logo_white.png' %}" class="brand-logo brand-logo-white" alt="FIGMAX Logo" />
+                    <img src="{% static 'images/logo_red.png' %}" class="brand-logo brand-logo-red" alt="FIGMAX Logo Red" />
+                </a>
                 
                 <p class="main-text">
                     ما <strong>فیگمکس</strong> هستیم، مرجع فروش فیگورهای خاص کلکسیونی که مثلشونو هیچ جا ندیدین.<br>
